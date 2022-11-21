@@ -15,6 +15,10 @@ return new class extends Migration
     {
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
+            $table->string('dni');
+            $table->string('name');
+            $table->set('gender',['male','female']);
+            $table->string('targeta_sanitaria');
             $table->timestamps();
         });
     }

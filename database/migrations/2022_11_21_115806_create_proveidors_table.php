@@ -15,6 +15,9 @@ return new class extends Migration
     {
         Schema::create('proveidors', function (Blueprint $table) {
             $table->id();
+            $table->string('nom');
+            $table->string('pais');
+            $table->foreignId('prod_ID');
             $table->timestamps();
         });
     }
