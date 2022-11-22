@@ -11,8 +11,8 @@ class Client extends Model
     protected $fillable = [
         'id',
         'dni',
-        'name',
-        'gender',
+        'nom',
+        'genere',
         'tarja_sanitaria'
     ];
 }

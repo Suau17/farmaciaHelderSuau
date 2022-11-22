@@ -1,15 +1,15 @@
 @extends('plantilla')
 @section('content')
 <h1>Update superhero</h1>
-<form action="/supers/update/{{ $supers->id }}" method="post">
+<form action="/Client/update/{{ $Clients->id }}" method="post">
     @csrf
-    Dni<input type="text" name="dni" value="{{ $clients->dni}}"><br>
-    Nom <input type="text" name="name" value="{{ $clients->name }}"><br>
-    Gender <select name="gender" value="{{ $clients->gender }}">
-        <option value="male">Male</option>
-        <option value="female">Female</option>
+    Dni<input type="text" name="dni" value="{{ $Clients->dni}}"><br>
+    Nom <input type="text" name="nom" value="{{$Clients->nom}}"><br>
+    Gender <select name="genere" value="{{$Clients->genere }}">
+        <option value="masculi">Male</option>
+        <option value="femeni">Female</option>
     </select><br>
-    Targeta Sanitaria <input type="text" nmae="targeta_sanitaria"><br>
+    Targeta Sanitaria <input type="text" name="tarja_sanitaria" value="{{$Clients->tarja_sanitaria }}"><br>
     </select><br>
     <input type="submit" value="Update">
 </form>
