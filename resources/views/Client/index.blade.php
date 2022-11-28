@@ -1,7 +1,7 @@
 @extends('plantilla')
 @section('content')
 <h1>Clients</h1>
-<a href="/clients/formnew">Login Client</a>
+<a href="/Client/formnew">Login Client</a>
 <table border=1>
     <tr>
         <td>id</td>
@@ -15,13 +15,13 @@
         <tr>
             <td>{{ $client->id }}</td>
             <td>{{ $client->dni }}</td>
-            <td>{{ $client->name }}</td>
-            <td>{{ $client->gender }}</td>
-            <td>{{ $client->targeta_sanitaria}}</td>
+            <td>{{ $client->nom }}</td>
+            <td>{{ $client->genere }}</td>
+            <td>{{ $client->tarja_sanitaria}}</td>
             
             <td>
-                <a href="/clients/delete/{{ $client->id }}">Delete</a>
-                <a href="/clients/update/{{ $client->id }}">Update</a>
+                <a href="/Client/delete/{{ $client->id }}">Delete</a>
+                <a href="/Client/update/{{ $client->id }}">Update</a>
             </td>
         </tr>
     @endforeach

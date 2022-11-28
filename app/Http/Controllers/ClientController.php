@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Client;
 
 class ClientController extends Controller
 {
@@ -14,9 +15,9 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $Clients = Clients::all();
-         $Clients= Clients::Paginate(10);
-        return view('Clients.index',compact('Clients'));
+        $Clients= Client::all();
+         $Clients= Client::Paginate(10);
+        return view('Client.index',compact('Clients'));
     }
 
     /**
@@ -25,7 +26,7 @@ class ClientController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create(){
-        return view('Clients.new');
+        return view('Client.new');
     }
 
     /**
@@ -36,20 +37,20 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate(
-            [ 'dni' => 'required | min:3 | max:20',
-            'name' => 'required | min:3 | max:20' ,
-            'targeta_sanitaria' => 'required | min:3 | max:28']
-        );
+        // $request->validate(
+        //     [ 'dni' => 'required | min:3 | max:20',
+        //     'nom' => 'required | min:3 | max:20' ,
+        //     'tarja_sanitaria' => 'required | min:3 | max:28']
+        // );
         
         echo $request->name;
-        $Clients = new Clients;
+        $Clients = new Client;
         $Clients->dni = $request->dni;
-        $Clients->name = $request->name;
-        $Clients->gender = $request->gender;
-        $Clients->targeta_sanitaria = $request->targeta_sanitaria;
+        $Clients->nom = $request->nom;
+        $Clients->genere = $request->genere;
+        $Clients->tarja_sanitaria = $request->tarja_sanitaria;
         $Clients->save();
-        return redirect('/clients');
+        return redirect('/Client');
     }
 
     /**
@@ -71,8 +72,8 @@ class ClientController extends Controller
      */
     public function edit($id)
     {
-        $clients = Clients::findOrFail($id);
-        return view("Clients.update",compact('Clients'));
+        $Clients = Client::findOrFail($id);
+        return view("Client.update",compact('Clients'));
     }
 
     /**
@@ -84,14 +85,17 @@ class ClientController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate(
-            [ 'name' => 'required | min:3 | max:20' ]
-        );
+        // $request->validate(
+        //     [ 'name' => 'required | min:3 | max:20' ]
+        // );
         
-        $clients = Clients::findOrFail($id);
-        $clients->name = $request->name;
-        $clients->save();
-        return redirect('/clients');
+        $Clients = Client::findOrFail($id);
+        $Clients->dni = $request->dni;
+        $Clients->nom = $request->nom;
+        $Clients->genere = $request->genere;
+        $Clients->tarja_sanitaria = $request->tarja_sanitaria;
+        $Clients->save();
+        return redirect('/Client');
     }
 
     /**
@@ -102,8 +106,8 @@ class ClientController extends Controller
      */
     public function destroy($id)
     {
-        $clients = Clients::findOrFail($id);
-        $clients->delete();
-        return redirect('/clients');
+        $Clients = Client::findOrFail($id);
+        $Clients->delete();
+        return redirect('/Client');
     }
 }
