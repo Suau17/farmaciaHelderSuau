@@ -8,6 +8,7 @@
     <div>
       <a href="{{ url('/') }}">Home</a>
       <a href="{{ url('/Client') }}">Clients</a>
+      <a href="{{ url('/Treballador') }}">Treballador</a>
      
     </div>
 
