@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('treballadors', function (Blueprint $table) {
             $table->id();
             $table->string('dni');
-            $table->string('name');
-            $table->set('gender',['male','female']);
+            $table->string('nom');
+            $table->set('genere',['masculi','femeni']);
             $table->timestamps();
         });
     }
