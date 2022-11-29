@@ -1,8 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+//IMPORTANTE PONER LOS CONTROLLERS
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\TreballadorController;
+use App\Http\Controllers\ProducteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,3 +46,17 @@ Route::get('/Treballador/delete/{id}',[TreballadorController::class,'destroy']);
 Route::get('/Treballador/update/{id}',[TreballadorController::class,'edit']);
 
 Route::post('/Treballador/update/{id}',[TreballadorController::class,'update']);
+
+//Producte
+
+Route::get('/Producte',[Producteontroller::class,'index']);
+
+Route::get('/Producte/formnew',[ProducteController::class,'create']);
+
+Route::post('/Producte/save',[ProducteController::class,'store']);
+
+Route::get('/Producte/delete/{id}',[ProducteController::class,'destroy']);
+
+Route::get('/Producte/update/{id}',[ProducteController::class,'edit']);
+
+Route::post('/Producte/update/{id}',[ProducteController::class,'update']);
