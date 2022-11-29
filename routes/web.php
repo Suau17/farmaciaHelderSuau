@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\TreballadorController;
 use App\Http\Controllers\ProducteController;
+use App\Http\Controllers\ProveidorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,7 +50,7 @@ Route::post('/Treballador/update/{id}',[TreballadorController::class,'update']);
 
 //Producte
 
-Route::get('/Producte',[Producteontroller::class,'index']);
+Route::get('/Producte',[ProducteController::class,'index']);
 
 Route::get('/Producte/formnew',[ProducteController::class,'create']);
 
@@ -60,3 +61,17 @@ Route::get('/Producte/delete/{id}',[ProducteController::class,'destroy']);
 Route::get('/Producte/update/{id}',[ProducteController::class,'edit']);
 
 Route::post('/Producte/update/{id}',[ProducteController::class,'update']);
+
+//Proveidor
+
+Route::get('/Proveidor',[ProveidorController::class,'index']);
+
+Route::get('/Proveidor/formnew',[ProveidorController::class,'create']);
+
+Route::post('/Proveidor/save',[ProveidorController::class,'store']);
+
+Route::get('/Proveidor/delete/{id}',[ProveidorController::class,'destroy']);
+
+Route::get('/Proveidor/update/{id}',[ProveidorController::class,'edit']);
+
+Route::post('/Proveidor/update/{id}',[ProveidorController::class,'update']);

@@ -17,7 +17,7 @@ class ProducteController extends Controller
     {
         $Productes= Producte::all();
          $Productes= Producte::Paginate(10);
-        return view('Producte.index',compact('Producte'));
+        return view('Producte.index',compact('Productes'));
     }
 
     /**
@@ -45,10 +45,8 @@ class ProducteController extends Controller
         
         echo $request->name;
         $Productes = new Producte;
-        $Productes->dni = $request->dni;
         $Productes->nom = $request->nom;
-        $Productes->genere = $request->genere;
-        $Productes->tarja_sanitaria = $request->tarja_sanitaria;
+        $Productes->tipus = $request->tipus;
         $Productes->save();
         return redirect('/Producte');
     }
@@ -90,10 +88,8 @@ class ProducteController extends Controller
         // );
         
         $Productes = Producte::findOrFail($id);
-        $Productes->dni = $request->dni;
         $Productes->nom = $request->nom;
-        $Productes->genere = $request->genere;
-        $Productes->tarja_sanitaria = $request->tarja_sanitaria;
+        $Productes->tipus= $request->tipus;
         $Productes->save();
         return redirect('/Producte');
     }
