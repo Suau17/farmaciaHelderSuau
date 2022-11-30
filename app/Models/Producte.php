@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Producte extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'id',
+        'nom',
+        'tipus',
+        
+    ];
+    public function Proveidor(){
+        return $this->belongsToMany('App\Proveidor');
+    }
 }

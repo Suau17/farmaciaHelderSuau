@@ -6,24 +6,20 @@
         <div class="col-md-6">
             <div class="card px-5 py-5" id="form1">
                 <div class="form-data" v-if="!submitted">
-                <h1>Login Client</h1>
-<form action="/Client/save" method="POST">
+                <h1>Afegir Proveidor</h1>
+<form action="/Proveidor/save" method="POST">
     @csrf
     <div class="forms-inputs mb-4">
-   DNI<input type="text" name="dni" value="{{ old('dni') }}"><br>
-</div>
-<div class="forms-inputs mb-4">
     Name <input type="text" name="nom" value="{{ old('nom') }}"><br>
 </div>
 <div class="forms-inputs mb-4">
-    Gender <select name="genere" value="{{ old('genere') }}">
-        <option value="masculi">Male</option>
-        <option value="femeni">Female</option>
-    </select><br>
+    Pais <input type="text" name="pais" value="{{ old('pais') }}"><br>
 </div>
 <div class="forms-inputs mb-4">
-   Targeta Sanitaria <input type="text" name="tarja_sanitaria"><br>
+    Productes<input type="text" name="prod_ID" value="{{ old('prod_ID') }}"><br>
 </div>
+
+
 <div class="mb-3"> <button v-on:click.stop.prevent="submit" class="btn btn-dark w-100">Login</button> </div>
 </div>
 </div>
