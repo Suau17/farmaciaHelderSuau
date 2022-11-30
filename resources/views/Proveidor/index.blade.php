@@ -6,10 +6,9 @@
 <thead class="thead-dark">
     <tr>
         <td>id</td>
-        <td>DNI</td>
         <td>Nom</td>
-        <td>gender</td>
-        <td>tarjeta_sanitaria</td>
+        <td>Pais</td>
+        <td>Prod_ID</td>
         
     </tr>
     </thead>
@@ -17,9 +16,9 @@
     @foreach($Proveidors as $proveidor)
         <tr>
             <td>{{ $proveidor->id }}</td>
-            
             <td>{{ $proveidor->nom }}</td>
-            <td>{{ $proveidor->prodID}}</td>
+            <td>{{ $proveidor->pais }}</td>
+            <td>{{ $proveidor->prod_ID}}</td>
             
             
             <td>

@@ -19,7 +19,7 @@ use App\Http\Controllers\ProveidorController;
 */
 
 Route::get('/', function () {
-    return view('plantilla');
+    return view('home');
 });
 Route::get('/Client',[ClientController::class,'index']);
 
@@ -75,3 +75,12 @@ Route::get('/Proveidor/delete/{id}',[ProveidorController::class,'destroy']);
 Route::get('/Proveidor/update/{id}',[ProveidorController::class,'edit']);
 
 Route::post('/Proveidor/update/{id}',[ProveidorController::class,'update']);
+
+//middleware
+
+Auth::routes();
+Route::get('plantilla', function () {
+    return "plantilla";
+})->middleware('auth');
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

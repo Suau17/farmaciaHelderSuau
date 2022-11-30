@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Proveidor;
+use App\Models\Producte;
 
 class ProveidorController extends Controller
 {
@@ -44,9 +45,10 @@ class ProveidorController extends Controller
         // );
         
         echo $request->name;
-        $Proveidors = new Producte;
+        $Proveidors = new Proveidor;
         $Proveidors->nom = $request->nom;
-        $Proveidors->tipus = $request->tipus;
+        $Proveidors->pais = $request->pais;
+        $Proveidors->prod_ID = $request->prod_ID;
         $Proveidors->save();
         return redirect('/Proveidor');
     }
@@ -89,7 +91,8 @@ class ProveidorController extends Controller
         
         $Proveidors = Producte::findOrFail($id);
         $Proveidors->nom = $request->nom;
-        $Proveidors->tipus= $request->tipus;
+        $Proveidors->pais= $request->pais;
+        $Proveidors->prod_ID= $request->prod_ID;
         $Proveidors->save();
         return redirect('/Proveidor');
     }
