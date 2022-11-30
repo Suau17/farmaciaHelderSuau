@@ -10,7 +10,10 @@ class Proveidor extends Model
     use HasFactory;
     protected $fillable = [
         'id',
-        'nom',
+        'nomE',
         'pais'
     ];
+    public function Producte(){
+        return $this->belongsToMany('App\Producte');
+    }
 }
