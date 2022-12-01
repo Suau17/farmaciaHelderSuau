@@ -6,6 +6,8 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\TreballadorController;
 use App\Http\Controllers\ProducteController;
 use App\Http\Controllers\ProveidorController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +21,7 @@ use App\Http\Controllers\ProveidorController;
 */
 
 Route::get('/', function () {
-    return view('home');
+    return view('plantilla');
 });
 Route::get('/Client',[ClientController::class,'index']);
 
@@ -79,8 +81,13 @@ Route::post('/Proveidor/update/{id}',[ProveidorController::class,'update']);
 //middleware
 
 Auth::routes();
-Route::get('plantilla', function () {
-    return "plantilla";
+Route::get('/webSegura', function () {
+    return "";
 })->middleware('auth');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('plantilla', [App\Http\Controllers\RegisterController::class, 'index'])->name('plantilla');
+
+
+// proteger rutas si es admin o usuario
+// Route::group(['middleware'=>['auth','is_admin']], function() {}
