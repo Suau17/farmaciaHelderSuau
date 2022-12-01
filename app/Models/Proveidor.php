@@ -14,10 +14,10 @@ class Proveidor extends Model
         'pais',
         'prod_ID'
     ];
-    public function Proveidor(){
-        return $this->belongsTo(Proveidor::class);
-                                    //get id de producte.
-    }
+    // public function Proveidor(){
+    //     return $this->belongsTo(Proveidor::class);
+    //                                 //get id de producte.
+    // }
 
     public function Producte(){
         return $this->belongsToMany(Producte::class,'prod_ID');

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('nom');
             $table->string('tipus');
-            $table->string('prov_ID');
+            $table->string('prov_ID')->constrained();
             $table->timestamps();
         });
     }

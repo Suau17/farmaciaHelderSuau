@@ -15,10 +15,10 @@ class Producte extends Model
         'prov_ID'
         
     ];
-    public function Producte(){
-        return $this->belongsToMany(Producte::class);
+    // public function Producte(){
+    //     return $this->belongsToMany(Producte::class);
                                     
-    }
+    // }
     public function Proveidor(){
         return $this->belongsToMany(Proveidor::class,'prov_ID');
                                     

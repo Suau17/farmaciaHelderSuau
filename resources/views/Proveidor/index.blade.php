@@ -18,7 +18,7 @@
             <td>{{ $proveidor->id }}</td>
             <td>{{ $proveidor->nom }}</td>
             <td>{{ $proveidor->pais }}</td>
-            <td>{{ $proveidor->Producte->prod_ID}}</td>
+            <td>{{ $proveidor->producte->prod_ID}}</td>
             
             
             <td>
