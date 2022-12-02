@@ -17,10 +17,18 @@ use App\Http\Controllers\ProveidorController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Auth::routes();
+Route::get('plantilla', function () {
+    return "plantilla";
+})->middleware('auth');
+
+
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/', function () {
-    return view('home');
-});
+    return view('plantilla');
+})->name('plantilla');
+
 Route::get('/Client',[ClientController::class,'index']);
 
 Route::get('/Client/formnew',[ClientController::class,'create']);
@@ -78,9 +86,3 @@ Route::post('/Proveidor/update/{id}',[ProveidorController::class,'update']);
 
 //middleware
 
-Auth::routes();
-Route::get('plantilla', function () {
-    return "plantilla";
-})->middleware('auth');
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
