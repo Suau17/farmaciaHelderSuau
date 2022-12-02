@@ -19,8 +19,7 @@ class ProducteSeeder extends Seeder
         //
         $productes = [
             ['nom'=>'Accelerated Healing',
-            'tipus'=>'ibuprofeno',
-            'prov_ID'=>'111'],
+            'tipus'=>'ibuprofeno'],
 
 			
 	

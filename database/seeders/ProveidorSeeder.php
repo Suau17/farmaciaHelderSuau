@@ -19,8 +19,7 @@ class ProveidorSeeder extends Seeder
     {
         $proveidors = [
             ['nom'=>'Accelerated Healing',
-            'pais'=>'españa',
-            'prod_ID'=>'111'],
+            'pais'=>'españa' ],
 
 			
 	

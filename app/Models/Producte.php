@@ -12,7 +12,7 @@ class Producte extends Model
         'id',
         'nom',
         'tipus',
-        'prov_ID'
+        
         
     ];
     // public function Producte(){
@@ -20,7 +20,7 @@ class Producte extends Model
                                     
     // }
     public function Proveidor(){
-        return $this->belongsToMany(Proveidor::class,'prov_ID');
+        return $this->belongsToMany('App\Models\Proveidor');
                                     
     }
 }

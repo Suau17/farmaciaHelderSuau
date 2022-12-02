@@ -25,6 +25,9 @@
   <li class="nav-item">
     <a class="nav-link " href="{{ url('/Proveidor') }}">Proveidor</a>
   </li>
+  <li class="nav-item">
+    <a class="nav-link " href="{{ url('/Prod_Prov') }}">Prod_Prov</a>
+  </li>
   
 </ul>
       
