@@ -107,4 +107,8 @@ class ProducteController extends Controller
         $Productes->delete();
         return redirect('/Producte');
     }
+    public function agregarProducto($producte_id,$proveidor_id){
+        $proveidor = Proveidor::findOrFail($proveidor_id);
+        $proveidor->productes()->attach($producte_id);
+    }
 }

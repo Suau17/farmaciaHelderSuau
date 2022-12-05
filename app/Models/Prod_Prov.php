@@ -10,7 +10,7 @@ class Prod_Prov extends Model
     use HasFactory;
     protected $fillable = [
         'id',
-        'proveidor_id',
-        'producte_id'
+        'producte_id',
+        'proveidor_id'
     ];
 }

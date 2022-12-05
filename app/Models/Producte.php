@@ -19,7 +19,7 @@ class Producte extends Model
     //     return $this->belongsToMany(Producte::class);
                                     
     // }
-    public function Proveidor(){
+    public function proveidors(){
         return $this->belongsToMany('App\Models\Proveidor');
                                     
     }

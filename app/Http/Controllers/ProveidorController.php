@@ -49,7 +49,7 @@ class ProveidorController extends Controller
         $Proveidors = new Proveidor;
         $Proveidors->nom = $request->nom;
         $Proveidors->pais = $request->pais;
-        $Proveidors->prod_ID = $request->prod_ID;
+        
         $Proveidors->save();
         return redirect('/Proveidor');
     }
