@@ -14,6 +14,8 @@ class ProveidorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    //Mostrar fins a un màxim de 10 per pàgina els proveïdors emmagatzemats a la base de dades
     public function index()
     {
         $Proveidors= Proveidor::all();
@@ -26,6 +28,8 @@ class ProveidorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    //Afegir proveidors
     public function create(){
         return view('Proveidor.new');
     }
@@ -36,6 +40,8 @@ class ProveidorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    //Emmagatzemar-los a la base de dades
     public function store(Request $request)
     {
         // $request->validate(
@@ -83,6 +89,8 @@ class ProveidorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    //Actualitzar proveidors de la base de dades
     public function update(Request $request, $id)
     {
         // $request->validate(
@@ -103,6 +111,8 @@ class ProveidorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    //Eliminar proveidors de la base de dades
     public function destroy($id)
     {
         $Proveidors= Proveidor::findOrFail($id);

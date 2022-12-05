@@ -14,6 +14,8 @@ class ProducteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    //Mostrar els productes emmagatzemats a la base de dades amb un máxim de 10 per pàgina
     public function index()
     {
         $Productes= Producte::all();
@@ -26,6 +28,8 @@ class ProducteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    //Crear productes per afegir-los a la base de dades
     public function create(){
         return view('Producte.new');
     }
@@ -36,13 +40,10 @@ class ProducteController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    //Emmagatzemar els productes a la base de dades
     public function store(Request $request)
     {
-        // $request->validate(
-        //     [ 'dni' => 'required | min:3 | max:20',
-        //     'nom' => 'required | min:3 | max:20' ,
-        //     'tarja_sanitaria' => 'required | min:3 | max:28']
-        // );
         
         echo $request->name;
         $Productes = new Producte;
@@ -69,6 +70,7 @@ class ProducteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function edit($id)
     {
         $Productes = Producte::findOrFail($id);
@@ -82,6 +84,8 @@ class ProducteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    //Actualitzar els productes existents a la base de dades
     public function update(Request $request, $id)
     {
         // $request->validate(
@@ -101,6 +105,8 @@ class ProducteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    //Eliminar els productes de la base de dades
     public function destroy($id)
     {
         $Productes = Producte::findOrFail($id);
