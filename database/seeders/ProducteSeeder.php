@@ -20,6 +20,10 @@ class ProducteSeeder extends Seeder
         $productes = [
             ['nom'=>'Accelerated Healing',
             'tipus'=>'ibuprofeno'],
+            ['nom'=>'Accelerated Healing',
+            'tipus'=>'ibuprofeno'],
+            ['nom'=>'Accelerated Healing',
+            'tipus'=>'ibuprofeno'],
 
 			
 	

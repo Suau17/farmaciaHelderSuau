@@ -17,8 +17,8 @@ class ProveidorController extends Controller
      */
     public function index()
     {
-        $Proveidors= Proveidor::all();
-         $Proveidors= Proveidor::Paginate(10);
+         //$Proveidors= Proveidor::all();
+          $Proveidors= Proveidor::Paginate(10);
         return view('Proveidor.index',compact('Proveidors'));
     }
 
@@ -47,7 +47,7 @@ class ProveidorController extends Controller
         
         echo $request->name;
         $Proveidors = new Proveidor;
-        $Proveidors->nom = $request->nom;
+        $Proveidors->nomE = $request->nomE;
         $Proveidors->pais = $request->pais;
         
         $Proveidors->save();
@@ -62,7 +62,10 @@ class ProveidorController extends Controller
      */
     public function show($id)
     {
-        //
+        
+        $Proveidor = Proveidor::findOrFail($id);
+        
+        return view('Proveidor.show',compact('Proveidor'));
     }
 
     /**
@@ -73,7 +76,7 @@ class ProveidorController extends Controller
      */
     public function edit($id)
     {
-        $Proveidors = Proveidor::findOrFail($id);
+        $Proveidor = Proveidor::findOrFail($id);
         return view("Proveidor.update",compact('Proveidor'));
     }
 
@@ -90,11 +93,12 @@ class ProveidorController extends Controller
         //     [ 'name' => 'required | min:3 | max:20' ]
         // );
         
-        $Proveidors = Producte::findOrFail($id);
-        $Proveidors->nom = $request->nom;
-        $Proveidors->pais= $request->pais;
+         $proveidor = Proveidor::findOrFail($id);
+        $proveidor->nomE = $request->nomE;
+        $proveidor->pais= $request->pais;
         
-        $Proveidors->save();
+        
+        $proveidor->save();
         return redirect('/Proveidor');
     }
 

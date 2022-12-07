@@ -21,6 +21,11 @@ class ProveidorSeeder extends Seeder
             ['nomE'=>'Accelerated Healing',
             'pais'=>'españa' ],
 
+            ['nomE'=>'Accelerated Healing',
+            'pais'=>'españa' ],
+            ['nomE'=>'Accelerated Healing',
+            'pais'=>'españa' ],
+
 			
 	
 		];

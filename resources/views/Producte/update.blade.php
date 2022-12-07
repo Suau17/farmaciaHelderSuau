@@ -5,12 +5,8 @@
     @csrf
     Dni<input type="text" name="dni" value="{{ $Clients->dni}}"><br>
     Nom <input type="text" name="nom" value="{{$Clients->nom}}"><br>
-    Gender <select name="genere" value="{{$Clients->genere }}">
-        <option value="masculi">Male</option>
-        <option value="femeni">Female</option>
-    </select><br>
-    Targeta Sanitaria <input type="text" name="tarja_sanitaria" value="{{$Clients->tarja_sanitaria }}"><br>
-    </select><br>
+    
+ 
     <input type="submit" value="Update">
 </form>
 @if($errors->any())

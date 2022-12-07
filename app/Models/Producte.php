@@ -20,7 +20,7 @@ class Producte extends Model
                                     
     // }
     public function proveidors(){
-        return $this->belongsToMany('App\Models\Proveidor');
+        return $this->belongsToMany(Proveidor::class,'prod_prov');
                                     
     }
 }

@@ -18,16 +18,12 @@
             <td>{{ $proveidor->id }}</td>
             <td>{{ $proveidor->nomE }}</td>
             <td>{{ $proveidor->pais }}</td>
-            <td>
-            @foreach($Proveidors->$Productes as $producte)
-
-            {{ $producte->id}}
-            @endforeach
-            </td>
+            <td> <a href="/Proveidor/show/{{ $proveidor->id }}"><button type="button" class="btn btn-primary">Mostrar</button></a></td>
             <td>
                 
                 <a href="/Proveidor/delete/{{ $proveidor->id }}"><button type="button" class="btn btn-danger">Delete</button></a>
                 <a href="/Proveidor/update/{{ $proveidor->id }}"><button type="button" class="btn btn-primary">Update</button></a>
+               
             </td>
         </tr>
     @endforeach

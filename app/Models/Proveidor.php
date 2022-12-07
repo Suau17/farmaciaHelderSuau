@@ -20,8 +20,7 @@ class Proveidor extends Model
     // }
 
     public function productes(){
-        return $this->belongsToMany(Producte::class,
-                                    'Prod_Prov');
+        return $this->belongsToMany(Producte::class,'prod_prov');
                                     //get id de producte.
     }
 
