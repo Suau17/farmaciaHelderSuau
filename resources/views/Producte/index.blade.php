@@ -9,6 +9,7 @@
         <td>id</td>
         <td>Nom</td>
         <td>tipus</td>
+        <td>Proveidor</td>
         
         
     </tr>
@@ -19,7 +20,7 @@
             <td>{{ $producte->id }}</td>          
             <td>{{ $producte->nom }}</td>
             <td>{{ $producte->tipus}}</td>
-            
+            <td> <a href="/Producte/show/{{ $producte->id }}"><button type="button" class="btn btn-primary">Mostrar</button></a></td>
             <td>
                 
                 <a href="/Producte/delete/{{ $producte->id }}"><button type="button" class="btn btn-danger">Delete</button></a>

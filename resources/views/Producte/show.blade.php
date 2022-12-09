@@ -1,17 +1,17 @@
 @extends('plantilla')
 @section('content')
-<h1>{{$Proveidor->nomE}}</h1>
+<h1>{{$Producte->nomE}}</h1>
 <table border=1 class ="table">
 <thead class="thead-dark">
     <tr>
-        <td>Nom Producte</td>
-        <td>Tipus</td>  
+        <td>Nom Empresa</td>
+        <td>Pais</td>  
     </tr>
     </thead>
     <tbody>
-@foreach($Proveidor->productes as $producte)
-<td>{{$producte->nom}}</td>
-<td>{{$producte->tipus}}</td>
+@foreach($Producte->proveidors as $proveidor)
+<td>{{$proveidor->nomE}}</td>
+<td>{{$proveidor->pais}}</td>
 
 @endforeach
 </tbody>

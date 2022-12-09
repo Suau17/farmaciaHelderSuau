@@ -48,7 +48,7 @@ class ProducteController extends Controller
         $Productes = new Producte;
         $Productes->nom = $request->nom;
         $Productes->tipus = $request->tipus;
-        $ProdProv = 
+        
         $Productes->save();
         return redirect('/Producte');
     }
@@ -62,6 +62,9 @@ class ProducteController extends Controller
     public function show($id)
     {
         //
+        $Producte = Producte::findOrFail($id);
+        
+        return view('Producte.show',compact('Producte'));
     }
 
     /**
@@ -73,7 +76,7 @@ class ProducteController extends Controller
     public function edit($id)
     {
         $Productes = Producte::findOrFail($id);
-        return view("Producte.update",compact('Producte'));
+        return view("Producte.update",compact('Productes'));
     }
 
     /**
