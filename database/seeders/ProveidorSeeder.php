@@ -16,7 +16,10 @@ class ProveidorSeeder extends Seeder
     public function run()
     {
         //
-        $proveidors = [
+
+
+		Proveidor::insert($proveidors);
+
             ['nomE'=>'Forest Pharma B.V.',
             'pais'=>'Austria' ],
             ['nomE'=>'Forest Pharma B.V.',
@@ -51,5 +54,6 @@ class ProveidorSeeder extends Seeder
 	
 		];
         Proveidor::insert($proveidors);
+
     }
 }
