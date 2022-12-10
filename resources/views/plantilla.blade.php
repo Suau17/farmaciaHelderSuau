@@ -13,14 +13,14 @@
   <li class="nav-item">
     <a class="nav-link active" href="{{ url('/') }}">home</a>
   </li>
-
+  @if(Auth::user()->is_admin)   
   <li class="nav-item">
     <a class="nav-link" href="{{ url('/Client') }}">Client</a>
   </li>
   <li class="nav-item">
     <a class="nav-link" href="{{ url('/Treballador') }}">Treballador</a>
   </li>
-
+  @endif
   <li class="nav-item">
     <a class="nav-link " href="{{ url('/Producte') }}">Producte</a>
   </li>
@@ -28,6 +28,7 @@
   <li class="nav-item">
     <a class="nav-link " href="{{ url('/Proveidor') }}">Proveidor</a>
   </li>
+
 
   
   @guest

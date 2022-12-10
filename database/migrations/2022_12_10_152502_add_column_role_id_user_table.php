@@ -15,7 +15,6 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             //
-            $table->string('role')->default("normal");
         });
     }
 
@@ -27,7 +26,8 @@ return new class extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            //
+            // Rol normal 0, rol admin 1
+            $table->unsignedBigInteger('role_id')->default(0);
         });
     }
 };

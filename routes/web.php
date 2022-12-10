@@ -45,7 +45,7 @@ Route::get('/Producte/update/{id}',[ProducteController::class,'edit']);
 
 Route::post('/Producte/update/{id}',[ProducteController::class,'update']);
 
-Route::group(['middleware'=>['role:admin']], function(){
+Route::group(['middleware'=>['auth','is_admin']], function(){
 
 //Client
 
@@ -60,7 +60,6 @@ Route::get('/Client/delete/{id}',[ClientController::class,'destroy']);
 Route::get('/Client/update/{id}',[ClientController::class,'edit']);
 
 Route::post('/Client/update/{id}',[ClientController::class,'update']);
-});
 
 //treballador
 
@@ -91,5 +90,6 @@ Route::get('/Proveidor/update/{id}',[ProveidorController::class,'edit']);
 Route::post('/Proveidor/update/{id}',[ProveidorController::class,'update']);
 
 //middleware
+});
 
 });
