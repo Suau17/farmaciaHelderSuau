@@ -10,7 +10,7 @@
 <form action="/Proveidor/save" method="POST">
     @csrf
     <div class="forms-inputs mb-4">
-    Name <input type="text" name="nom" value="{{ old('nom') }}"><br>
+    Name <input type="text" name="nomE" value="{{ old('nomE') }}"><br>
 </div>
 <div class="forms-inputs mb-4">
     Pais <input type="text" name="pais" value="{{ old('pais') }}"><br>

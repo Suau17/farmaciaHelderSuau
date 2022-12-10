@@ -13,8 +13,14 @@ class Producte extends Model
         'nom',
         'tipus',
         
+        
     ];
-    public function Proveidor(){
-        return $this->belongsToMany('App\Proveidor');
+    // public function Producte(){
+    //     return $this->belongsToMany(Producte::class);
+                                    
+    // }
+    public function proveidors(){
+        return $this->belongsToMany(Proveidor::class,'prod_prov');
+                                    
     }
 }
