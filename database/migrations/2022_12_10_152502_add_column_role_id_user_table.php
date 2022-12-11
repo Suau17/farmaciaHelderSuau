@@ -13,11 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('proveidors', function (Blueprint $table) {
-            $table->id();
-            $table->string('nomE');
-            $table->string('pais');       
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            //
         });
     }
 
@@ -28,6 +25,9 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('proveidors');
+        Schema::table('users', function (Blueprint $table) {
+            // Rol normal 0, rol admin 1
+            $table->unsignedBigInteger('role_id')->default(0);
+        });
     }
 };

@@ -13,6 +13,8 @@ class ClientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    //Mostrar els clients emmagatzemats a la base de dades amb un màxim de 10 per pàgina
     public function index()
     {
         $Clients= Client::all();
@@ -25,6 +27,8 @@ class ClientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    //Crear nous clients
     public function create(){
         return view('Client.new');
     }
@@ -35,13 +39,15 @@ class ClientController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    //Emmagatzemar els clients creats
     public function store(Request $request)
     {
-        // $request->validate(
-        //     [ 'dni' => 'required | min:3 | max:20',
-        //     'nom' => 'required | min:3 | max:20' ,
-        //     'tarja_sanitaria' => 'required | min:3 | max:28']
-        // );
+        $request->validate(
+             [ 'dni' => 'required | min:9 | max:9',
+             'nom' => 'required | min:3 | max:20' ,
+             'tarja_sanitaria' => 'required | min:14 | max:14']
+         );
         
         echo $request->name;
         $Clients = new Client;
@@ -70,6 +76,8 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    //Editar els clients de la base de dades
     public function edit($id)
     {
         $Clients = Client::findOrFail($id);
@@ -83,11 +91,15 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    //Actualitzar informació dels clients de la base de dades
     public function update(Request $request, $id)
     {
-        // $request->validate(
-        //     [ 'name' => 'required | min:3 | max:20' ]
-        // );
+        $request->validate(
+            [ 'dni' => 'required | min:9 | max:9',
+            'nom' => 'required | min:3 | max:20' ,
+            'tarja_sanitaria' => 'required | min:14 | max:14']
+        );
         
         $Clients = Client::findOrFail($id);
         $Clients->dni = $request->dni;
@@ -104,6 +116,8 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    //Eliminar clients de la base de dades
     public function destroy($id)
     {
         $Clients = Client::findOrFail($id);

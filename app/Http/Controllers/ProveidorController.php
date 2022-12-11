@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Proveidor;
 use App\Models\Producte;
+use App\Models\Prod_Prov;
 
 class ProveidorController extends Controller
 {
@@ -14,10 +15,12 @@ class ProveidorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    //Mostrar fins a un màxim de 10 per pàgina els proveïdors emmagatzemats a la base de dades
     public function index()
     {
-        $Proveidors= Proveidor::all();
-         $Proveidors= Proveidor::Paginate(10);
+         //$Proveidors= Proveidor::all();
+          $Proveidors= Proveidor::Paginate(10);
         return view('Proveidor.index',compact('Proveidors'));
     }
 
@@ -26,6 +29,8 @@ class ProveidorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    //Afegir proveidors
     public function create(){
         return view('Proveidor.new');
     }
@@ -36,6 +41,8 @@ class ProveidorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    //Emmagatzemar-los a la base de dades
     public function store(Request $request)
     {
         // $request->validate(
@@ -46,9 +53,9 @@ class ProveidorController extends Controller
         
         echo $request->name;
         $Proveidors = new Proveidor;
-        $Proveidors->nom = $request->nom;
+        $Proveidors->nomE = $request->nomE;
         $Proveidors->pais = $request->pais;
-        $Proveidors->prod_ID = $request->prod_ID;
+        
         $Proveidors->save();
         return redirect('/Proveidor');
     }
@@ -61,7 +68,10 @@ class ProveidorController extends Controller
      */
     public function show($id)
     {
-        //
+        
+        $Proveidor = Proveidor::findOrFail($id);
+        
+        return view('Proveidor.show',compact('Proveidor'));
     }
 
     /**
@@ -72,7 +82,7 @@ class ProveidorController extends Controller
      */
     public function edit($id)
     {
-        $Proveidors = Proveidor::findOrFail($id);
+        $Proveidor = Proveidor::findOrFail($id);
         return view("Proveidor.update",compact('Proveidor'));
     }
 
@@ -83,17 +93,20 @@ class ProveidorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    //Actualitzar proveidors de la base de dades
     public function update(Request $request, $id)
     {
         // $request->validate(
         //     [ 'name' => 'required | min:3 | max:20' ]
         // );
         
-        $Proveidors = Producte::findOrFail($id);
-        $Proveidors->nom = $request->nom;
-        $Proveidors->pais= $request->pais;
-        $Proveidors->prod_ID= $request->prod_ID;
-        $Proveidors->save();
+         $proveidor = Proveidor::findOrFail($id);
+        $proveidor->nomE = $request->nomE;
+        $proveidor->pais= $request->pais;
+        
+        
+        $proveidor->save();
         return redirect('/Proveidor');
     }
 
@@ -103,6 +116,8 @@ class ProveidorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    //Eliminar proveidors de la base de dades
     public function destroy($id)
     {
         $Proveidors= Proveidor::findOrFail($id);

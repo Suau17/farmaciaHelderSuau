@@ -17,36 +17,18 @@ use App\Http\Controllers\ProveidorController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Auth::routes();
+Route::get('plantilla', function () {
+    return "plantilla";
+})->middleware('auth');
+
+
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/', function () {
-    return view('home');
-});
-Route::get('/Client',[ClientController::class,'index']);
+    return view('plantilla');
+})->name('plantilla');
 
-Route::get('/Client/formnew',[ClientController::class,'create']);
-
-Route::post('/Client/save',[ClientController::class,'store']);
-
-Route::get('/Client/delete/{id}',[ClientController::class,'destroy']);
-
-Route::get('/Client/update/{id}',[ClientController::class,'edit']);
-
-Route::post('/Client/update/{id}',[ClientController::class,'update']);
-
-//treballador
-
-
-Route::get('/Treballador',[TreballadorController::class,'index']);
-
-Route::get('/Treballador/formnew',[TreballadorController::class,'create']);
-
-Route::post('/Treballador/save',[TreballadorController::class,'store']);
-
-Route::get('/Treballador/delete/{id}',[TreballadorController::class,'destroy']);
-
-Route::get('/Treballador/update/{id}',[TreballadorController::class,'edit']);
-
-Route::post('/Treballador/update/{id}',[TreballadorController::class,'update']);
 
 //Producte
 
@@ -61,6 +43,36 @@ Route::get('/Producte/delete/{id}',[ProducteController::class,'destroy']);
 Route::get('/Producte/update/{id}',[ProducteController::class,'edit']);
 
 Route::post('/Producte/update/{id}',[ProducteController::class,'update']);
+
+Route::group(['middleware'=>['auth','is_admin']], function(){
+
+//Client
+
+Route::get('/Client',[ClientController::class,'index']);
+
+Route::get('/Client/formnew',[ClientController::class,'create']);
+
+Route::post('/Client/save',[ClientController::class,'store']);
+
+Route::get('/Client/delete/{id}',[ClientController::class,'destroy']);
+
+Route::get('/Client/update/{id}',[ClientController::class,'edit']);
+
+Route::post('/Client/update/{id}',[ClientController::class,'update']);
+
+//treballador
+
+Route::get('/Treballador',[TreballadorController::class,'index']);
+
+Route::get('/Treballador/formnew',[TreballadorController::class,'create']);
+
+Route::post('/Treballador/save',[TreballadorController::class,'store']);
+
+Route::get('/Treballador/delete/{id}',[TreballadorController::class,'destroy']);
+
+Route::get('/Treballador/update/{id}',[TreballadorController::class,'edit']);
+
+Route::post('/Treballador/update/{id}',[TreballadorController::class,'update']);
 
 //Proveidor
 
@@ -77,10 +89,6 @@ Route::get('/Proveidor/update/{id}',[ProveidorController::class,'edit']);
 Route::post('/Proveidor/update/{id}',[ProveidorController::class,'update']);
 
 //middleware
+});
 
-Auth::routes();
-Route::get('plantilla', function () {
-    return "plantilla";
-})->middleware('auth');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

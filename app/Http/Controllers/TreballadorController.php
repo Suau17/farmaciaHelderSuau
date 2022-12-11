@@ -14,6 +14,8 @@ class TreballadorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    //Mostrar fins a un màxim de 10 els treballadors de la farmàcia
     public function index()
     {
         $Treballadors= Treballador::all();
@@ -26,6 +28,8 @@ class TreballadorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    //Afegir treballadors
     public function create(){
         return view('Treballador.new');
     }
@@ -36,14 +40,10 @@ class TreballadorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    //Emmagatzemar treballadors a la base de dades
     public function store(Request $request)
-    {
-        // $request->validate(
-        //     [ 'dni' => 'required | min:3 | max:20',
-        //     'nom' => 'required | min:3 | max:20' ,
-        //     'tarja_sanitaria' => 'required | min:3 | max:28']
-        // );
-        
+    {    
         echo $request->name;
         $Treballadors = new Treballador;
         $Treballadors->dni = $request->dni;
@@ -83,6 +83,8 @@ class TreballadorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    //Actualitzar els treballadors a la base de dades
     public function update(Request $request, $id)
     {
         // $request->validate(
@@ -103,6 +105,8 @@ class TreballadorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    //Eliminar els treballadors de la base de dades
     public function destroy($id)
     {
         $Treballadors = Treballador::findOrFail($id);
