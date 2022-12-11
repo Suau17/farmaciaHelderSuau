@@ -11,9 +11,17 @@ class Proveidor extends Model
     protected $fillable = [
         'id',
         'nomE',
-        'pais'
+        'pais',
+        
     ];
-    public function Producte(){
-        return $this->belongsToMany('App\Producte');
+    // public function Proveidor(){
+    //     return $this->belongsTo(Proveidor::class);
+    //                                 //get id de producte.
+    // }
+
+    public function productes(){
+        return $this->belongsToMany(Producte::class,'prod_prov');
+                                    //get id de producte.
     }
+
 }

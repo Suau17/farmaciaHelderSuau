@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Producte;
-use App\Models\Proveidor;
+use App\Models\Prod_Prov;
 
 class ProducteController extends Controller
 {
@@ -49,6 +49,7 @@ class ProducteController extends Controller
         $Productes = new Producte;
         $Productes->nom = $request->nom;
         $Productes->tipus = $request->tipus;
+        
         $Productes->save();
         return redirect('/Producte');
     }
@@ -62,6 +63,9 @@ class ProducteController extends Controller
     public function show($id)
     {
         //
+        $Producte = Producte::findOrFail($id);
+        
+        return view('Producte.show',compact('Producte'));
     }
 
     /**
@@ -74,7 +78,7 @@ class ProducteController extends Controller
     public function edit($id)
     {
         $Productes = Producte::findOrFail($id);
-        return view("Producte.update",compact('Producte'));
+        return view("Producte.update",compact('Productes'));
     }
 
     /**
@@ -112,5 +116,9 @@ class ProducteController extends Controller
         $Productes = Producte::findOrFail($id);
         $Productes->delete();
         return redirect('/Producte');
+    }
+    public function agregarProducto($producte_id,$proveidor_id){
+        $proveidor = Proveidor::findOrFail($proveidor_id);
+        $proveidor->productes()->attach($producte_id);
     }
 }

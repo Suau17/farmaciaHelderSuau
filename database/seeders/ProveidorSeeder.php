@@ -16,12 +16,44 @@ class ProveidorSeeder extends Seeder
     public function run()
     {
         //
-        $proveidors = [
-            ['nom'=>'Johnson & Johnson'],
-			['nom'=>'Sanitas'],
-			['nom'=>'Babaria'],
-		];
+
 
 		Proveidor::insert($proveidors);
+
+            ['nomE'=>'Forest Pharma B.V.',
+            'pais'=>'Austria' ],
+            ['nomE'=>'Forest Pharma B.V.',
+            'pais'=>'Austria' ],
+            ['nomE'=>'Forest Pharma B.V.',
+            'pais'=>'Austria' ],
+
+            ['nomE'=>'Chichester West Sussex',
+            'pais'=>'Dinamarca' ],
+            ['nomE'=>'Copenhagen S',
+            'pais'=>'Dinamarca' ],
+
+            ['nomE'=>'Sanofi-Aventis France',
+            'pais'=>'Francia' ],
+            ['nomE'=>'Sanofi-Aventis France',
+            'pais'=>'Francia' ],
+
+            ['nomE'=>'Chichester Business Park',
+            'pais'=>'Inglaterra' ],
+            ['nomE'=>'Chichester Business Park',
+            'pais'=>'Inglaterra' ],
+
+            ['nomE'=>'Forest Laboratories Nederland B.V.',
+            'pais'=>'Holanda' ],
+
+            ['nomE'=>'InfectoPharm Arzneimittel',
+            'pais'=>'Alemania' ],
+            ['nomE'=>'InfectoPharm Arzneimittel',
+            'pais'=>'Alemania' ],
+
+			
+	
+		];
+        Proveidor::insert($proveidors);
+
     }
 }

@@ -29,7 +29,6 @@ Route::get('/', function () {
     return view('plantilla');
 })->name('plantilla');
 
-Route::group(['middleware'=>['auth']], function(){
 
 //Producte
 
@@ -92,4 +91,4 @@ Route::post('/Proveidor/update/{id}',[ProveidorController::class,'update']);
 //middleware
 });
 
-});
+

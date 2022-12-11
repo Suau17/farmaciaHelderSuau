@@ -3,7 +3,7 @@
 <h1>Update superhero</h1>
 <form action="/Proveidor/update/{{ $Proveidor->id }}" method="post">
     @csrf
-    Nom<input type="text" name="nom" value="{{ $Proveidor->nom}}"><br>
+    Nom<input type="text" name="nomE" value="{{ $Proveidor->nomE}}"><br>
     Pais <input type="text" name="pais" value="{{$Proveidor->pais}}"><br>
     
     <input type="submit" value="Update">
