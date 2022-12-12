@@ -44,7 +44,9 @@ Route::get('/Producte/update/{id}',[ProducteController::class,'edit']);
 
 Route::post('/Producte/update/{id}',[ProducteController::class,'update']);
 
-Route::group(['middleware'=>['auth','is_admin']], function(){
+Route::get('/Producte/show/{id}',[ProveidorController::class,'show']);
+
+Route::group(['middleware'=>['auth','role:admin']], function() {
 
 //Client
 
@@ -87,6 +89,8 @@ Route::get('/Proveidor/delete/{id}',[ProveidorController::class,'destroy']);
 Route::get('/Proveidor/update/{id}',[ProveidorController::class,'edit']);
 
 Route::post('/Proveidor/update/{id}',[ProveidorController::class,'update']);
+
+Route::get('/Proveidor/show/{id}',[ProveidorController::class,'show']);
 
 //middleware
 });
