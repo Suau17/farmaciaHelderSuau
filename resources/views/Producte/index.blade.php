@@ -26,7 +26,7 @@
 
 
             <td> <a href="/Producte/show/{{ $producte->id }}"><button type="button" class="btn btn-primary">Mostrar</button></a></td>
-            @if(Auth::user()->is_admin)
+            @if(Auth()->user()->role == "admin") 
             <td>
                 
                 <a href="/Producte/delete/{{ $producte->id }}"><button type="button" class="btn btn-danger">Delete</button></a>
