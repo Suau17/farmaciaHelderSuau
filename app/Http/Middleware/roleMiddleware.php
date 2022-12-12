@@ -22,30 +22,5 @@ class roleMiddleware
 
        } 
        abort(403);
-    }
-}
-
-/*public function handle($request, Closure $next, $role) {
-    // I'm using the api guard
-    $role = strtolower( request()->user()->type );
-    $allowed_roles = array_slice(func_get_args(), 2);
-
-    if( in_array($role, $allowed_roles) ) {
-        return $next($request);
-    }
-
-    throw new AuthenticationException();
-    }
-}*/
-/*
-public function handle($request, Closure $next, $roles)
-{
-    foreach($roles as $role) {
-        // Check if user has the role This check will depend on how your roles are set up
-        if($user->hasRole($role))
-            return $next($request);
-    }
-
-    return redirect('login');
-    }
-}*/
+   }
+ }

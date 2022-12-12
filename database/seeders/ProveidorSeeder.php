@@ -18,7 +18,7 @@ class ProveidorSeeder extends Seeder
         //
 
 
-		Proveidor::insert($proveidors);
+		$proveidors = [
 
             ['nomE'=>'Forest Pharma B.V.',
             'pais'=>'Austria' ],
