@@ -25,12 +25,15 @@ Route::get('plantilla', function () {
 
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::group(['middleware'=>['auth','role:normal']], function() {
+Route::group(['middleware'=>['auth']], function() {
 
 Route::get('/', function () {
     return view('plantilla');
 })->name('plantilla');
 
+});
+
+Route::group(['middleware'=>['auth','role:normal']], function() {
 
 //Producte
 
@@ -47,6 +50,8 @@ Route::get('/Producte/update/{id}',[ProducteController::class,'edit']);
 Route::post('/Producte/update/{id}',[ProducteController::class,'update']);
 
 Route::get('/Producte/show/{id}',[ProveidorController::class,'show']);
+
+});
 
 //Rutes que només podrà accedir un usuari amb rol "admin"
 Route::group(['middleware'=>['auth','role:admin']], function() {
@@ -98,4 +103,3 @@ Route::get('/Proveidor/show/{id}',[ProveidorController::class,'show']);
 //middleware
 });
 
-});

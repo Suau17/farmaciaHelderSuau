@@ -7,13 +7,13 @@
     @vite(['resources/sass/app.scss','resources/js/app.js'])
   </head>
   <body class="p-3 mb-2 bg-light text-dark">
-    
+    <p>{{auth()->user()->role}}</p>
     <div>
     <ul class="nav justify-content-end">
   <li class="nav-item">
     <a class="nav-link active" href="{{ url('/') }}">home</a>
   </li>
-  @if(Auth()->user()->role == "admin")   
+  @if(auth()->user()->role == "admin")   
   <li class="nav-item">
     <a class="nav-link" href="{{ url('/Client') }}">Client</a>
   </li>
@@ -24,7 +24,7 @@
   <li class="nav-item">
     <a class="nav-link " href="{{ url('/Producte') }}">Producte</a>
   </li>
-  @if(Auth()->user()->role == "admin")  
+  @if(auth()->user()->role == "admin")  
   <li class="nav-item">
     <a class="nav-link " href="{{ url('/Proveidor') }}">Proveidor</a>
   </li>
