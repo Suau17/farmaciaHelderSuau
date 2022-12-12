@@ -1,7 +1,7 @@
 @extends('plantilla')
 @section('content')
 <h1>Productes</h1>
-@if(Auth::user()->is_admin)
+@if(auth()->user()->role == "admin")  
 <a href="/Producte/formnew">Afegir Producte</a>
 @endif
 <table border=1 class ="table">
