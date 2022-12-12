@@ -7,7 +7,6 @@
     @vite(['resources/sass/app.scss','resources/js/app.js'])
   </head>
   <body class="p-3 mb-2 bg-light text-dark">
-    <p>{{auth()->user()->role}}</p>
     <div>
     <ul class="nav justify-content-end">
   <li class="nav-item">
