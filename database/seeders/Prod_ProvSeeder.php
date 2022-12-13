@@ -21,6 +21,12 @@ class Prod_ProvSeeder extends Seeder
             'producte_id' => 2,
                    
         ]);
+
+        DB::table('prod_prov')->insert([
+            'proveidor_id' => 1 ,
+            'producte_id' => 1,
+                   
+        ]);
         DB::table('prod_prov')->insert([
             'proveidor_id' => 2 ,
             'producte_id' => 3,
