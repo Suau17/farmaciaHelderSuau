@@ -10,9 +10,10 @@
     </thead>
     <tbody>
 @foreach($Producte->proveidors as $proveidor)
+<tr>
 <td>{{$proveidor->nomE}}</td>
 <td>{{$proveidor->pais}}</td>
-
+</tr>
 @endforeach
 </tbody>
 </table>
