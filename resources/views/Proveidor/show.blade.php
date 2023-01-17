@@ -10,8 +10,10 @@
     </thead>
     <tbody>
 @foreach($Proveidor->productes as $producte)
+<tr>
 <td>{{$producte->nom}}</td>
 <td>{{$producte->tipus}}</td>
+</tr>
 
 @endforeach
 </tbody>
