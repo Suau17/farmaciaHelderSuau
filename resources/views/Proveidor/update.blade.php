@@ -5,7 +5,7 @@
         <div class="col-md-6">
             <div class="card px-5 py-5" id="form1">
                 <div class="form-data" v-if="!submitted">
-<h1>Update superhero</h1>
+<h1>Update productes</h1>
 <form action="/Proveidor/update/{{ $Proveidor->id }}" method="post">
     @csrf
     <div class="forms-inputs mb-4">

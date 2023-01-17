@@ -13,7 +13,9 @@
 <tr>
 <td>{{$proveidor->nomE}}</td>
 <td>{{$proveidor->pais}}</td>
+
 </tr>
+
 @endforeach
 </tbody>
 </table>
