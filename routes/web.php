@@ -47,7 +47,7 @@ Route::get('/Producte/update/{id}',[ProducteController::class,'edit']);
 
 Route::post('/Producte/update/{id}',[ProducteController::class,'update']);
 
-Route::get('/Producte/show/{id}',[ProveidorController::class,'show']);
+Route::get('/Producte/show/{id}',[ProducteController::class,'show']);
 
 //Rutes que només podrà accedir un usuari amb rol "admin"
 Route::group(['middleware'=>['auth','role:admin']], function() {
