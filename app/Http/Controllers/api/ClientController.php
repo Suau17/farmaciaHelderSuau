@@ -47,7 +47,26 @@ class ClientCOntroller extends Controller
     public function show($id)
     {
         //
-        
+        $producte = Product::find($id);
+
+        // No s'ha trobat el producte 
+        if($producte==null) {
+            $response = [
+              'success' => false,
+              'message' => "Producte no trobat",            
+            ];
+            return response()->json($response, 404); 
+
+        }
+        else { // El producte s'ha trobat
+
+            $response = [
+              'success' => true,
+              'data'    => $producte,
+              'message' => "Producte recuperat",
+            ];
+            return response()->json($response, 200);
+        }
     }
 
     /**
