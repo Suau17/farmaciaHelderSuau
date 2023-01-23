@@ -14,6 +14,7 @@
 <td>{{$producte->nom}}</td>
 <td>{{$producte->tipus}}</td>
 </tr>
+
 @endforeach
 </tbody>
 </table>
