@@ -47,13 +47,17 @@ class TreballadorController extends Controller
     //Emmagatzemar treballadors a la base de dades
     public function store(Request $request)
     {    
-        echo $request->name;
-        $Treballadors = new Treballador;
-        $Treballadors->dni = $request->dni;
-        $Treballadors->nom = $request->nom;
-        $Treballadors->genere = $request->genere;
-        $Treballadors->save();
-        return redirect('/Treballador');
+        $Treballador = new Treballador;
+        $Treballador->dni = $request->dni;
+        $Treballador->nom = $request->nom;
+        $Treballador->genere = $request->genere;
+        $Treballador->save();
+        $response = [
+            'success' => true, 
+            'message' => "Informacion Trabajador recuperada",
+            'data' => $Treballador, 
+        ];
+        return response()->json($response, 200);  
     }
 
     /**
