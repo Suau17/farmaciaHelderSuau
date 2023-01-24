@@ -58,8 +58,22 @@ class TreballadorController extends Controller
     //Emmagatzemar treballadors a la base de dades
     public function store(Request $request)
     {   
+        
         try {
-            //code...
+        
+        $testDni =  preg_match('/^[0-9]{8,8}[A-Z]$/g',$request->dni);
+        $validator = Validator::make($input, [
+             'nom' => 'required | min:3 | max:20' ,
+        ]);
+        if($validator->fails() || !$testDni){
+            $response = [
+                'success' => true, 
+                'message' => "errors de validacio",
+                'data' => $validator->errors()->all(), 
+            ];
+      
+            return response()->json($response, 404); 
+        }            
         
         $Treballador = new Treballador;
         $Treballador->dni = $request->dni;
@@ -129,7 +143,7 @@ class TreballadorController extends Controller
         // $request->validate(
         //     [ 'name' => 'required | min:3 | max:20' ]
         // );+
-      $testDni =  preg_match('/^[0-9]{8,8}[A-Za-z]$/g',$request->dni);
+        $testDni =  preg_match('/^[0-9]{8,8}[A-Za-z]$/g',$request->dni);
         $validator = Validator::make($input, [
              'nom' => 'required | min:3 | max:20' ,
         ]);
