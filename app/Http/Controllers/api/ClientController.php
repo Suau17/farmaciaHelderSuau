@@ -13,6 +13,7 @@ class ClientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
      //Mostrar els clients emmagatzemats a la base de dades amb un màxim de 10 per pàgina
      public function index()
      {
@@ -123,4 +124,5 @@ class ClientController extends Controller
          $Clients->delete();
          return redirect('/Client');
      }
+
 }
