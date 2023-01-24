@@ -128,8 +128,20 @@ class TreballadorController extends Controller
     {
         // $request->validate(
         //     [ 'name' => 'required | min:3 | max:20' ]
-        // );
-        
+        // );+
+      $testDni =  preg_match('/^[0-9]{8,8}[A-Za-z]$/g',$request->dni);
+        $validator = Validator::make($input, [
+             'nom' => 'required | min:3 | max:20' ,
+        ]);
+        if($validator->fails() || !$testDni){
+            $response = [
+                'success' => true, 
+                'message' => "errors de validacio",
+                'data' => $validator->errors()->all(), 
+            ];
+      
+            return response()->json($response, 404); 
+        }
         try {
             //code...
 
