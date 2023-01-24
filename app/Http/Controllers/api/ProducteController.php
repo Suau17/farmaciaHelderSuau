@@ -4,9 +4,8 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Client;
 
-class ClientCOntroller extends Controller
+class ProducteController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,15 +15,6 @@ class ClientCOntroller extends Controller
     public function index()
     {
         //
-        $Clients = Client::all();
-
-        $response = [
-            'success' => true, //indicació que tot ha funcionat
-            'message' => "Llista de clients recuperada",
-            'data' => $Clients,
-        ];
-
-        return response() -> json($response, 200);
     }
 
     /**
@@ -57,26 +47,6 @@ class ClientCOntroller extends Controller
     public function show($id)
     {
         //
-        $Clients = Client::find($id);
-
-        // No s'ha trobat el producte 
-        if($Clients==null) {
-            $response = [
-              'success' => false,
-              'message' => "Client no trobat",            
-            ];
-            return response()->json($response, 404); 
-
-        }
-        else { // El producte s'ha trobat
-
-            $response = [
-              'success' => true,
-              'data'    => $Clients,
-              'message' => "Client recuperat",
-            ];
-            return response()->json($response, 200);
-        }
     }
 
     /**
