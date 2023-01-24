@@ -18,6 +18,9 @@ class TreballadorController extends Controller
     //Mostrar fins a un màxim de 10 els treballadors de la farmàcia
     public function index()
     {
+        try {
+            //code...
+        
         $Treballadors= Treballador::all();
         $Treballadors= Treballador::Paginate(10);
         
@@ -27,8 +30,16 @@ class TreballadorController extends Controller
             'data' => $Treballadors, 
         ];
   
+        return response()->json($response, 200);  
 
-        return response()->json($response, 200);           
+    } catch (\Throwable $th) {
+        $response = [
+            'success' => false, 
+            'message' => "Error al buscar todos los trabajadores",
+            'data' => $th, 
+        ];
+        return response()->json($response, 404);  
+    }       
     }
 
     /**
@@ -46,7 +57,10 @@ class TreballadorController extends Controller
 
     //Emmagatzemar treballadors a la base de dades
     public function store(Request $request)
-    {    
+    {   
+        try {
+            //code...
+        
         $Treballador = new Treballador;
         $Treballador->dni = $request->dni;
         $Treballador->nom = $request->nom;
@@ -58,6 +72,15 @@ class TreballadorController extends Controller
             'data' => $Treballador, 
         ];
         return response()->json($response, 200);  
+
+    } catch (\Throwable $th) {
+        $response = [
+            'success' => false, 
+            'message' => "Error al crear el trabajador",
+            'data' => $th, 
+        ];
+        return response()->json($response, 404);  
+    }
     }
 
     /**
@@ -68,6 +91,9 @@ class TreballadorController extends Controller
      */
     public function show($id)
     {
+        try {
+            //code...
+
         $Treballador = Treballador::findOrFail($id);
         
         $response = [
@@ -77,7 +103,16 @@ class TreballadorController extends Controller
         ];
   
 
-        return response()->json($response, 200);    
+        return response()->json($response, 200); 
+        
+    } catch (\Throwable $th) {
+        $response = [
+            'success' => false, 
+            'message' => "Error al buscar el trabajador",
+            'data' => $th, 
+        ];
+        return response()->json($response, 404);  
+    }
     }
 
     /**
@@ -95,20 +130,30 @@ class TreballadorController extends Controller
         //     [ 'name' => 'required | min:3 | max:20' ]
         // );
         
-        $Treballadors = Treballador::findOrFail($id);
-        $Treballadors->dni = $request->dni;
-        $Treballadors->nom = $request->nom;
-        $Treballadors->genere = $request->genere;
-        $Treballadors->save();
+        try {
+            //code...
+
+        $Treballador = Treballador::findOrFail($id);
+        $Treballador->dni = $request->dni;
+        $Treballador->nom = $request->nom;
+        $Treballador->genere = $request->genere;
+        $Treballador->save();
         
         $response = [
             'success' => true, 
             'message' => "Informacion Trabajador actualizada con exito",
-            'data' => $Treballadors, 
+            'data' => $Treballador, 
         ];
   
-
         return response()->json($response, 200); 
+    } catch (\Throwable $th) {
+        $response = [
+            'success' => false, 
+            'message' => "Error al actualizar el trabajador",
+            'data' => $th, 
+        ];
+        return response()->json($response, 404);  
+    }
     }
 
     /**
@@ -121,6 +166,9 @@ class TreballadorController extends Controller
     //Eliminar els treballadors de la base de dades
     public function destroy($id)
     {
+        try {
+            //code...
+      
         $Treballador = Treballador::findOrFail($id);
         $Treballador->delete();
         $response = [
@@ -128,7 +176,14 @@ class TreballadorController extends Controller
             'message' => "Trabajador eliminado"
         ];
   
-
         return response()->json($response, 200); 
+    } catch (\Throwable $th) {
+        $response = [
+            'success' => false, 
+            'message' => "Error al eliminar el trabajador",
+            'data' => $th, 
+        ];
+        return response()->json($response, 404);  
+    }
     }
 }
