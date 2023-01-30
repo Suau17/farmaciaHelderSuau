@@ -16,16 +16,29 @@ class ClientCOntroller extends Controller
     public function index()
     {
         //
-        $Clients = Client::all();
-
+        try {
+            //code...
+        
+        $Clients= Client::all();
+        $Clients= Client::Paginate(10);
+        
         $response = [
-            'success' => true, //indicació que tot ha funcionat
-            'message' => "Llista de clients recuperada",
-            'data' => $Clients,
+            'success' => true, 
+            'message' => "Llista clients recuperada",
+            'data' => $Clients, 
         ];
+  
+        return response()->json($response, 200);  
 
-        return response() -> json($response, 200);
-    }
+    } catch (\Throwable $th) {
+        $response = [
+            'success' => false, 
+            'message' => "Error al buscar todos los clientes",
+            'data' => $th, 
+        ];
+        return response()->json($response, 404);  
+    }    
+}   
 
     /**
      * Show the form for creating a new resource.
@@ -100,6 +113,7 @@ class ClientCOntroller extends Controller
     public function update(Request $request, $id)
     {
         //
+        
     }
 
     /**
