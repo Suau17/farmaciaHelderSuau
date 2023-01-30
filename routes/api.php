@@ -2,7 +2,10 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\api\ProducteController;
+use App\Http\Controllers\api\ProveidorController;
+use App\Http\Controllers\api\Prod_ProvController;
+use App\Http\Controllers\api\ClientController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -19,3 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::resource('client', ClientController::class);
 Route::resource('producte', ProducteController::class);
+//cositas
+Route::resource('proveidor', ProveidorController::class);
+Route::resource('prod_prov', Prod_ProvController::class);
+

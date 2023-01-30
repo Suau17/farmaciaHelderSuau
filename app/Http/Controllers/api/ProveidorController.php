@@ -4,12 +4,10 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Client;
-use App\Http\Resources\ClientResource as ClientResource;
+use App\Models\Proveidor;
+use App\Http\Resources\ProveidorResource as ProveidorResource;
 
-use Validator;
-
-class ClientController extends Controller
+class ProveidorController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,29 +17,16 @@ class ClientController extends Controller
     public function index()
     {
         //
-        try {
-            //code...
-        
-        $Clients= Client::all();
-        $Clients= Client::Paginate(10);
-        
+        $Proveidors= Proveidor::all();
+         $Proveidors= Proveidor::Paginate(10);
+        // return view('Producte.index',compact('Productes'));
         $response = [
-            'success' => true, 
-            'message' => "Llista clients recuperada",
-            'data' => $Clients, 
+            'success' => true,  // Per indicar que Tot ha anat bé
+          'message' => "Llista productes recuperada", // missatge
+          'data' => ProveidorResource::collection($Proveidors),
         ];
-  
-        return response()->json($response, 200);  
-
-    } catch (\Throwable $th) {
-        $response = [
-            'success' => false, 
-            'message' => "Error al buscar todos los clientes",
-            'data' => $th, 
-        ];
-        return response()->json($response, 404);  
-    }    
-}   
+        return response()->json($response, 200);
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -73,26 +58,27 @@ class ClientController extends Controller
     public function show($id)
     {
         //
-        $Clients = Client::find($id);
+         // Busquem un producte en concret segons els seu id
+         $Proveidors = Proveidor::find($id);
 
-        // No s'ha trobat el producte 
-        if($Clients==null) {
-            $response = [
-              'success' => false,
-              'message' => "Client no trobat",            
-            ];
-            return response()->json($response, 404); 
-
-        }
-        else { // El producte s'ha trobat
-
-            $response = [
-              'success' => true,
-              'data'    => $Clients,
-              'message' => "Client recuperat",
-            ];
-            return response()->json($response, 200);
-        }
+         // No s'ha trobat el producte 
+         if($Proveidors==null) {
+             $response = [
+               'success' => false,
+               'message' => "Producte no trobat",            
+             ];
+             return response()->json($response, 404); 
+ 
+         }
+         else { // El producte s'ha trobat
+ 
+             $response = [
+               'success' => true,
+               'data'    => new ProveidorResource($Proveidors),
+               'message' => "Producte recuperat",
+             ];
+             return response()->json($response, 200);
+  }
     }
 
     /**
@@ -116,7 +102,6 @@ class ClientController extends Controller
     public function update(Request $request, $id)
     {
         //
-        
     }
 
     /**

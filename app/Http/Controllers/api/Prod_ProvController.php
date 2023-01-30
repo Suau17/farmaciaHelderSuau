@@ -4,12 +4,10 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Client;
-use App\Http\Resources\ClientResource as ClientResource;
+use App\Models\Prod_Prov;
+use App\Http\Resources\Prod_ProvResource as Prod_ProvResource;
 
-use Validator;
-
-class ClientController extends Controller
+class Prod_ProvController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,29 +17,16 @@ class ClientController extends Controller
     public function index()
     {
         //
-        try {
-            //code...
-        
-        $Clients= Client::all();
-        $Clients= Client::Paginate(10);
-        
+        $Prod_Provs = Prod_Prov::all();
+         $Prod_Provs = Prod_Prov::Paginate(10);
+        // return view('Producte.index',compact('Productes'));
         $response = [
-            'success' => true, 
-            'message' => "Llista clients recuperada",
-            'data' => $Clients, 
+            'success' => true,  // Per indicar que Tot ha anat bé
+          'message' => "Llista productes recuperada", // missatge
+          'data' => Prod_ProvResource::collection($Prod_Provs),
         ];
-  
-        return response()->json($response, 200);  
-
-    } catch (\Throwable $th) {
-        $response = [
-            'success' => false, 
-            'message' => "Error al buscar todos los clientes",
-            'data' => $th, 
-        ];
-        return response()->json($response, 404);  
-    }    
-}   
+        return response()->json($response, 200);
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -73,13 +58,14 @@ class ClientController extends Controller
     public function show($id)
     {
         //
-        $Clients = Client::find($id);
+        // Busquem un producte en concret segons els seu id
+        $Prod_Provs = Prod_Prov::find($id);
 
         // No s'ha trobat el producte 
-        if($Clients==null) {
+        if($Prod_Provs ==null) {
             $response = [
               'success' => false,
-              'message' => "Client no trobat",            
+              'message' => "Producte no trobat",            
             ];
             return response()->json($response, 404); 
 
@@ -88,11 +74,11 @@ class ClientController extends Controller
 
             $response = [
               'success' => true,
-              'data'    => $Clients,
-              'message' => "Client recuperat",
+              'data'    => new Prod_ProvResource($Prod_Provs),
+              'message' => "Producte recuperat",
             ];
             return response()->json($response, 200);
-        }
+ }
     }
 
     /**
@@ -116,7 +102,6 @@ class ClientController extends Controller
     public function update(Request $request, $id)
     {
         //
-        
     }
 
     /**
