@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Proveidor;
 use App\Http\Resources\ProveidorResource as ProveidorResource;
+use Validator;
 
 class ProveidorController extends Controller
 {
@@ -17,15 +18,16 @@ class ProveidorController extends Controller
     public function index()
     {
         //
-        $Proveidors= Proveidor::all();
-         $Proveidors= Proveidor::Paginate(10);
-        // return view('Producte.index',compact('Productes'));
+        $Proveidors = Proveidor::all(['id','name']);
+
         $response = [
-            'success' => true,  // Per indicar que Tot ha anat bé
-          'message' => "Llista productes recuperada", // missatge
-          'data' => ProveidorResource::collection($Proveidors),
+            'success' => true,
+            'message' => "Llistat planetes recuperat",
+            'data' => $Proveidors,
         ];
-        return response()->json($response, 200);
+
+        //return $response;
+        return response()->json($response,200);
     }
 
     /**
@@ -47,6 +49,34 @@ class ProveidorController extends Controller
     public function store(Request $request)
     {
         //
+        $input = $request->all();
+        $validator = Validator::make($input,
+            [ 
+                'name'=>'required|min:3|max:10',
+
+            ]
+        );
+
+        if($validator->fails()) {
+
+            $response = [
+                'success' => false,
+                'message' => "Errors de validació",
+                'data' => $validator->errors()->all(),
+            ];
+            return response()->json($response,400);
+        }
+      
+        // [ "name"=>"planetaP", .......]
+
+        $Proveidors= Proveidor::create($input);
+
+        $response = [
+                'success' => true,
+                'message' => "Planeta creat correctament",
+                'data' => $Proveidors,
+        ];
+        return response()->json($response,200);
     }
 
     /**
@@ -74,7 +104,7 @@ class ProveidorController extends Controller
  
              $response = [
                'success' => true,
-               'data'    => new ProveidorResource($Proveidors),
+               'data'    => $Proveidors,
                'message' => "Producte recuperat",
              ];
              return response()->json($response, 200);
@@ -102,6 +132,25 @@ class ProveidorController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $Proveidors = Proveidor::find($id);
+        if($Proveidors==null) {
+
+            $response = [
+                'success' => false,
+                'message' => "Proveidors no trobat",
+                'data' => [],
+            ];
+        
+            return response()->json($response,404);
+        }
+
+        $response = [
+                'success' => true,
+                'message' => "Proveidors trobat",
+                'data' => $Proveidors,
+            ];
+        
+        return response()->json($response,200);
     }
 
     /**
@@ -113,5 +162,38 @@ class ProveidorController extends Controller
     public function destroy($id)
     {
         //
+        $Proveidors = Proveidor::find($id);
+        if($Proveidors==null) {
+
+            $response = [
+                'success' => false,
+                'message' => "Proveidors no trobat",
+                'data' => [],
+            ];
+        
+            return response()->json($response,404);
+        }
+
+        try {
+            $Proveidors->delete();
+
+            $response = [
+                    'success' => true,
+                    'message' => "Proveidorsesborrat",
+                    'data' => $Proveidors,
+                ];
+            
+            return response()->json($response,200);
+        }
+        catch(\Exception $e) {
+            $response = [
+                    'success' => false,
+                    'message' => "Error esborrant planeta",                    
+                ];
+            
+            return response()->json($response,400);
+
+        }
     }
-}
+    }
+
