@@ -62,6 +62,44 @@ class ClientController extends Controller
     public function store(Request $request)
     {
         //
+        try {
+
+            $testdni = preg_match('/^[0-9]{8,8}[A-Z]$/g',$request->dni);
+            $testtarja = preg_match('/^[0-9]{14,14}[A-Z]$/g',$request->tarja_sanitaria);
+            $validator = Validator::make($input, [
+                'nom' => 'required | min:3 | max:20' ,
+           ]);
+           if($validator->fails() || !$testdni){
+               $response = [
+                   'success' => true, 
+                   'message' => "errors de validacio",
+                   'data' => $validator->errors()->all(), 
+               ];
+         
+               return response()->json($response, 404); 
+           }            
+           
+           $Clients = new Client;
+           $Clients->dni = $request->dni;
+           $Clients->nom = $request->nom;
+           $Clients->genere = $request->genere;
+           $Clients->tarja_sanitaria = $request->tarja_sanitaria;
+           $Clients->save();
+           $response = [
+               'success' => true, 
+               'message' => "Informacion Trabajador recuperada",
+               'data' => $Clients, 
+           ];
+           return response()->json($response, 200);  
+   
+       } catch (\Throwable $th) {
+           $response = [
+               'success' => false, 
+               'message' => "Error al crear el cliente",
+               'data' => $th, 
+           ];
+           return response()->json($response, 404);  
+       }
     }
 
     /**
@@ -75,11 +113,11 @@ class ClientController extends Controller
         //
         $Clients = Client::find($id);
 
-        // No s'ha trobat el producte 
+        // No s'ha trobat el client 
         if($Clients==null) {
             $response = [
               'success' => false,
-              'message' => "Client no trobat",            
+              'message' => "Client no trobat",    
             ];
             return response()->json($response, 404); 
 
@@ -104,6 +142,7 @@ class ClientController extends Controller
     public function edit($id)
     {
         //
+    
     }
 
     /**
@@ -116,6 +155,45 @@ class ClientController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $testDni =  preg_match('/^[0-9]{8,8}[A-Za-z]$/g',$request->dni);
+        $testtarja = preg_match('/^[0-9]{14,14}[A-Z]$/g',$request->tarja_sanitaria);
+        $validator = Validator::make($input, [
+             'nom' => 'required | min:3 | max:20' ,
+        ]);
+        if($validator->fails() || !$testDni){
+            $response = [
+                'success' => true, 
+                'message' => "errors de validacio",
+                'data' => $validator->errors()->all(), 
+            ];
+      
+            return response()->json($response, 404); 
+        }
+        try {
+            //code...
+
+        $Clients = Treballador::findOrFail($id);
+        $Clients->dni = $request->dni;
+        $Clients->nom = $request->nom;
+        $Clients->genere = $request->genere;
+        $Clients->tarja_sanitaria = $request->tarja_sanitaria;
+        $Clients->save();
+        
+        $response = [
+            'success' => true, 
+            'message' => "Informacion Trabajador actualizada con exito",
+            'data' => $Treballador, 
+        ];
+  
+        return response()->json($response, 200); 
+    } catch (\Throwable $th) {
+        $response = [
+            'success' => false, 
+            'message' => "Error al actualizar el cliente",
+            'data' => $th, 
+        ];
+        return response()->json($response, 404);  
+    }
         
     }
 
@@ -128,5 +206,33 @@ class ClientController extends Controller
     public function destroy($id)
     {
         //
+                // Eliminem el client segons el codi que ens passin
+
+        // El busquem a la BD
+        $Clients = Client::find($id);
+
+        // Si no trobem el client responem amb informació
+        // sobre l'error
+        if($Clients==null) {
+            $Clients = [
+            'success' => false,
+            'message' => "Client no trobat",            
+            ];
+            return response()->json($response, 404); 
+
+        }
+        else { // El client l'hem trobat
+
+            // posar dins try-catch en cas de haver-hi relacions clau forana!!
+            $Clients->delete();
+
+            $response = [
+            'success' => true,
+            'data'    => $Clients,
+            'message' => "Client esborrat",
+            ];
+
+            return response()->json($response, 200);
+        }
     }
 }
