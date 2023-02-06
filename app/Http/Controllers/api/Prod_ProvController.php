@@ -46,7 +46,35 @@ class Prod_ProvController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        $input = $request->all();
+        $validator = Validator::make($input,
+            [ 
+                'name'=>'required|min:3|max:10',
+
+            ]
+        );
+
+        if($validator->fails()) {
+
+            $response = [
+                'success' => false,
+                'message' => "Errors de validació",
+                'data' => $validator->errors()->all(),
+            ];
+            return response()->json($response,400);
+        }
+      
+        // [ "name"=>"planetaP", .......]
+
+        $Prod_Provs = Prod_Prov::create($input);
+
+        $response = [
+                'success' => true,
+                'message' => "Planeta creat correctament",
+                'data' => $Prod_Provs,
+        ];
+        return response()->json($response,200);
     }
 
     /**
@@ -74,7 +102,7 @@ class Prod_ProvController extends Controller
 
             $response = [
               'success' => true,
-              'data'    => new Prod_ProvResource($Prod_Provs),
+              'data'    => $Prod_Provs,
               'message' => "Producte recuperat",
             ];
             return response()->json($response, 200);
@@ -102,6 +130,44 @@ class Prod_ProvController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $Prod_Provs = Prod_Prov::find($id);
+        if($Prod_Provs==null) {
+            $response = [
+                'success' => false,
+                'message' => "Planeta no trobat",
+                'data' => [],
+            ];        
+            return response()->json($response,404);
+        }      
+
+        $input = $request->all();
+        $validator = Validator::make($input,
+            [ 
+                'name'=>'required|min:3|max:10',
+
+            ]
+        );
+
+        if($validator->fails()) {
+            $response = [
+                'success' => false,
+                'message' => "Errors de validació",
+                'data' => $validator->errors(),
+            ];
+            return response()->json($response,400);
+        }
+      
+        // versió 1
+        $Prod_Provs->update($input);
+        // versió 2
+        // $planet->name = $input->name;
+        // $planet->save();
+        $response = [
+                'success' => true,
+                'message' => "Planeta actualitzat correctament",
+                'data' => $Prod_Provs,
+        ];
+        return response()->json($response,200);
     }
 
     /**
@@ -113,5 +179,37 @@ class Prod_ProvController extends Controller
     public function destroy($id)
     {
         //
+        $Prod_Provs = Prod_Prov::find($id);
+        if($Prod_Provs==null) {
+
+            $response = [
+                'success' => false,
+                'message' => "Planeta no trobat",
+                'data' => [],
+            ];
+        
+            return response()->json($response,404);
+        }
+
+        try {
+            $Prod_Provs->delete();
+
+            $response = [
+                    'success' => true,
+                    'message' => "Planeta esborrat",
+                    'data' => $Prod_Provs,
+                ];
+            
+            return response()->json($response,200);
+        }
+        catch(\Exception $e) {
+            $response = [
+                    'success' => false,
+                    'message' => "Error esborrant planeta",                    
+                ];
+            
+            return response()->json($response,400);
+
+        }
     }
 }

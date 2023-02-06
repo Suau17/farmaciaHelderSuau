@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Resources\TreballadorResource as TreballadorResource;
 
+
 class TreballadorController extends Controller
 {
    //

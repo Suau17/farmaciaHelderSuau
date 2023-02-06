@@ -51,6 +51,8 @@ class ClientController extends Controller
     public function create()
     {
         //
+        return view('client/index');
+
     }
 
     /**
@@ -62,6 +64,46 @@ class ClientController extends Controller
     public function store(Request $request)
     {
         //
+
+        // En $input guardem totes les dades que s'han enviat via POST
+        $input = $request->all();
+
+        // Creem un validador de les dades enviades, i li passem les regles
+        // que volem comprovar
+        $validator = Validator::make($input, [
+          'id' => 'required|max:25',
+          'dni' => 'required|numeric|min:0',
+          'nom' => 'required|max:20',
+          'genere' => 'required',
+          'tarja_sanitaria' => 'required|max:25',
+        ]);
+
+        // Si alguna dada no és correcta
+        if($validator->fails()){
+
+           $response = [
+             'success' => false,
+             'message' => "Alta incorrecta!",
+             'data' => $validator->errors(),
+           ];
+           // Retornem l'array convertit a JSON i el codi d'error 404 de
+           //  HTTTP
+           return response()->json($response, 404);     
+        }
+
+                
+        $Clients = Client::create($input);
+
+        // Responem a la crida amb un tot ok!
+        $response = [
+           'success' => true,
+           'data'    => $Clients,
+           'message' => "Alta correcta",
+
+        ];
+
+        return response()->json($response, 200);
+
         try {
 
             $testdni = preg_match('/^[0-9]{8,8}[A-Z]$/g',$request->dni);
@@ -100,6 +142,7 @@ class ClientController extends Controller
            ];
            return response()->json($response, 404);  
        }
+
     }
 
     /**
