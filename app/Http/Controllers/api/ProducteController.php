@@ -52,8 +52,8 @@ class ProducteController extends Controller
         // Creem un validador de les dades enviades, i li passem les regles
         // que volem comprovar
         $validator = Validator::make($input, [
-          'id' => 'required|max:25',
-          'nom' => 'required|numeric|min:0',
+         
+          'nom' => 'required|min:0',
           'tipus' => 'required|max:256',
         ]);
 
