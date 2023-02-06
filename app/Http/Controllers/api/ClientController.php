@@ -5,6 +5,9 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Client;
+use App\Http\Resources\ClientResource as ClientResource;
+
+use Validator;
 
 class ClientController extends Controller
 {
@@ -13,116 +16,223 @@ class ClientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function index()
+    {
+        //
+        try {
+            //code...
+        
+        $Clients= Client::all();
+        $Clients= Client::Paginate(10);
+        
+        $response = [
+            'success' => true, 
+            'message' => "Llista clients recuperada",
+            'data' => $Clients, 
+        ];
+  
+        return response()->json($response, 200);  
 
-     //Mostrar els clients emmagatzemats a la base de dades amb un màxim de 10 per pàgina
-     public function index()
-     {
-         $Clients= Client::all();
-          $Clients= Client::Paginate(10);
-         return view('Client.index',compact('Clients'));
-     }
- 
-     /**
-      * Show the form for creating a new resource.
-      *
-      * @return \Illuminate\Http\Response
-      */
- 
-     //Crear nous clients
-     public function create(){
-         return view('Client.new');
-     }
- 
-     /**
-      * Store a newly created resource in storage.
-      *
-      * @param  \Illuminate\Http\Request  $request
-      * @return \Illuminate\Http\Response
-      */
- 
-     //Emmagatzemar els clients creats
-     public function store(Request $request)
-     {
-         $request->validate(
-              [ 'dni' => 'required | min:9 | max:9',
-              'nom' => 'required | min:3 | max:20' ,
-              'tarja_sanitaria' => 'required | min:14 | max:14']
-          );
+    } catch (\Throwable $th) {
+        $response = [
+            'success' => false, 
+            'message' => "Error al buscar todos los clientes",
+            'data' => $th, 
+        ];
+        return response()->json($response, 404);  
+    }    
+}   
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
+        try {
+
+            $testdni = preg_match('/^[0-9]{8,8}[A-Z]$/g',$request->dni);
+            $testtarja = preg_match('/^[0-9]{14,14}[A-Z]$/g',$request->tarja_sanitaria);
+            $validator = Validator::make($input, [
+                'nom' => 'required | min:3 | max:20' ,
+           ]);
+           if($validator->fails() || !$testdni){
+               $response = [
+                   'success' => true, 
+                   'message' => "errors de validacio",
+                   'data' => $validator->errors()->all(), 
+               ];
          
-         echo $request->name;
-         $Clients = new Client;
-         $Clients->dni = $request->dni;
-         $Clients->nom = $request->nom;
-         $Clients->genere = $request->genere;
-         $Clients->tarja_sanitaria = $request->tarja_sanitaria;
-         $Clients->save();
-         return redirect('/Client');
-     }
- 
-     /**
-      * Display the specified resource.
-      *
-      * @param  int  $id
-      * @return \Illuminate\Http\Response
-      */
-     public function show($id)
-     {
-         //
-     }
- 
-     /**
-      * Show the form for editing the specified resource.
-      *
-      * @param  int  $id
-      * @return \Illuminate\Http\Response
-      */
- 
-     //Editar els clients de la base de dades
-     public function edit($id)
-     {
-         $Clients = Client::findOrFail($id);
-         return view("Client.update",compact('Clients'));
-     }
- 
-     /**
-      * Update the specified resource in storage.
-      *
-      * @param  \Illuminate\Http\Request  $request
-      * @param  int  $id
-      * @return \Illuminate\Http\Response
-      */
- 
-     //Actualitzar informació dels clients de la base de dades
-     public function update(Request $request, $id)
-     {
-         $request->validate(
-             [ 'dni' => 'required | min:9 | max:9',
+               return response()->json($response, 404); 
+           }            
+           
+           $Clients = new Client;
+           $Clients->dni = $request->dni;
+           $Clients->nom = $request->nom;
+           $Clients->genere = $request->genere;
+           $Clients->tarja_sanitaria = $request->tarja_sanitaria;
+           $Clients->save();
+           $response = [
+               'success' => true, 
+               'message' => "Informacion Trabajador recuperada",
+               'data' => $Clients, 
+           ];
+           return response()->json($response, 200);  
+   
+       } catch (\Throwable $th) {
+           $response = [
+               'success' => false, 
+               'message' => "Error al crear el cliente",
+               'data' => $th, 
+           ];
+           return response()->json($response, 404);  
+       }
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+        $Clients = Client::find($id);
+
+        // No s'ha trobat el client 
+        if($Clients==null) {
+            $response = [
+              'success' => false,
+              'message' => "Client no trobat",    
+            ];
+            return response()->json($response, 404); 
+
+        }
+        else { // El producte s'ha trobat
+
+            $response = [
+              'success' => true,
+              'data'    => $Clients,
+              'message' => "Client recuperat",
+            ];
+            return response()->json($response, 200);
+        }
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+        $testDni =  preg_match('/^[0-9]{8,8}[A-Za-z]$/g',$request->dni);
+        $testtarja = preg_match('/^[0-9]{14,14}[A-Z]$/g',$request->tarja_sanitaria);
+        $validator = Validator::make($input, [
              'nom' => 'required | min:3 | max:20' ,
-             'tarja_sanitaria' => 'required | min:14 | max:14']
-         );
-         
-         $Clients = Client::findOrFail($id);
-         $Clients->dni = $request->dni;
-         $Clients->nom = $request->nom;
-         $Clients->genere = $request->genere;
-         $Clients->tarja_sanitaria = $request->tarja_sanitaria;
-         $Clients->save();
-         return redirect('/Client');
-     }
- 
-     /**
-      * Remove the specified resource from storage.
-      *
-      * @param  int  $id
-      * @return \Illuminate\Http\Response
-      */
- 
-     //Eliminar clients de la base de dades
-     public function destroy($id)
-     {
-         $Clients = Client::findOrFail($id);
-         $Clients->delete();
-         return redirect('/Client');
-     }
+        ]);
+        if($validator->fails() || !$testDni){
+            $response = [
+                'success' => true, 
+                'message' => "errors de validacio",
+                'data' => $validator->errors()->all(), 
+            ];
+      
+            return response()->json($response, 404); 
+        }
+        try {
+            //code...
 
+        $Clients = Treballador::findOrFail($id);
+        $Clients->dni = $request->dni;
+        $Clients->nom = $request->nom;
+        $Clients->genere = $request->genere;
+        $Clients->tarja_sanitaria = $request->tarja_sanitaria;
+        $Clients->save();
+        
+        $response = [
+            'success' => true, 
+            'message' => "Informacion Trabajador actualizada con exito",
+            'data' => $Treballador, 
+        ];
+  
+        return response()->json($response, 200); 
+    } catch (\Throwable $th) {
+        $response = [
+            'success' => false, 
+            'message' => "Error al actualizar el cliente",
+            'data' => $th, 
+        ];
+        return response()->json($response, 404);  
+    }
+        
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
+                // Eliminem el client segons el codi que ens passin
+
+        // El busquem a la BD
+        $Clients = Client::find($id);
+
+        // Si no trobem el client responem amb informació
+        // sobre l'error
+        if($Clients==null) {
+            $Clients = [
+            'success' => false,
+            'message' => "Client no trobat",            
+            ];
+            return response()->json($response, 404); 
+
+        }
+        else { // El client l'hem trobat
+
+            // posar dins try-catch en cas de haver-hi relacions clau forana!!
+            $Clients->delete();
+
+            $response = [
+            'success' => true,
+            'data'    => $Clients,
+            'message' => "Client esborrat",
+            ];
+
+            return response()->json($response, 200);
+        }
+    }
 }
