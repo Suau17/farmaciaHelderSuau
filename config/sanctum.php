@@ -45,7 +45,7 @@ return [
     | not expire. This won't tweak the lifetime of first-party sessions.
     |
     */
-
+    // cambiar la expiracion del token
     'expiration' => null,
 
     /*

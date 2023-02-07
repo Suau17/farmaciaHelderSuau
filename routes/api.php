@@ -20,6 +20,9 @@ use App\Http\Controllers\api\ClientController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('producte/save',[ProducteController::class,'store']); 
+
 Route::resource('client', ClientController::class);
 Route::resource('producte', ProducteController::class);
 //cositas

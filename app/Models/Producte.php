@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+//haspiToken para los token de laravel
 class Producte extends Model
 {
     use HasFactory;

@@ -2,10 +2,18 @@
 
 use Illuminate\Support\Facades\Route;
 //IMPORTANTE PONER LOS CONTROLLERS
-use App\Http\Controllers\ClientController;
-use App\Http\Controllers\TreballadorController;
-use App\Http\Controllers\ProducteController;
-use App\Http\Controllers\ProveidorController;
+// use App\Http\Controllers\ClientController;
+// use App\Http\Controllers\TreballadorController;
+// use App\Http\Controllers\ProducteController;
+// use App\Http\Controllers\ProveidorController;
+
+
+use Illuminate\Http\Request;
+
+use App\Http\Controllers\api\ProducteController;
+use App\Http\Controllers\api\ProveidorController;
+use App\Http\Controllers\api\Prod_ProvController;
+use App\Http\Controllers\api\ClientController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +39,11 @@ Route::get('/', function () {
     return view('plantilla');
 })->name('plantilla');
 
+Route::get('/producte/create2', function () {
+    return view('Producte/index2');
+});
+
+
 });
 
 //Producte
@@ -39,7 +52,7 @@ Route::get('/Producte',[ProducteController::class,'index']);
 
 Route::get('/Producte/formnew',[ProducteController::class,'create']);
 
-Route::post('/Producte/save',[ProducteController::class,'store']);
+
 
 Route::get('/Producte/delete/{id}',[ProducteController::class,'destroy']);
 
@@ -97,5 +110,10 @@ Route::post('/Proveidor/update/{id}',[ProveidorController::class,'update']);
 Route::get('/Proveidor/show/{id}',[ProveidorController::class,'show']);
 
 //middleware
+
+
+
+//vista api 
+Route::get('/api/producte/create');
 });
 
