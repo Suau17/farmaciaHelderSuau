@@ -10,6 +10,7 @@
     <title>Producte</title>
 </head>
 <body>
+    <h1>hola</h1>
     <div >
         <input type="text" name="producteNom" id="producteNom">
         <input type="text" name="producteTipus" id="producteTipus">
@@ -68,7 +69,47 @@
 		saveProducte();
 	}
 
- 
+
+    async function updateProducte(event){
+        var newProducte = {
+            "nom": producteNom.value,
+            "tipus": producteTipus.value
+        }
+        try {
+			const response = await fetch(url+'/'+selectedId,
+					{
+						method: 'PUT',
+						headers: {
+							'Content-type': 'application/json',
+							'Accept': 'application/json'
+						},
+						body: JSON.stringify(newProducte) //   "{ 'name' : 'mart'}"
+					}
+			)
+			
+			const data = await response.json();
+            console.log(data);
+			if(response.ok) {
+				//afegirFila(data.data)
+				
+				const nameid = document.getElementById('nom'+data.data.id)
+                const nameTip = document.getElementById('tipus'+data.data.id)
+				const rowid = document.getElementById(data.data.id)
+				nameid.innerHTML = data.data.name;
+				rowid.setAttribute('nom',data.data.name);
+				producteNom.value = "";
+				operation = "inserting";
+			}
+			else {
+				showErrors(data.data)
+			}
+		} 
+		catch(error) {
+			errors.innerHTML = "S'ha produit un error inesperat"
+			operation = "inserting";
+		}
+    }
+
     async function saveProducte(event){
 
         var newProducte = {
@@ -97,6 +138,39 @@
         } catch(error) {
 			errors.innerHTML = "S'ha produit un error inesperat"
 		}
+    }
+
+
+    function afegirFila(row){
+        const rowElement = document.createElement("tr");
+        rowElement.setAttribute('id',row.id);
+        rowElement.setAtribute('nom',row.nom);
+        rowElement.setAtribute('tipus',row.tipus);
+
+        const idCell = document.createElement("td");
+        idCell.textContent = row.id;
+        
+        const nomCell = document.createElement("td");
+        nomCell.setAttribute('nom','tipus'+row.id);
+        nomCell.textContent = row.nom;
+        nomCell.textContent = row.tipus;
+
+        const operaciones = document.createElement("td");
+        const deletButton = document.createElement("button");
+        deletButton.innerHTML = "esborrar";
+        deleteButton.addEventListener('click',deletProducte);
+        operaciones.appendChild(deletButton);
+
+        const updateButton = document.createElement("button");
+        updateButton.innerHTML = "Actualizar";
+        updateButton.addEventListener('click',function(event){editProducte(event, row)});
+        operaciones.appendChild(updateButton);
+
+        rowElement.appendChild(idCell);
+        rowElement.appendChild(nomCell);
+        rowElement.appendChild(operaciones);
+
+        taula.appendChild(rowElement);
     }
 
 
