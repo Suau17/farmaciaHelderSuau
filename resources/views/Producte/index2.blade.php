@@ -50,6 +50,7 @@
     console.log(saveButton)
 
     const url = 'http://localhost:8000/api/producte/save';
+    const urlGetProductes =  'http://localhost:8000/api/producte/index'
 
     function showErrors(errors) {
 		
@@ -65,10 +66,29 @@
 	}
 
     function onSave(event) {
-		console.log("ei!!!")
+		console.log("ei!!!");
 		saveProducte();
+        if(operation=="editing")updateProducte();
+        getProductes();
 	}
 
+    async function getProductes(){
+        try{
+        const response = await fetch(urlGetProductes+'/'+selectId,
+					{
+						method: 'GET',
+						headers: {
+							'Content-type': 'application/json',
+							'Accept': 'application/json'
+						},
+						
+					}
+			)
+            console.log(response);
+                }catch(e){
+                    console.log(e);
+                }
+    }
 
     async function updateProducte(event){
         var newProducte = {
@@ -76,16 +96,7 @@
             "tipus": producteTipus.value
         }
         try {
-			const response = await fetch(url+'/'+selectedId,
-					{
-						method: 'PUT',
-						headers: {
-							'Content-type': 'application/json',
-							'Accept': 'application/json'
-						},
-						body: JSON.stringify(newProducte) //   "{ 'name' : 'mart'}"
-					}
-			)
+			
 			
 			const data = await response.json();
             console.log(data);
