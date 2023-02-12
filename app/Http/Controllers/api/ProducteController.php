@@ -19,7 +19,7 @@ class ProducteController extends Controller
         //
         $Productes= Producte::all();
          $Productes= Producte::Paginate(10);
-        // return view('Producte.index',compact('Productes'));
+        // return viebw('Producte.index',compact('Productes'));
         $response = [
             'success' => true,  // Per indicar que Tot ha anat bé
           'message' => "Llista productes recuperada", // missatge
