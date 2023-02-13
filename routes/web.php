@@ -43,6 +43,10 @@ Route::get('/producte/create2', function () {
     return view('Producte/index2');
 });
 
+Route::get('/client/create2', function(){
+    return view('Client/index2');
+});
+
 
 });
 
