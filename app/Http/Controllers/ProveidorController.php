@@ -20,8 +20,8 @@ class ProveidorController extends Controller
     public function index()
     {
          //$Proveidors= Proveidor::all();
-          $Proveidors= Proveidor::Paginate(10);
-        return view('Proveidor.index',compact('Proveidors'));
+         // $Proveidors= Proveidor::paginate(10);
+        return view('Proveidor.index');
     }
 
     /**

@@ -1,33 +1,42 @@
 @extends('plantilla')
 @section('content')
-<h1>Proveidors</h1>
-<a href="/Proveidor/formnew">Afegir Proveidor</a>
-<table border=1 class ="table">
-<thead class="thead-dark">
-    <tr>
-        <td>id</td>
-        <td>Nom</td>
-        <td>Pais</td>
-        <td>Producte</td>
-        
-    </tr>
-    </thead>
-    <tbody>
-    @foreach($Proveidors as $proveidor)
-        <tr>
-            <td>{{ $proveidor->id }}</td>
-            <td>{{ $proveidor->nomE }}</td>
-            <td>{{ $proveidor->pais }}</td>
-            <td> <a href="/Proveidor/show/{{ $proveidor->id }}"><button type="button" class="btn btn-primary">Mostrar</button></a></td>
-            <td>
-                
-                <a href="/Proveidor/delete/{{ $proveidor->id }}"><button type="button" class="btn btn-danger">Delete</button></a>
-                <a href="/Proveidor/update/{{ $proveidor->id }}"><button type="button" class="btn btn-primary">Update</button></a>
-               
-            </td>
-        </tr>
-    @endforeach
-</tbody>
-</table>
-{{ $Proveidors->links('pagination::bootstrap-4') }}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Producte</title>
+</head>
+
+<body>
+    <h1>CRUD PRODUCTOS</h1>
+    <div>
+        <input type="text" name="producteNom" id="producteNom">
+        <input type="text" name="producteTipus" id="producteTipus">
+        <button id="saveButton">save</button>
+    </div>
+    <div id="resposta" role="alert"></div>
+    <div id="errors" role="alert"></div>
+    <button onClick="getProducte()">Mostrar Productos</button>
+    <table>
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>nom</th>
+                <th>tipus</th>
+                <th>Operacions</th>
+            </tr>
+        </thead>
+        <tbody id="taula">
+
+        </tbody>
+    </table>
+
+    </form>
+</body>
+
+</html>
 @endsection
