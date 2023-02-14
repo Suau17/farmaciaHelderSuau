@@ -28,7 +28,7 @@
                         <a class="nav-link" href="{{ url('/Treballador') }}">Treballador</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " href="{{ url('/Proveidor') }}">Proveidor</a>
+                        <a class="nav-link " href="{{url('/Proveidor/get')}}">Proveidor</a>
                     </li>
                 @endif
                 <li class="nav-item">

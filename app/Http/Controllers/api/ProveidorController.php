@@ -18,7 +18,7 @@ class ProveidorController extends Controller
     public function index()
     {
         //
-        $Proveidors = Proveidor::all(['id','name']);
+        $Proveidors= Proveidor::all();
 
         $response = [
             'success' => true,
@@ -52,8 +52,7 @@ class ProveidorController extends Controller
         $input = $request->all();
         $validator = Validator::make($input,
             [ 
-                'name'=>'required|min:3|max:10',
-
+                'nomE'=>'required|min:3|max:20',
             ]
         );
 
