@@ -34,12 +34,19 @@
 
         </tbody>
     </table>
+    <nav class = "mt-2">
+        <ul id = 'pagination' class = 'pagination'>
+
+        </ul>
+    </nav>
 
     </form>
 </body>
 
 </html>
 <script type="text/javascript">
+
+    const pagination = document.getElementById('pagination');
     var rows = [];
 
     var operation = "interesting";
@@ -88,6 +95,9 @@
                 }
             });
             const data = await response.json();
+
+            
+
             if (response.ok) {
                 console.log('asdasda')
                 data.data.data.forEach(element => {
@@ -101,8 +111,10 @@
                             getProducte()
                         });
                     }
-                });
 
+                    
+                });
+                
             } else {
                 showErrors(data.data)
             }
@@ -264,6 +276,55 @@
         // rowElement.appendChild(operaciones);
 
         // taula.appendChild(rowElement);
+    }
+
+    function afegirBoto(link){
+        const pagLi = document.createElement("li");
+        pagLi.classList.add('page-item');
+
+        const pagAnchor = document.createElement("a");
+        pagAnchor.innerHTML = link.label;
+        pagAnchor.addEventListener('click', function(event) {paginate(link.url)});
+        pagAnchor.classList.add('page-link');
+        pagAnchor.setAttribute('href', "#");
+
+        pagLi.appendChild(pagAnchor);
+        pagination.appendChild(pagLi);
+    }
+
+    async function loadIntoTable(url){
+        try{
+
+            const response = await fetch(url);
+			const json = await response.json();
+			rows = json.data.data;
+			
+			var i =0
+			for(const row of rows) {				
+				afegirFila(row)
+			}
+
+            const links = json.data.links;
+            console.log(links)
+            afegirLinks(links)
+		}
+		catch(error) {
+			errors.innerHTML = "No es pot accedir a la base de dades"
+		}
+        
+    }
+
+    function paginate(url){
+        pagination.innerHTML = "";
+        taula.innerHTML = "";
+        loadIntoTable(url);
+    }
+
+    function agefirLinks(links){
+        console.log(links)
+        for (const link of links){
+            afegirBoto(link)
+        }
     }
 </script>
 @endsection
