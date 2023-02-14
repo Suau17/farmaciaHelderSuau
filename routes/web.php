@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
 use App\Http\Controllers\api\ProducteController;
-use App\Http\Controllers\api\ProveidorController;
+use App\Http\Controllers\ProveidorController;
 use App\Http\Controllers\api\Prod_ProvController;
 use App\Http\Controllers\api\ClientController;
 
@@ -41,6 +41,10 @@ Route::get('/', function () {
 
 Route::get('/producte/create2', function () {
     return view('Producte/index2');
+});
+
+Route::get('/client/create2', function(){
+    return view('Client/index2');
 });
 
 
