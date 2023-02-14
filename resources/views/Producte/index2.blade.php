@@ -104,14 +104,9 @@
                         });
                         
                     }
-                    for(let button of buttons2){
-                        
-                        updateButton.addEventListener('click', function(event) {
-                        editProducte(row)});
-                    }
-                });
+                 
 
-            } else {
+             else {
                 showErrors(data.data)
             }
         } catch (error) {
