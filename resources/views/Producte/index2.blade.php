@@ -100,7 +100,9 @@
 
             if (response.ok) {
                 console.log('asdasda')
-                data.data.data.forEach(element => {
+                let links = data.data.links;
+                loadIntoTable(urlGetProductes);
+                /*data.data.data.forEach(element => {
                     afegirFila(element)
                     const buttons = document.querySelectorAll('button[id^="delete-"]');
                     for (let button of buttons) {
@@ -114,7 +116,7 @@
 
                     
                 });
-                
+                */
             } else {
                 showErrors(data.data)
             }
@@ -292,6 +294,15 @@
         pagination.appendChild(pagLi);
     }
 
+    function afegirLinks(links){
+        console.log("has entrat")
+        for (const link of links){
+            
+            afegirBoto(link)
+            
+        }
+    }
+
     async function loadIntoTable(url){
         try{
 
@@ -305,6 +316,7 @@
 			}
 
             const links = json.data.links;
+            
             console.log(links)
             afegirLinks(links)
 		}
@@ -320,11 +332,6 @@
         loadIntoTable(url);
     }
 
-    function agefirLinks(links){
-        console.log(links)
-        for (const link of links){
-            afegirBoto(link)
-        }
-    }
+
 </script>
 @endsection
