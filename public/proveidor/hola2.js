@@ -1,8 +1,6 @@
 var rows = [];
-var { imprime } = '/';
 var selectId;
 var update = false;
-
 // obtener html
 const table = document.getElementById('taula');
 const divErrors = document.getElementById("errors");
