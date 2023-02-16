@@ -30,6 +30,9 @@ Route::put('producte/update',[ProducteController::class,'update']);
 Route::resource('client', ClientController::class);
 Route::resource('producte', ProducteController::class);
 //cositas
-Route::resource('proveidor', ProveidorController::class);
-Route::resource('prod_prov', Prod_ProvController::class);
+Route::get('proveidor', [ProveidorController::class,'index']);
+Route::post('proveidor/save', [ProveidorController::class,'store']);
+Route::delete('proveidor/delete/{id}', [ProveidorController::class,'destroy']);
+Route::put('proveidor/update/{id}', [ProveidorController::class,'update']);
+
 
