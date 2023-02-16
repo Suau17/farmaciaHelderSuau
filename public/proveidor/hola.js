@@ -8,8 +8,6 @@ const table = document.getElementById('taula');
 const divErrors = document.getElementById("errors");
 divErrors.style.display = "none";
 const proveidorNom = document.getElementById("inputNom");
-const tdNom = document.getElementById('tdNom');
-const tdPais = document.getElementById('tdPais')
 const proveidorPais = document.getElementById("inputPais");
 const saveButton = document.getElementById('saveButton')
 saveButton.addEventListener('click', onSave)
@@ -55,7 +53,7 @@ function afegirFila(row) {
     <td id='tdNom'>${row.nomE}</td>
     <td id='tdPais'>${row.pais}</td>
     <td><button id='delete-${row.id}'>Eliminar</button></td>
-    <td><button id='update-${row.id}'>Actualizar</button></td>
+    <td><button id='update-${row.id}-${row.nomE}-${row.pais}'>Actualizar</button></td>
     </tr>
     `
 }
@@ -89,7 +87,9 @@ async function getProducte() {
 
                     button.addEventListener("click", function () {
                         const id = this.id.split("-")[1];
-                        updateHTML(id, element.nomE, element.pais)
+                        const nomE = this.id.split("-")[2];
+                        const pais = this.id.split("-")[3];
+                        updateHTML(id, nomE,pais)
                     });
                 }
             });
@@ -139,7 +139,7 @@ async function saveProducte(event) {
 }
 
 function updateHTML(id, nomE, pais) {
-    console.log('dafaf')
+    console.log(id, nomE, pais)
     update = id
     proveidorNom.value = nomE
     proveidorPais.value = pais
