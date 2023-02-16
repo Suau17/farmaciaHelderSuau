@@ -12,7 +12,6 @@ class Proveidor extends Model
         'id',
         'nomE',
         'pais',
-        
     ];
     // public function Proveidor(){
     //     return $this->belongsTo(Proveidor::class);
