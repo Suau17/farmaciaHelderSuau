@@ -151,15 +151,9 @@ class ProducteController extends Controller
 
         $Productes->save();
         $response = [
-<<<<<<< HEAD
-                'success' => true,
-                'message' => "Producte actualitzat correctament",
-                'data' => $Productes,
-=======
             'success' => true,
             'message' => "Proveidors trobat",
             'data' => $Productes,
->>>>>>> dccf18d (productesAcabado menos paginate)
         ];
         return response()->json($response,200);
     }
