@@ -99,7 +99,7 @@ Route::post('/Treballador/update/{id}',[TreballadorController::class,'update']);
 
 //Proveidor
 
-Route::get('/Proveidor',[ProveidorController::class,'index']);
+Route::get('/Proveidor/get',[ProveidorController::class,'index']);
 
 Route::get('/Proveidor/formnew',[ProveidorController::class,'create']);
 
