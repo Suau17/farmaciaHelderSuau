@@ -36,8 +36,8 @@ Route::get('plantilla', function () {
 Route::group(['middleware'=>['auth']], function() {
 
 Route::get('/', function () {
-    return view('plantilla');
-})->name('plantilla');
+    return view('welcome');
+})->name('welcome');
 
 Route::get('/producte/create2', function () {
     return view('Producte/index2');

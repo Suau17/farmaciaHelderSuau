@@ -8,11 +8,15 @@
 </script>
 @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
-
+<style>
+    li a{
+        color: white;
+    }
+</style>
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #6cc475;">
-        <a class="navbar-brand" href="#">FARMACIA</a>
+        <a class="navbar-brand" href="#" style="color:white"><b>FARMACIA HGM</b></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -22,39 +26,39 @@
             <ul class="navbar-nav mr-auto">
                 @if (auth()->user()->role == 'admin')
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route('client.index')}}">Client</a>
+                        <a class="nav-link" href="{{route('client.index')}}" style="color:white">Client</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/Treballador') }}">Treballador</a>
+                        <a class="nav-link" href="{{ url('/Treballador') }}" style="color:white">Treballador</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " href="{{url('/Proveidor/get')}}">Proveidor</a>
+                        <a class="nav-link " href="{{url('/Proveidor/get')}}" style="color:white">Proveidor</a>
                     </li>
                 @endif
                 <li class="nav-item">
-                    <a class="nav-link " href="{{ url('/Producte') }}">Producte</a>
+                    <a class="nav-link " href="{{ url('/Producte') }}" style="color:white">Producte</a>
                 </li>
                 @guest
                 @if (Route::has('login'))
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                        <a class="nav-link" href="{{ route('login') }}" style="color:white">{{ __('Login') }}</a>
                     </li>
                 @endif
         
                 @if (Route::has('register'))
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                        <a class="nav-link" href="{{ route('register') }}" style="color:white">{{ __('Register') }}</a>
                     </li>
                 @endif
             @else
                 <li class="nav-item dropdown" >
-                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" style="color:white"
                         aria-haspopup="true" aria-expanded="false" v-pre>
                         {{ Auth::user()->name }}
                     </a>
         
                     <div class="dropdown-menu dropdown-menu-end" style="background-color: #a5e6ac;" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{ route('logout') }}"
+                        <a class="dropdown-item" href="{{ route('logout') }}" 
                             onclick="event.preventDefault();
                                      document.getElementById('logout-form').submit();">
                             {{ __('Logout') }}
