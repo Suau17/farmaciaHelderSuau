@@ -1,13 +1,15 @@
 var rows = [];
-var {imprime} = '/;
+var {imprime} = '/';
 var selectId;
-
+var update = false;
 
 // obtener html
 const table = document.getElementById('taula');
 const divErrors = document.getElementById("errors");
 divErrors.style.display = "none";
 const proveidorNom = document.getElementById("inputNom");
+const tdNom = document.getElementById('tdNom');
+const tdPais = document.getElementById('tdPais')
 const proveidorPais = document.getElementById("inputPais");
 const saveButton = document.getElementById('saveButton')
 saveButton.addEventListener('click', onSave)
@@ -16,8 +18,8 @@ saveButton.addEventListener('click', onSave)
 const Url = {
     get: 'http://localhost:8000/api/proveidor/',
     save: 'http://localhost:8000/api/proveidor/save',
-    update: '',
-    delete: '',
+    update: 'http://localhost:8000/api/proveidor/update',
+    delete: 'http://localhost:8000/api/proveidor/delete',
 }
 
 function showErrors(errors) {
@@ -34,7 +36,14 @@ function showErrors(errors) {
 }
 
 function onSave(event) {
-    saveProducte();
+    console.log(update)
+    if(update === false){
+        saveProducte();
+    } 
+    if(update != false){
+        updateProducte(update)
+    }
+  
 }
 
 function afegirFila(row) {
@@ -43,9 +52,10 @@ function afegirFila(row) {
     taula.innerHTML += `
     <tr>
     <td id='${row.id}'>${row.id}</td>
-    <td>${row.nomE}</td>
-    <td>${row.pais}</td>
+    <td id='tdNom'>${row.nomE}</td>
+    <td id='tdPais'>${row.pais}</td>
     <td><button id='delete-${row.id}'>Eliminar</button></td>
+    <td><button id='update-${row.id}'>Actualizar</button></td>
     </tr>
     `
 }
@@ -66,11 +76,21 @@ async function getProducte() {
             data.data.forEach(element => {
                 afegirFila(element)
                 const buttons = document.querySelectorAll('button[id^="delete-"]');
+                const buttonsUpdate = document.querySelectorAll('button[id^="update-"]');
                 for (let button of buttons) {
 
                     button.addEventListener("click", function() {
                         const id = this.id.split("-")[1];
                         deleteProducte(id)
+                        getProducte()
+                    });
+                }
+                for (let button of buttonsUpdate) {
+
+                    button.addEventListener("click", function() {
+                        const id = this.id.split("-")[1];
+                        updateHTML(id,element.nomE, element.pais)
+                   //     updateProducte(id)
                         getProducte()
                     });
                 }
@@ -120,33 +140,34 @@ async function saveProducte(event) {
     }
 }
 
-async function updateProducte(event) {
-    var newProducte = {
-        "nom": producteNom.value,
-        "tipus": producteTipus.value
+function updateHTML(id,nomE,pais){
+console.log('dafaf')
+update = id
+proveidorNom.value = nomE
+proveidorPais.value = pais
+}
+
+async function updateProducte(id) {
+    update = false
+    var updateProducte = {
+        "nomE": proveidorNom.value,
+        "pais": proveidorPais.value
     }
+    console.log(updateProducte)
     try {
-        const response = await fetch(url + '/' + selectedId, {
+        const response = await fetch(Url.update + '/' + id, {
             method: 'PUT',
             headers: {
                 'Content-type': 'application/json',
                 'Accept': 'application/json'
             },
-            body: JSON.stringify(newProducte) //   "{ 'name' : 'mart'}"
+            body: JSON.stringify(updateProducte) //   "{ 'name' : 'mart'}"
         })
 
         const data = await response.json();
-        console.log(data);
         if (response.ok) {
             //afegirFila(data.data)
-
-            const nameid = document.getElementById('nom' + data.data.id)
-            const nameTip = document.getElementById('tipus' + data.data.id)
-            const rowid = document.getElementById(data.data.id)
-            nameid.innerHTML = data.data.name;
-            rowid.setAttribute('nom', data.data.name);
-            producteNom.value = "";
-            operation = "inserting";
+            getProducte()
         } else {
             showErrors(data.data)
         }
@@ -160,12 +181,8 @@ async function deleteProducte(id) {
     let respostaDIV = document.getElementById('resposta')
     respostaDIV.innerHTML = "";
     respostaDIV.className = "alert alert-danger"
-    var newProducte = {
-        "id": producteNom.value,
-        "tipus": producteTipus.value
-    }
     try {
-        const response = await fetch(urlDelete+ '/' + id, {
+        const response = await fetch(Url.delete+ '/' + id, {
             method: 'DELETE',
             headers: {
                 'Content-type': 'application/json',
