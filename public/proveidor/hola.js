@@ -1,5 +1,5 @@
 var rows = [];
-var {imprime} = '/';
+var { imprime } = '/';
 var selectId;
 var update = false;
 
@@ -37,13 +37,13 @@ function showErrors(errors) {
 
 function onSave(event) {
     console.log(update)
-    if(update === false){
+    if (update === false) {
         saveProducte();
-    } 
-    if(update != false){
+    }
+    if (update != false) {
         updateProducte(update)
     }
-  
+
 }
 
 function afegirFila(row) {
@@ -63,7 +63,7 @@ function afegirFila(row) {
 async function getProducte() {
     try {
         let taula = document.getElementById('taula')
-    taula.innerHTML = ``;
+        taula.innerHTML = ``;
         const response = await fetch(Url.get, {
             method: 'GET',
             headers: {
@@ -79,7 +79,7 @@ async function getProducte() {
                 const buttonsUpdate = document.querySelectorAll('button[id^="update-"]');
                 for (let button of buttons) {
 
-                    button.addEventListener("click", function() {
+                    button.addEventListener("click", function () {
                         const id = this.id.split("-")[1];
                         deleteProducte(id)
                         getProducte()
@@ -87,11 +87,9 @@ async function getProducte() {
                 }
                 for (let button of buttonsUpdate) {
 
-                    button.addEventListener("click", function() {
+                    button.addEventListener("click", function () {
                         const id = this.id.split("-")[1];
-                        updateHTML(id,element.nomE, element.pais)
-                   //     updateProducte(id)
-                        getProducte()
+                        updateHTML(id, element.nomE, element.pais)
                     });
                 }
             });
@@ -140,11 +138,11 @@ async function saveProducte(event) {
     }
 }
 
-function updateHTML(id,nomE,pais){
-console.log('dafaf')
-update = id
-proveidorNom.value = nomE
-proveidorPais.value = pais
+function updateHTML(id, nomE, pais) {
+    console.log('dafaf')
+    update = id
+    proveidorNom.value = nomE
+    proveidorPais.value = pais
 }
 
 async function updateProducte(id) {
@@ -165,6 +163,8 @@ async function updateProducte(id) {
         })
 
         const data = await response.json();
+        proveidorNom.value = ""
+        proveidorPais.value = ""
         if (response.ok) {
             //afegirFila(data.data)
             getProducte()
@@ -182,13 +182,13 @@ async function deleteProducte(id) {
     respostaDIV.innerHTML = "";
     respostaDIV.className = "alert alert-danger"
     try {
-        const response = await fetch(Url.delete+ '/' + id, {
+        const response = await fetch(Url.delete + '/' + id, {
             method: 'DELETE',
             headers: {
                 'Content-type': 'application/json',
                 'Accept': 'application/json'
             },
-            
+
         })
         const data = await response.json();
         if (response.ok) {
