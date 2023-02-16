@@ -258,16 +258,12 @@ function afegirLinks(links){
 
 async function loadIntoTable(url){
     try{
-
         const response = await fetch(url);
         const json = await response.json();
-        rows = json.data.data;
-        
-        var i =0
+        rows = json.data.data;       
+        let i =0
         for(const row of rows) {				
-            afegirFila(row)
-                
-                
+            afegirFila(row)       
                 const buttons = document.querySelectorAll('button[id^="delete-"]');
                 for (let button of buttons) {
 
@@ -275,14 +271,9 @@ async function loadIntoTable(url){
                         const id = this.id.split("-")[1];
                         deleteProducte(id)
                     });
-                }
-
-                
-            
+                }           
         }
-
         const links = json.data.links;
-        
         console.log(links)
         afegirLinks(links)
     }

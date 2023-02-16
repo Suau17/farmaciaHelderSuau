@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Proveidor;
 use App\Http\Resources\ProveidorResource as ProveidorResource;
+use App\Models\Producte;
 use Validator;
 
 class ProveidorController extends Controller
@@ -19,6 +20,7 @@ class ProveidorController extends Controller
     {
         //
         $Proveidors= Proveidor::all();
+        $Proveidors= Proveidor::Paginate(10);
 
         $response = [
             'success' => true,
