@@ -50,8 +50,6 @@
 
 </html>
 
-<<<<<<< HEAD
-=======
     var operation = "inserting";
     var selectId;
 
@@ -317,5 +315,4 @@
 
    
 </script>
->>>>>>> c50e47e0b1459af9191a24a9313a89ceab47dc18
 @endsection
