@@ -11,14 +11,17 @@ divErrors.style.display = "none";
 
 const producteNom = document.getElementById("producteNom");
 const producteTipus = document.getElementById("producteTipus");
-const saveButton = document.getElementById('saveButton')
-saveButton.addEventListener('click', onSave)
-updateButton.addEventListener('click',update)
+const saveButton = document.getElementById('saveButton');
+saveButton.addEventListener('click', onSave);
+// updateButton.addEventListener('click',updateP);
+const inputNom = document.getElementById("producteNom");
+const inputTip = document.getElementById("producteTipus");
 console.log(saveButton)
 
 const url = 'http://localhost:8000/api/producte/save';
 const urlGetProductes = 'http://localhost:8000/api/producte/get';
 const urlDelete = 'http://localhost:8000/api/producte/delete';
+const urlUpdate = 'http://localhost:8000/api/producte/update'
 
 function showErrors(errors) {
 
@@ -36,11 +39,14 @@ function showErrors(errors) {
 function onSave(event) {
     console.log("ei!!!")
     saveProducte();
+    updateProducte();
     
 }
-// function update(event){
+// function updateP(event){
+//     console.log('eeeeeeeeei')
 //     updateProducte();
 // }
+
 
 async function getProducte() {
     try {
@@ -83,8 +89,13 @@ async function getProducte() {
     }
 }
 
-
+function añadirUp(producteNom,producteTipus){
+    console.log("isdvorbvo");
+     inputNom.value = producteNom;
+     inputTip.value = producteTipus;
+}
 async function updateProducte(event) {
+    console.log('has updateado');
     var newProducte = {
         "nom": producteNom.value,
         "tipus": producteTipus.value
@@ -103,12 +114,14 @@ async function updateProducte(event) {
         console.log(data);
         if (response.ok) {
             //afegirFila(data.data)
-
-            const nameid = document.getElementById('nom' + data.data.id)
-            const nameTip = document.getElementById('tipus' + data.data.id)
+            
+            const nameid = document.getElementById('producteNom' + data.data.id)
+            const nameTip = document.getElementById('producteTipus' + data.data.id)
             const rowid = document.getElementById(data.data.id)
-            nameid.innerHTML = data.data.name;
-            rowid.setAttribute('nom', data.data.name);
+            nameid.innerHTML = data.data.nom;
+            nameTip.innerHTML = data.data.tipus;
+            rowid.setAttribute('producteNom', data.data.nom)
+            rowid.setAttribute('producteTipus', data.data.tipus);
             producteNom.value = "";
             operation = "inserting";
         } else {
@@ -140,6 +153,8 @@ async function saveProducte(event) {
         const data = await response.json();
         if (response.ok) {
             console.log(data.data.nom)
+            producteNom.innerHTML = "";
+            producteTipus.innerHTML = "";
             respostaDIV.innerHTML = `Producte ${data.data.nom} Creat Correctament`
             setTimeout(() => {
                 respostaDIV.innerHTML = "";
@@ -199,10 +214,10 @@ function afegirFila(row) {
     taula.innerHTML += `
     <tr>
     <td id='${row.id}'>${row.id}</td>
-    <td>${row.nom}</td>
-    <td>${row.tipus}</td>
+    <td id="inputNom">${row.nom}</td>
+    <td id="inputTip">${row.tipus}</td>
     <td><button id='delete-${row.id}'>Eliminar</button></td>
-    <td><button id='update-${row.event}'>Update</button></td>
+    <td><button id='update-${row.id}'>Update</button></td>
     </tr>
     `
 
@@ -280,6 +295,15 @@ async function loadIntoTable(url){
                     button.addEventListener("click", function() {
                         const id = this.id.split("-")[1];
                         deleteProducte(id)
+                    });
+                }
+                const buttons2 = document.querySelectorAll('button[id^="update-"]');
+                for (let button of buttons2) {
+
+                    button.addEventListener("click", function() {
+                        const id = this.id.split("-")[1];
+                        añadirUp(inputNom,inputTip);
+                        // updateProducte(id)
                     });
                 }
 

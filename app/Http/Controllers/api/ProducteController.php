@@ -171,7 +171,7 @@ class ProducteController extends Controller
         // $planet->save();
         $response = [
                 'success' => true,
-                'message' => "Planeta actualitzat correctament",
+                'message' => "Producte actualitzat correctament",
                 'data' => $Productes,
         ];
         return response()->json($response,200);
