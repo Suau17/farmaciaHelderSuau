@@ -208,3 +208,48 @@ async function deleteProducte(id) {
         errors.innerHTML = "S'ha produit un error inesperat"
     }
 }
+async function loadIntoTable(url){
+    try{
+
+        const response = await fetch(url);
+        const json = await response.json();
+        rows = json.data.data;
+        
+        var i =0
+        for(const row of rows) {				
+            afegirFila(row)
+                
+                
+                const buttons = document.querySelectorAll('button[id^="delete-"]');
+                for (let button of buttons) {
+
+                    button.addEventListener("click", function() {
+                        const id = this.id.split("-")[1];
+                        deleteProducte(id)
+                    });
+                }
+                const buttons2 = document.querySelectorAll('button[id^="update-"]');
+                for (let button of buttons2) {
+
+                    button.addEventListener("click", function() {
+                        const id = this.id.split("-")[1];
+                        añadirUp(inputNom,inputTip);
+                        // updateProducte(id)
+                    });
+                }
+
+                
+            
+        }
+
+        const links = json.data.links;
+        
+        console.log(links)
+        afegirLinks(links)
+    }
+    catch(error) {
+        errors.innerHTML = "No es pot accedir a la base de dades"
+    }
+    
+}
+
