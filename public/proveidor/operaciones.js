@@ -171,6 +171,7 @@ async function deleteProducte(id) {
         const data = await response.json();
         if (response.ok) {
             console.log(data.data.nom)
+            paginate(Url.delete)
             respostaDIV.innerHTML = `Producte ${data.data.nom} eliminat Correctament`
             setTimeout(() => {
                 respostaDIV.innerHTML = "";
