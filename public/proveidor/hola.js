@@ -41,7 +41,6 @@ function onSave(event) {
     if (update != false) {
         updateProducte(update)
     }
-
 }
 
 function afegirFila(row) {
