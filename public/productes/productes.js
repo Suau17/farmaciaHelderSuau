@@ -120,8 +120,8 @@ async function updateProducte(event) {
             const rowid = document.getElementById(data.data.id)
             nameid.innerHTML = data.data.nom;
             nameTip.innerHTML = data.data.tipus;
-            rowid.setAttribute('producteNom', data.data.nom)
-            rowid.setAttribute('producteTipus', data.data.tipus);
+            rowid.setAttribute('nom', data.data.nom)
+            rowid.setAttribute('tipus', data.data.tipus);
             producteNom.value = "";
             operation = "inserting";
         } else {
