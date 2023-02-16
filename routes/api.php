@@ -21,17 +21,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-<<<<<<< HEAD
 //productos
 Route::post('producte/save',[ProducteController::class,'store']);
 Route::get('producte/get',[ProducteController::class,'index']);  
 Route::delete('producte/delete/{id}',[ProducteController::class,'destroy']); 
-Route::put('producte/update',[ProducteController::class,'update']);  
-=======
-Route::post('producte/save',[ProducteController::class,'store']); 
-Route::get('producte/index',[ProducteController::class,'index']); 
->>>>>>> a3c05e0 (api)
-
+Route::put('producte/update',[ProducteController::class,'update']);
 Route::resource('client', ClientController::class);
 Route::resource('producte', ProducteController::class);
 //cositas

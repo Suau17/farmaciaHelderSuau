@@ -53,7 +53,7 @@ class ProducteController extends Controller
         // que volem comprovar
         $validator = Validator::make($input, [
          
-          'nom' => 'required|min:0',
+          'nom' => 'required|min:3',
           'tipus' => 'required|max:256',
         ]);
 
@@ -63,7 +63,7 @@ class ProducteController extends Controller
            $response = [
              'success' => false,
              'message' => "Alta incorrecta!",
-             'data' => $validator->errors(),
+             'data' => $validator->errors()->all(),
            ];
            // Retornem l'array convertit a JSON i el codi d'error 404 de
            //  HTTTP
@@ -141,38 +141,25 @@ class ProducteController extends Controller
         if($Productes==null) {
             $response = [
                 'success' => false,
-                'message' => "Planeta no trobat",
+                'message' => "Producte no trobat",
                 'data' => [],
             ];        
             return response()->json($response,404);
-        }      
+        }   
+        $Productes->nom = $request->nom;
+        $Productes->tipus = $request->tipus;  
 
-        $input = $request->all();
-        $validator = Validator::make($input,
-            [ 
-                'name'=>'required|min:3|max:10',
-
-            ]
-        );
-
-        if($validator->fails()) {
-            $response = [
-                'success' => false,
-                'message' => "Errors de validació",
-                'data' => $validator->errors(),
-            ];
-            return response()->json($response,400);
-        }
-      
-        // versió 1
-        $Productes->update($input);
-        // versió 2
-        // $planet->name = $input->name;
-        // $planet->save();
+        $Productes->save();
         $response = [
+<<<<<<< HEAD
                 'success' => true,
                 'message' => "Producte actualitzat correctament",
                 'data' => $Productes,
+=======
+            'success' => true,
+            'message' => "Proveidors trobat",
+            'data' => $Productes,
+>>>>>>> dccf18d (productesAcabado menos paginate)
         ];
         return response()->json($response,200);
     }
