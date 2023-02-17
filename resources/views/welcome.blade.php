@@ -10,5 +10,7 @@
     <div class="card-footer">
     </div>
 </div>
-
+<footer>
+    s
+</footer>
 @endsection
