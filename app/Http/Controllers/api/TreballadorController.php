@@ -5,7 +5,7 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Resources\TreballadorResource as TreballadorResource;
-
+use Validator;
 
 class TreballadorController extends Controller
 {
@@ -20,28 +20,27 @@ class TreballadorController extends Controller
     //Mostrar fins a un màxim de 10 els treballadors de la farmàcia
     public function index()
     {
-        try {
-            //code...
+       
         
-        $Treballadors= Treballador::all();
-        $Treballadors= Treballador::Paginate(10);
+        $Treballador= Treballador::all();
+        $Treballador= Treballador::Paginate(10);
         
         $response = [
             'success' => true, 
             'message' => "Llista Treballadors recuperada",
-            'data' => $Treballadors, 
+            'data' => $Treballador, 
         ];
   
         return response()->json($response, 200);  
 
-    } catch (\Throwable $th) {
+    
         $response = [
             'success' => false, 
             'message' => "Error al buscar todos los trabajadores",
             'data' => $th, 
         ];
         return response()->json($response, 404);  
-    }       
+         
     }
 
     /**
@@ -66,6 +65,7 @@ class TreballadorController extends Controller
         $testDni =  preg_match('/^[0-9]{8,8}[A-Z]$/g',$request->dni);
         $validator = Validator::make($input, [
              'nom' => 'required | min:3 | max:20' ,
+            //poner valores
         ]);
         if($validator->fails() || !$testDni){
             $response = [

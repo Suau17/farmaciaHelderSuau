@@ -6,6 +6,7 @@ use App\Http\Controllers\api\ProducteController;
 use App\Http\Controllers\api\ProveidorController;
 use App\Http\Controllers\api\Prod_ProvController;
 use App\Http\Controllers\api\ClientController;
+use App\Http\Controllers\api\TreballadorController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -35,4 +36,9 @@ Route::post('proveidor/save', [ProveidorController::class,'store']);
 Route::delete('proveidor/delete/{id}', [ProveidorController::class,'destroy']);
 Route::put('proveidor/update/{id}', [ProveidorController::class,'update']);
 
+//treballadors
+route::get('treballador',[TreballadorController::class,'index']); 
+Route::post('treballador/save',[TreballadorController::class,'store']); 
+Route::delete('treballador/delete/{id}',[TreballadorController::class,'destroy']); 
+Route::put('treballador/update/{id}',[TreballadorController::class,'update']);
 

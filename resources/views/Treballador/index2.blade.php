@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Producte</title>
-    <script src="producte.js" defer>
+    <script src = "/treballador/treballador.js" defer>
 
     
 
@@ -36,11 +36,12 @@
 </head>
 
 <body>
-    <h1 >CRUD PRODUCTOS</h1>
+    <h1 >CRUD Treballador</h1>
     <div class="div2">
     <div>
-        <input type="text" name="producteNom" id="producteNom">
-        <input type="text" name="producteTipus" id="producteTipus">
+        <input type="text" name="dni" id="dni">
+        <input type="text" name="NomT" id="NomT">
+        <input type="text" name="genre" id="genre">
         <button id="saveButton">save</button>
     </div>
     <div id="resposta" role="alert"></div>
@@ -50,8 +51,9 @@
         <thead style="border: solid 1px;">
             <tr style="border: solid 1px;">
                 <th>id</th>
+                <th>DNI</th>
                 <th>nom</th>
-                <th>tipus</th>
+                <th>genre</th>
                 <th>Operacions</th>
             </tr>
         </thead>

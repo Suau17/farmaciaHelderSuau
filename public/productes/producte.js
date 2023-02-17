@@ -169,7 +169,7 @@ async function updateProducte(id){
             })
             const data = await response.json();
             if(response.ok){
-
+                paginate()
                 respostaDIV.innerHTML = `Producte ${data.data.nom} eliminat Correctament`
                 setTimeout(() => {
                     respostaDIV.innerHTML = "";

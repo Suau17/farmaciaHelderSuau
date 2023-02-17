@@ -47,6 +47,10 @@ Route::get('/client/create2', function(){
     return view('Client/index2');
 });
 
+ Route::get('/treballador/create2', function(){
+     return view('Treballador/index2');
+ });
+
 
 });
 
