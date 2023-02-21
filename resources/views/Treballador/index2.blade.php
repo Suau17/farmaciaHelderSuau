@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Producte</title>
-    <script src = "/treballador/treballador.js" defer>
+    <script src = "/treballador/treballadors.js" defer>
 
     
 
@@ -39,9 +39,9 @@
     <h1 >CRUD Treballador</h1>
     <div class="div2">
     <div>
-        <input type="text" name="dni" id="dni">
-        <input type="text" name="NomT" id="NomT">
-        <input type="text" name="genre" id="genre">
+        <input type="text" name="dniT" id="dniT">
+        <input type="text" name="nomT" id="nomT">
+        <input type="text" name="genreT" id="genreT">
         <button id="saveButton">save</button>
     </div>
     <div id="resposta" role="alert"></div>

@@ -12,12 +12,12 @@ const saveButton = document.getElementById('saveButton');
 saveButton.addEventListener('click', onSave)
 
 const Url = {
-    get: 'http://localhost:8000/api/producte/',
+    get: 'http://localhost:8000/api/producte',
     save: 'http://localhost:8000/api/producte/save',
     update: 'http://localhost:8000/api/producte/update',
     delete: 'http://localhost:8000/api/producte/delete',
 }
-
+console.log(Url.get)
 function showErrors(errors) {
 
     divErrors.style.display = "block"
@@ -67,8 +67,10 @@ async function getProducte(){
             }
         });
         const data = await response.json();
+        console.log(data)
+        console.log(response)
         if (response.ok) {
-            console.log('asdasda')
+            
             let links = data.data.links;
             loadIntoTable(Url.get);
         } else {

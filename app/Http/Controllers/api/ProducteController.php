@@ -25,7 +25,7 @@ class ProducteController extends Controller
           'message' => "Llista productes recuperada", // missatge
           'data' => $Productes,
         ];
-        return response()->json($response, 404);
+        return response()->json($response, 200);
     }
 
     /**

@@ -6,14 +6,14 @@ const pagination = document.getElementById('pagination');
 const table = document.getElementById('taula');
 const divErrors = document.getElementById("errors");
 divErrors.style.display = "none";
-const dni = document.getElementById("dni");
-const nom = document.getElementById("nomT");
-const genre = document.getElementById("genre");
+const dniT = document.getElementById("dniT");
+const nomT = document.getElementById("nomT");
+const genreT = document.getElementById("genreT");
 const saveButton = document.getElementById('saveButton');
 saveButton.addEventListener('click', onSave);
 
 const Url = {
-    get: 'http://localhost:8000/api/treballador/',
+    get: 'http://localhost:8000/api/treballador',
     save: 'http://localhost:8000/api/treballador/save',
     update: 'http://localhost:8000/api/treballador/update',
     delete: 'http://localhost:8000/api/treballador/delete',
@@ -49,10 +49,10 @@ function afegirFila(row) {
     <tr>
     <td id='${row.id}'>${row.id}</td>
     <td id='dni'>${row.dni}</td>
-    <td id='nomT'>${row.nom}</td>
-    <td id='tipus'>${row.genre}</td>
+    <td id='nom'>${row.nom}</td>
+    <td id='genere'>${row.genere}</td>
     <td><button id='delete-${row.id}'>Eliminar</button></td>
-    <td><button id='update-${row.id}-${row.dni}-${row.nom}-${row.tipus}'>Actualizar</button></td>
+    <td><button id='update-${row.id}-${row.dni}-${row.nom}-${row.genere}'>Actualizar</button></td>
     </tr>
     `
 }
@@ -87,9 +87,9 @@ async function saveTreballador(event){
     respostaDIV.innerHTML = ``;
     respostaDIV.className = "alert alert-success"
     var newTreballador = {
-        "dni": dni.value,
-        "nomT": nomT.value,
-        "genre": genre.value
+        "dni": dniT.value,
+        "nom": nomT.value,
+        "genere": genreT.value
     }
     try{
         const response = await fetch(Url.save, {
@@ -98,12 +98,12 @@ async function saveTreballador(event){
                 'Content-type': 'application/json',
                 'Accept': 'application/json'
             },
-            body: JSON.stringify(newProducte)
+            body: JSON.stringify(newTreballador)
         })
         const data = await response.json();
         if(response.ok){
-            paginate();
-            respostaDIV.innerHTML = `Treballador${data.data.nomT} creat correctament`
+            
+            respostaDIV.innerHTML = `Treballador${data.data.nom} creat correctament`
             setTimeout(() => {
                 respostaDIV.innerHTML = "";
                 respostaDIV.className = ""
@@ -117,19 +117,19 @@ async function saveTreballador(event){
         getTreballador()
 }
 
-function updateHTML(id,dni,nomT,genre){
+function updateHTML(id,dni,nom,genere){
     update = id
-    dni.value=dni
-    nomT.value = nomT
-    genre.value = genre
+    dniT.value=dni
+    nomT.value = nom
+    genreT.value = genere
 }
 
 async function updateTreballador(id){
     update = false;
     var updateTreballador = {
-        "dni": dni.value,
-        "nomT": nomT.value,
-        "genre": genre.value
+        "dni": dniT.value,
+        "nom": nomT.value,
+        "genere": genreT.value
     }
     try{
         const response = await fetch(Url.update + '/' + id, {
@@ -142,9 +142,9 @@ async function updateTreballador(id){
         })
 
         const data = await response.json(); 
-        dni.value = ""
+        dniT.value = ""
         nomT.value = ""
-        genre.value = ""
+        genreT.value = ""
         if (response.ok) {
             //afegirFila(data.data)
             getTreballador()
@@ -173,7 +173,7 @@ async function deletTreballador(id){
             const data = await response.json();
             if(response.ok){
                 paginate();
-                respostaDIV.innerHTML = `Treballador ${data.data.nomT} eliminat correctament`
+                respostaDIV.innerHTML = `Treballador ${data.data.nom} eliminat correctament`
                 setTimeout(() => {
                     respostaDIV.innerHTML = "";
                     respostaDIV.className = ""
@@ -206,9 +206,9 @@ async function loadIntoTable(url){
                 button.addEventListener("click",function () {
                     const id = this.id.split("-")[1];
                     const dni = this.id.split("-")[2];
-                    const nomT = this.id.split("-")[3];
-                    const genre = this.id.split("-")[4];
-                    updateHTML(id,dni,nomT,genre)
+                    const nom = this.id.split("-")[3];
+                    const genere = this.id.split("-")[4];
+                    updateHTML(id,dni,nom,genere)
                 });
             }
         }
@@ -250,5 +250,9 @@ console.log(1)
     pagLi.appendChild(pagAnchor);
     pagination.appendChild(pagLi);
     console.log(4)
+
+    pagLi.appendChild(pagAnchor);
+    pagination.appendChild(pagLi);
+    console.log(5)
 }
 getTreballador()

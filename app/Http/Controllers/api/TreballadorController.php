@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Treballador;
 use App\Http\Resources\TreballadorResource as TreballadorResource;
 use Validator;
 
@@ -60,43 +61,42 @@ class TreballadorController extends Controller
     public function store(Request $request)
     {   
         
-        try {
-        
-        $testDni =  preg_match('/^[0-9]{8,8}[A-Z]$/g',$request->dni);
-        $validator = Validator::make($input, [
-             'nom' => 'required | min:3 | max:20' ,
-            //poner valores
-        ]);
-        if($validator->fails() || !$testDni){
-            $response = [
-                'success' => true, 
-                'message' => "errors de validacio",
-                'data' => $validator->errors()->all(), 
-            ];
-      
-            return response()->json($response, 404); 
-        }            
-        
-        $Treballador = new Treballador;
-        $Treballador->dni = $request->dni;
-        $Treballador->nom = $request->nom;
-        $Treballador->genere = $request->genere;
-        $Treballador->save();
-        $response = [
-            'success' => true, 
-            'message' => "Informacion Trabajador recuperada",
-            'data' => $Treballador, 
-        ];
-        return response()->json($response, 200);  
+        //
+        $input = $request->all();
 
-    } catch (\Throwable $th) {
+        // Creem un validador de les dades enviades, i li passem les regles
+        // que volem comprovar
+        $validator = Validator::make($input, [
+            'dni' => 'required|min:3',
+          'nom' => 'required|min:3',
+          'genere' => 'required|max:256',
+        ]);
+
+        // Si alguna dada no és correcta
+        if($validator->fails()){
+
+           $response = [
+             'success' => false,
+             'message' => "Alta incorrecta!",
+             'data' => $validator->errors()->all(),
+           ];
+           // Retornem l'array convertit a JSON i el codi d'error 404 de
+           //  HTTTP
+           return response()->json($response, 404);     
+        }
+
+                
+        $Treballador= Treballador::create($input);
+
+        // Responem a la crida amb un tot ok!
         $response = [
-            'success' => false, 
-            'message' => "Error al crear el trabajador",
-            'data' => $th, 
+           'success' => true,
+           'data'    => $Treballador,
+           'message' => "Alta correcta",
+
         ];
-        return response()->json($response, 404);  
-    }
+
+        return response()->json($response, 200);
     }
 
     /**
