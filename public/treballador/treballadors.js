@@ -83,6 +83,7 @@ console.log("has entrado")
 }
 
 async function saveTreballador(event){
+
     let respostaDIV = document.getElementById('resposta')
     respostaDIV.innerHTML = ``;
     respostaDIV.className = "alert alert-success"
@@ -91,6 +92,7 @@ async function saveTreballador(event){
         "nom": nomT.value,
         "genere": genreT.value
     }
+    console.log(newTreballador)
     try{
         const response = await fetch(Url.save, {
             method: 'POST',
@@ -103,7 +105,7 @@ async function saveTreballador(event){
         const data = await response.json();
         if(response.ok){
             
-            respostaDIV.innerHTML = `Treballador${data.data.nom} creat correctament`
+            respostaDIV.innerHTML = `Treballador ${data.data.nom} creat correctament`
             setTimeout(() => {
                 respostaDIV.innerHTML = "";
                 respostaDIV.className = ""

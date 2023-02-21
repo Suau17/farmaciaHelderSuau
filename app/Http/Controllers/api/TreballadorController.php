@@ -35,12 +35,7 @@ class TreballadorController extends Controller
         return response()->json($response, 200);  
 
     
-        $response = [
-            'success' => false, 
-            'message' => "Error al buscar todos los trabajadores",
-            'data' => $th, 
-        ];
-        return response()->json($response, 404);  
+      
          
     }
 
@@ -68,8 +63,8 @@ class TreballadorController extends Controller
         // que volem comprovar
         $validator = Validator::make($input, [
             'dni' => 'required|min:3',
-          'nom' => 'required|min:3',
-          'genere' => 'required|max:256',
+            'nom' => 'required|min:3',
+            'genere' => '',
         ]);
 
         // Si alguna dada no és correcta

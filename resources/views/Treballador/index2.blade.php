@@ -41,7 +41,11 @@
     <div>
         <input type="text" name="dniT" id="dniT">
         <input type="text" name="nomT" id="nomT">
-        <input type="text" name="genreT" id="genreT">
+        <!-- <input type="text" name="genreT" id="genreT"> -->
+    <select name="genreT" id="genreT">
+     <option value="masculi">masculi</option>
+    <option value="femeni">femeni</option>
+    </select>
         <button id="saveButton">save</button>
     </div>
     <div id="resposta" role="alert"></div>

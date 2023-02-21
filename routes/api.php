@@ -37,7 +37,7 @@ Route::delete('proveidor/delete/{id}', [ProveidorController::class,'destroy']);
 Route::put('proveidor/update/{id}', [ProveidorController::class,'update']);
 
 //treballadors
-route::get('treballador',[TreballadorController::class,'index']); 
+Route::get('treballador',[TreballadorController::class,'index']); 
 Route::post('treballador/save',[TreballadorController::class,'store']); 
 Route::delete('treballador/delete/{id}',[TreballadorController::class,'destroy']); 
 Route::put('treballador/update/{id}',[TreballadorController::class,'update']);
