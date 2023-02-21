@@ -51,7 +51,7 @@ class ClientController extends Controller
     public function create()
     {
         //
-        return view('client/index');
+        
 
     }
 
@@ -72,7 +72,7 @@ class ClientController extends Controller
         // que volem comprovar
         $validator = Validator::make($input, [
           'id' => 'required|max:25',
-          'dni' => 'required|numeric|min:0',
+          'dni' => 'required|min:0',
           'nom' => 'required|max:20',
           'genere' => 'required',
           'tarja_sanitaria' => 'required|max:25',

@@ -2,22 +2,24 @@ console.log("Has entrat")
 const pagination = document.getElementById('pagination');
 var rows = [];
 
-var operation = "interesting";
+var operation = "inserting";
 var selectId;
 
 const table = document.getElementById('taula');
 const divErrors = document.getElementById("errors");
 divErrors.style.display = "none";
 
-const producteNom = document.getElementById("producteNom");
-const producteTipus = document.getElementById("producteTipus");
+const clientDni = document.getElementById("clientDni");
+const clientNom = document.getElementById("clientName");
+const clientGenre = document.getElementById("clientGender");
+const clientTarja = document.getElementById("clientTarja");
 const saveButton = document.getElementById('saveButton')
 saveButton.addEventListener('click', onSave)
 console.log(saveButton)
 
-const url = 'http://localhost:8000/api/producte/save';
-const urlGetProductes = 'http://localhost:8000/api/producte/get';
-const urlDelete = 'http://localhost:8000/api/producte/delete';
+const url = 'http://localhost:8000/api/client/save';
+const urlGetClients = 'http://localhost:8000/api/client/get';
+const urlDelete = 'http://localhost:8000/api/client/delete';
 
 function showErrors(errors) {
 
@@ -34,27 +36,28 @@ function showErrors(errors) {
 
 function onSave(event) {
     console.log("ei!!!")
-    saveProducte();
+    saveClient();
 }
 
-async function getProducte() {
+async function getClient() {
     try {
         let taula = document.getElementById('taula')
     taula.innerHTML = ``;
-        const response = await fetch(urlGetProductes, {
+        const response = await fetch(urlGetClients, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json'
             }
         });
         const data = await response.json();
+        console.log(data);
 
         
 
         if (response.ok) {
             console.log('asdasda')
             let links = data.data.links;
-            loadIntoTable(urlGetProductes);
+            loadIntoTable(urlGetClients);
             /*data.data.data.forEach(element => {
                 afegirFila(element)
                 const buttons = document.querySelectorAll('button[id^="delete-"]');
@@ -79,10 +82,10 @@ async function getProducte() {
 }
 
 
-async function updateProducte(event) {
-    var newProducte = {
-        "nom": producteNom.value,
-        "tipus": producteTipus.value
+async function updateClient(event) {
+    var newClient = {
+        "nom": clientNom.value,
+        "tipus": clientTipus.value
     }
     try {
         const response = await fetch(url + '/' + selectedId, {
@@ -91,7 +94,7 @@ async function updateProducte(event) {
                 'Content-type': 'application/json',
                 'Accept': 'application/json'
             },
-            body: JSON.stringify(newProducte) //   "{ 'name' : 'mart'}"
+            body: JSON.stringify(newClient) //   "{ 'name' : 'mart'}"
         })
 
         const data = await response.json();
@@ -99,12 +102,14 @@ async function updateProducte(event) {
         if (response.ok) {
             //afegirFila(data.data)
 
+            const nameDni = document.getElementById('dni' + data.data.id)
             const nameid = document.getElementById('nom' + data.data.id)
-            const nameTip = document.getElementById('tipus' + data.data.id)
+            const nameGenre = document.getElementById('genere' + data.data.id)
+            const nameTarj = document.getElementById('targeta' + data.data.id)
             const rowid = document.getElementById(data.data.id)
             nameid.innerHTML = data.data.name;
             rowid.setAttribute('nom', data.data.name);
-            producteNom.value = "";
+            clientNom.value = "";
             operation = "inserting";
         } else {
             showErrors(data.data)
@@ -115,13 +120,15 @@ async function updateProducte(event) {
     }
 }
 
-async function saveProducte(event) {
+async function saveClient(event) {
     let respostaDIV = document.getElementById('resposta')
     respostaDIV.innerHTML = "";
     respostaDIV.className = "alert alert-success"
-    var newProducte = {
-        "nom": producteNom.value,
-        "tipus": producteTipus.value
+    var newClient = {
+        "dni": clientDni.value,
+        "nom": clientNom.value,
+        "genere": clientGenre.value,
+        "tarja_sanitaria": clientTarja.value
     }
     try {
         const response = await fetch(url, {
@@ -130,12 +137,12 @@ async function saveProducte(event) {
                 'Content-type': 'application/json',
                 'Accept': 'application/json'
             },
-            body: JSON.stringify(newProducte)
+            body: JSON.stringify(newClient)
         })
         const data = await response.json();
         if (response.ok) {
             console.log(data.data.nom)
-            respostaDIV.innerHTML = `Producte ${data.data.nom} Creat Correctament`
+            respostaDIV.innerHTML = `Client ${data.data.nom} Creat Correctament`
             setTimeout(() => {
                 respostaDIV.innerHTML = "";
                 respostaDIV.className = ""
@@ -151,13 +158,15 @@ async function saveProducte(event) {
     }
 }
 
-async function deleteProducte(id) {
+async function deleteClient(id) {
     let respostaDIV = document.getElementById('resposta')
     respostaDIV.innerHTML = "";
     respostaDIV.className = "alert alert-danger"
-    var newProducte = {
-        "id": producteNom.value,
-        "tipus": producteTipus.value
+    var newClient = {
+        "dni": clientDni.value,
+        "nom": clientNom.value,
+        "genere": clientGenre.value,
+        "tarja_sanitaria": clientTarja.value
     }
     try {
         const response = await fetch(urlDelete+ '/' + id, {
@@ -171,7 +180,7 @@ async function deleteProducte(id) {
         const data = await response.json();
         if (response.ok) {
             console.log(data.data.nom)
-            respostaDIV.innerHTML = `Producte ${data.data.nom} eliminat Correctament`
+            respostaDIV.innerHTML = `Client ${data.data.nom} eliminat Correctament`
             setTimeout(() => {
                 respostaDIV.innerHTML = "";
                 respostaDIV.className = ""
@@ -267,4 +276,3 @@ function afegirBoto(link){
     }
     
 }
-
