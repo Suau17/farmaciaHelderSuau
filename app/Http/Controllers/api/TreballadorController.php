@@ -64,7 +64,7 @@ class TreballadorController extends Controller
         $validator = Validator::make($input, [
             'dni' => 'required|min:3',
             'nom' => 'required|min:3',
-            'genere' => '',
+            'genere' => 'required|max:200'
         ]);
 
         // Si alguna dada no és correcta
@@ -140,43 +140,65 @@ class TreballadorController extends Controller
         // $request->validate(
         //     [ 'name' => 'required | min:3 | max:20' ]
         // );+
-        $testDni =  preg_match('/^[0-9]{8,8}[A-Za-z]$/g',$request->dni);
-        $validator = Validator::make($input, [
-             'nom' => 'required | min:3 | max:20' ,
-        ]);
-        if($validator->fails() || !$testDni){
-            $response = [
-                'success' => true, 
-                'message' => "errors de validacio",
-                'data' => $validator->errors()->all(), 
-            ];
+    //     $testDni =  preg_match('/^[0-9]{8,8}[A-Za-z]$/g',$request->dni);
+    //     $validator = Validator::make($input, [
+    //          'nom' => 'required | min:3 | max:20' ,
+    //         //  'genere' => 'required | max:200'
+    //     ]);
+    //     if($validator->fails() || !$testDni){
+    //         $response = [
+    //             'success' => true, 
+    //             'message' => "errors de validacio",
+    //             'data' => $validator->errors()->all(), 
+    //         ];
       
-            return response()->json($response, 404); 
-        }
-        try {
-            //code...
+    //         return response()->json($response, 404); 
+    //     }
+    //     try {
+    //         //code...
 
-        $Treballador = Treballador::findOrFail($id);
+    //     $Treballador = Treballador::findOrFail($id);
+    //     $Treballador->dni = $request->dni;
+    //     $Treballador->nom = $request->nom;
+    //     $Treballador->genere = $request->genere;
+    //     $Treballador->save();
+        
+    //     $response = [
+    //         'success' => true, 
+    //         'message' => "Informacion Trabajador actualizada con exito",
+    //         'data' => $Treballador, 
+    //     ];
+  
+    //     return response()->json($response, 200); 
+    // } catch (\Throwable $th) {
+    //     $response = [
+    //         'success' => false, 
+    //         'message' => "Error al actualizar el trabajador",
+    //         'data' => $th, 
+    //     ];
+    //     return response()->json($response, 404);  
+    // }
+
+    $Treballador = Treballador::find($id);
+        if($Treballador==null) {
+            $response = [
+                'success' => false,
+                'message' => "Producte no trobat",
+                'data' => [],
+            ];        
+            return response()->json($response,404);
+        }   
         $Treballador->dni = $request->dni;
         $Treballador->nom = $request->nom;
-        $Treballador->genere = $request->genere;
+        $Treballador->genere = $request->genere;  
+
         $Treballador->save();
-        
         $response = [
-            'success' => true, 
-            'message' => "Informacion Trabajador actualizada con exito",
-            'data' => $Treballador, 
+            'success' => true,
+            'message' => "Treballador trobat",
+            'data' => $Treballador,
         ];
-  
-        return response()->json($response, 200); 
-    } catch (\Throwable $th) {
-        $response = [
-            'success' => false, 
-            'message' => "Error al actualizar el trabajador",
-            'data' => $th, 
-        ];
-        return response()->json($response, 404);  
-    }
+        return response()->json($response,200);
     }
 
     /**
@@ -189,24 +211,33 @@ class TreballadorController extends Controller
     //Eliminar els treballadors de la base de dades
     public function destroy($id)
     {
-        try {
-            //code...
-      
-        $Treballador = Treballador::findOrFail($id);
-        $Treballador->delete();
-        $response = [
-            'success' => true, 
-            'message' => "Trabajador eliminado"
-        ];
-  
-        return response()->json($response, 200); 
-    } catch (\Throwable $th) {
-        $response = [
-            'success' => false, 
-            'message' => "Error al eliminar el trabajador",
-            'data' => $th, 
-        ];
-        return response()->json($response, 404);  
-    }
+    // Eliminem el producte segons el codi que ens passin
+
+        // El busquem a la BD
+        $Treballador = Treballador::find($id);
+
+        // Si no trobem el producte responem amb informació
+        // sobre l'error
+        if($Treballador==null) {
+            $response = [
+            'success' => false,
+            'message' => "Producte no trobat",            
+            ];
+            return response()->json($response, 404); 
+
+        }
+        else { // El producte l'hem trobat
+
+            // posar dins try-catch en cas de haver-hi relacions clau forana!!
+            $Treballador->delete();
+
+            $response = [
+            'success' => true,
+            'data'    => $Treballador,
+            'message' => "Producte esborrat",
+            ];
+
+            return response()->json($response, 200);
+        }
     }
 }
