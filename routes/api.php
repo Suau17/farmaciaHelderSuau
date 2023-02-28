@@ -7,6 +7,9 @@ use App\Http\Controllers\api\ProveidorController;
 use App\Http\Controllers\api\Prod_ProvController;
 use App\Http\Controllers\api\ClientController;
 use App\Http\Controllers\api\TreballadorController;
+
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\LoginController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -17,6 +20,10 @@ use App\Http\Controllers\api\TreballadorController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::post('register', [RegisterController::class, 'register']);
+
+//Route::post('login', [RegisterController::class, 'login']);
+
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
