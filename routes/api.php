@@ -33,6 +33,12 @@ Route::post('/tokens/create', function (Request $request) {
     return ['token' => $token->plainTextToken];
 });
 
+//treballadors
+Route::get('treballador',[TreballadorController::class,'index']); 
+Route::post('treballador/save',[TreballadorController::class,'store']); 
+Route::delete('treballador/delete/{id}',[TreballadorController::class,'destroy']); 
+Route::put('treballador/update/{id}',[TreballadorController::class,'update']);
+
 
 Route::middleware('auth:sanctum')->group( function () {
     Route::post('producte/save',[ProducteController::class,'store']);

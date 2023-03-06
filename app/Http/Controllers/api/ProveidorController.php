@@ -22,6 +22,9 @@ class ProveidorController extends Controller
         $Proveidors= Proveidor::all();
         $Proveidors= Proveidor::Paginate(10);
 
+        $Proveidors= Proveidor::Paginate(10);
+
+
         $response = [
             'success' => true,
             'message' => "Llistat planetes recuperat",

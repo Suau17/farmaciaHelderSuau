@@ -16,6 +16,7 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    use HasFactory, Notifiable, HasApiTokens;
     protected $fillable = [
         'name',
         'email',
