@@ -15,6 +15,9 @@
 
 </script>
 <style>
+    body{
+        height: 100%;
+    }
     h1{
         text-align: center;
         margin-top: 3%;
@@ -29,9 +32,10 @@
         border: solid 1px;
         margin-top: 2%;
     }
-    tr:hover{
+    .rowDataTD:hover{
         background-color: lightgrey;
     }
+
 </style>
 </head>
 

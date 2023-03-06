@@ -41,18 +41,18 @@ Route::put('treballador/update/{id}',[TreballadorController::class,'update']);
 
 
 Route::middleware('auth:sanctum')->group( function () {
-    Route::post('producte/save',[ProducteController::class,'store']);
-    Route::get('producte/get',[ProducteController::class,'index']);  
-    Route::delete('producte/delete/{id}',[ProducteController::class,'destroy']);  
-    
-    Route::resource('client', ClientController::class);
-    Route::resource('producte', ProducteController::class);
-    //cositas
-    Route::get('proveidor', [ProveidorController::class,'index']);
-    Route::post('proveidor/save', [ProveidorController::class,'store']);
-    Route::delete('proveidor/delete/{id}', [ProveidorController::class,'destroy']);
-    Route::put('proveidor/update/{id}', [ProveidorController::class,'update']);    
 });
+Route::post('producte/save',[ProducteController::class,'store']);
+Route::get('producte/get',[ProducteController::class,'index']);  
+Route::delete('producte/delete/{id}',[ProducteController::class,'destroy']);  
+
+Route::resource('client', ClientController::class);
+Route::resource('producte', ProducteController::class);
+//cositas
+Route::get('proveidor', [ProveidorController::class,'index']);
+Route::post('proveidor/save', [ProveidorController::class,'store']);
+Route::delete('proveidor/delete/{id}', [ProveidorController::class,'destroy']);
+Route::put('proveidor/update/{id}', [ProveidorController::class,'update']);    
 
 Route::get('/login', function () {
     return "Has de validar-te com a usuari!";

@@ -46,12 +46,13 @@ function afegirFila(row) {
     console.log(row)
     let taula = document.getElementById('taula')
     taula.innerHTML += `
-    <tr>
+    <tr class='rowDataTD'>
     <td id='${row.id}'>${row.id}</td>
     <td id='tdNom'>${row.nomE}</td>
     <td id='tdPais'>${row.pais}</td>
     <td><button id='delete-${row.id}'>Eliminar</button></td>
     <td><button id='update-${row.id}-${row.nomE}-${row.pais}'>Actualizar</button></td>
+    <td><button id='show-${row.id}' onClick='verProveidor(${row.id})' >Info</button></td>
     </tr>
     `
 }
@@ -257,3 +258,8 @@ console.log(1)
     console.log(4)
 }
 getProducte()
+
+
+function verProveidor(event) {
+    console.log(event)
+}
