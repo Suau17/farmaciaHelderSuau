@@ -1,9 +1,7 @@
-
 var rows = [];
 var selectId;
 var update = false;
 // obtener html
-const pagination = document.getElementById('pagination');
 const table = document.getElementById('taula');
 const divErrors = document.getElementById("errors");
 divErrors.style.display = "none";
@@ -68,11 +66,31 @@ async function getProducte() {
             }
         });
         const data = await response.json();
-
         if (response.ok) {
             console.log('asdasda')
-            let links = data.data.links;
-            loadIntoTable(Url.get);
+            data.data.forEach(element => {
+                afegirFila(element)
+                const buttons = document.querySelectorAll('button[id^="delete-"]');
+                const buttonsUpdate = document.querySelectorAll('button[id^="update-"]');
+                for (let button of buttons) {
+
+                    button.addEventListener("click", function () {
+                        const id = this.id.split("-")[1];
+                        deleteProducte(id)
+                        getProducte()
+                    });
+                }
+                for (let button of buttonsUpdate) {
+
+                    button.addEventListener("click", function () {
+                        const id = this.id.split("-")[1];
+                        const nomE = this.id.split("-")[2];
+                        const pais = this.id.split("-")[3];
+                        updateHTML(id, nomE,pais)
+                    });
+                }
+            });
+
         } else {
             showErrors(data.data)
         }
@@ -186,79 +204,5 @@ async function deleteProducte(id) {
     } catch (error) {
         errors.innerHTML = "S'ha produit un error inesperat"
     }
-}
-
-async function loadIntoTable(url){
-    try{
-        const response = await fetch(url);
-        const json = await response.json();
-        rows = json.data.data;       
-        for(const row of rows) {				
-            afegirFila(row)
-            const buttons = document.querySelectorAll('button[id^="delete-"]');
-            const buttonsUpdate = document.querySelectorAll('button[id^="update-"]');
-            for (let button of buttons) {
-
-                button.addEventListener("click", function () {
-                    const id = this.id.split("-")[1];
-                    deleteProducte(id)
-                    getProducte()
-                });
-            }
-            for (let button of buttonsUpdate) {
-
-                button.addEventListener("click", function () {
-                    const id = this.id.split("-")[1];
-                    const nomE = this.id.split("-")[2];
-                    const pais = this.id.split("-")[3];
-                    updateHTML(id, nomE,pais)
-                });
-            }
-        }
-        const links = json.data.links;
-        console.log(links)
-        afegirLinks(links)
-    }
-    catch(error) {
-        errors.innerHTML = "No es pot accedir a la base de dades"
-    }
-    
-}
-
-function paginate(url){
-    pagination.innerHTML = "";
-    taula.innerHTML = "";
-    loadIntoTable(url);
-}
-function afegirLinks(links){
-    for (const link of links){
-        console.log(link)
-        afegirBoto(link)
-        
-    }
-}
-
-function afegirBoto(link){
-
-    const pagLi = document.createElement("li");
-    pagLi.classList.add('page-item');
-console.log(1)
-    const pagAnchor = document.createElement("a");
-    pagAnchor.innerHTML = link.label;
-    pagAnchor.addEventListener('click', function(event) {paginate(link.url)});
-    console.log(2)
-    pagAnchor.classList.add('page-link');
-    pagAnchor.setAttribute('href', "#");
-    console.log(3)
-    console.log(pagAnchor)
-
-    pagLi.appendChild(pagAnchor);
-    pagination.appendChild(pagLi);
-    console.log(4)
-}
-getProducte()
-
-export function imprime() {
- console.log('nuevo import')   
 }
 

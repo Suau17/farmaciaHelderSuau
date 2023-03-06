@@ -10,7 +10,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Producte</title>
 
-    <script src="/proveidor/hola.js" defer></script>
+    <script src="/proveidor/operaciones.js" defer>
+        
+    </script>
+
 
 </head>
 
@@ -23,7 +26,6 @@
     </div>
     <div id="resposta" role="alert"></div>
     <div id="errors" role="alert"></div>
-    <button onClick="getProducte()">Mostrar Productos</button>
     <table>
         <thead>
             <tr>
@@ -39,6 +41,11 @@
     </table>
 
     </form>
+    <nav class = "mt-2">
+        <ul id = 'pagination' class = 'pagination'>
+
+        </ul>
+    </nav>
 </body>
 
 </html>

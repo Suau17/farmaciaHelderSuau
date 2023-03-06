@@ -36,8 +36,8 @@ Route::get('plantilla', function () {
 Route::group(['middleware'=>['auth']], function() {
 
 Route::get('/', function () {
-    return view('plantilla');
-})->name('plantilla');
+    return view('welcome');
+})->name('welcome');
 
 Route::get('/producte/create2', function () {
     return view('Producte/index2');
@@ -46,6 +46,10 @@ Route::get('/producte/create2', function () {
 Route::get('/client/create2', function(){
     return view('Client/index2');
 });
+
+ Route::get('/treballador/create2', function(){
+     return view('Treballador/index2');
+ });
 
 
 });
@@ -114,7 +118,16 @@ Route::post('/Proveidor/update/{id}',[ProveidorController::class,'update']);
 Route::get('/Proveidor/show/{id}',[ProveidorController::class,'show']);
 
 //middleware
-
+Route::get('/token',function(Request $request){
+    if(auth()->check()){
+        auth()->user()->tokens()->delete();
+        $token = auth()->user()->createToken("prova");
+        return response()->json(['token' => $token->plainTextToken],200);
+    }
+    else{
+        return response()->json("NO AUTORIZADO",405);
+    }
+});
 
 
 //vista api 

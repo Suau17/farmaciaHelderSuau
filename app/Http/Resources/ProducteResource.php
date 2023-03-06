@@ -14,6 +14,8 @@ class ProducteResource extends JsonResource
      */
     public function toArray($request)
     {
+        $Productes= Producte::all();
+         $Productes= Producte::Paginate(10);
         return [
             'id' => $this->id,  // conservem nom columna, conservem valor
             'nom' => $this->nom,  
