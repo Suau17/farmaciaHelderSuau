@@ -6,6 +6,7 @@ use App\Http\Controllers\api\ProducteController;
 use App\Http\Controllers\api\ProveidorController;
 use App\Http\Controllers\api\Prod_ProvController;
 use App\Http\Controllers\api\ClientController;
+use App\Http\Controllers\api\TreballadorController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -21,14 +22,28 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('producte/save',[ProducteController::class,'store']);
-Route::get('producte/get',[ProducteController::class,'index']);  
-Route::delete('producte/delete/{id}',[ProducteController::class,'destroy']);  
+//productos
+Route::get('producte',[ProducteController::class,'index']); 
+Route::post('producte/save',[ProducteController::class,'store']); 
+Route::delete('producte/delete/{id}',[ProducteController::class,'destroy']); 
+Route::put('producte/update/{id}',[ProducteController::class,'update']);
 
-Route::resource('producte', ProducteController::class);
-Route::resource('client', ClientController::class);
-Route::get('client/get', [ClientController::class, 'index']);
+//clients
+Route::get('client', [ClientController::class, 'index']);
+Route::post('client/save',[ClientController::class,'store']); 
+Route::delete('client/delete/{id}',[ClientController::class,'destroy']); 
+Route::put('client/update/{id}',[ClientController::class,'update']);
+
+
 //cositas
-Route::resource('proveidor', ProveidorController::class);
-Route::resource('prod_prov', Prod_ProvController::class);
+Route::get('proveidor', [ProveidorController::class,'index']);
+Route::post('proveidor/save', [ProveidorController::class,'store']);
+Route::delete('proveidor/delete/{id}', [ProveidorController::class,'destroy']);
+Route::put('proveidor/update/{id}', [ProveidorController::class,'update']);
+
+//treballadors
+route::get('treballador',[TreballadorController::class,'index']); 
+Route::post('treballador/save',[TreballadorController::class,'store']); 
+Route::delete('treballador/delete/{id}',[TreballadorController::class,'destroy']); 
+Route::put('treballador/update/{id}',[TreballadorController::class,'update']);
 

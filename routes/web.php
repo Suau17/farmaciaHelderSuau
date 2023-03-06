@@ -36,8 +36,8 @@ Route::get('plantilla', function () {
 Route::group(['middleware'=>['auth']], function() {
 
 Route::get('/', function () {
-    return view('plantilla');
-})->name('plantilla');
+    return view('welcome');
+})->name('welcome');
 
 Route::get('/producte/create2', function () {
     return view('Producte/index2');
@@ -46,6 +46,10 @@ Route::get('/producte/create2', function () {
 Route::get('/client/create2', function(){
     return view('Client/index2');
 });
+
+ Route::get('/treballador/create2', function(){
+     return view('Treballador/index2');
+ });
 
 
 });
@@ -99,7 +103,7 @@ Route::post('/Treballador/update/{id}',[TreballadorController::class,'update']);
 
 //Proveidor
 
-Route::get('/Proveidor',[ProveidorController::class,'index']);
+Route::get('/Proveidor/get',[ProveidorController::class,'index']);
 
 Route::get('/Proveidor/formnew',[ProveidorController::class,'create']);
 

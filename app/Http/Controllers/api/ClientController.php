@@ -71,7 +71,6 @@ class ClientController extends Controller
         // Creem un validador de les dades enviades, i li passem les regles
         // que volem comprovar
         $validator = Validator::make($input, [
-          'id' => 'required|max:25',
           'dni' => 'required|min:0',
           'nom' => 'required|max:20',
           'genere' => 'required',
@@ -198,8 +197,8 @@ class ClientController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $testDni =  preg_match('/^[0-9]{8,8}[A-Za-z]$/g',$request->dni);
-        $testtarja = preg_match('/^[0-9]{14,14}[A-Z]$/g',$request->tarja_sanitaria);
+        //$testDni =  preg_match('/^[0-9]{8,8}[A-Za-z]$/g',$request->dni);
+        //$testtarja = preg_match('/^[0-9]{14,14}[A-Z]$/g',$request->tarja_sanitaria);
         $validator = Validator::make($input, [
              'nom' => 'required | min:3 | max:20' ,
         ]);
@@ -215,7 +214,7 @@ class ClientController extends Controller
         try {
             //code...
 
-        $Clients = Treballador::findOrFail($id);
+        $Clients = Client::findOrFail($id);
         $Clients->dni = $request->dni;
         $Clients->nom = $request->nom;
         $Clients->genere = $request->genere;
@@ -224,8 +223,8 @@ class ClientController extends Controller
         
         $response = [
             'success' => true, 
-            'message' => "Informacion Trabajador actualizada con exito",
-            'data' => $Treballador, 
+            'message' => "Informacion Client actualizada con exito",
+            'data' => $Clients, 
         ];
   
         return response()->json($response, 200); 

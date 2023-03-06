@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Proveidor;
 use App\Http\Resources\ProveidorResource as ProveidorResource;
+use App\Models\Producte;
 use Validator;
 
 class ProveidorController extends Controller
@@ -18,7 +19,8 @@ class ProveidorController extends Controller
     public function index()
     {
         //
-        $Proveidors = Proveidor::all(['id','name']);
+        $Proveidors= Proveidor::all();
+        $Proveidors= Proveidor::Paginate(10);
 
         $response = [
             'success' => true,
@@ -52,8 +54,7 @@ class ProveidorController extends Controller
         $input = $request->all();
         $validator = Validator::make($input,
             [ 
-                'name'=>'required|min:3|max:10',
-
+                'nomE'=>'required|min:3|max:20',
             ]
         );
 
@@ -132,8 +133,8 @@ class ProveidorController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $Proveidors = Proveidor::find($id);
-        if($Proveidors==null) {
+        $Proveidor = Proveidor::find($id);
+        if($Proveidor==null) {
 
             $response = [
                 'success' => false,
@@ -143,11 +144,15 @@ class ProveidorController extends Controller
         
             return response()->json($response,404);
         }
-
+        $Proveidor->nomE = $request->nomE;
+        $Proveidor->pais= $request->pais;
+        
+        
+        $Proveidor->save();
         $response = [
                 'success' => true,
                 'message' => "Proveidors trobat",
-                'data' => $Proveidors,
+                'data' => $Proveidor,
             ];
         
         return response()->json($response,200);
