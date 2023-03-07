@@ -51,7 +51,7 @@ class ClientController extends Controller
     public function create()
     {
         //
-        return view('client/index');
+        
 
     }
 
@@ -71,8 +71,7 @@ class ClientController extends Controller
         // Creem un validador de les dades enviades, i li passem les regles
         // que volem comprovar
         $validator = Validator::make($input, [
-          'id' => 'required|max:25',
-          'dni' => 'required|numeric|min:0',
+          'dni' => 'required|min:0',
           'nom' => 'required|max:20',
           'genere' => 'required',
           'tarja_sanitaria' => 'required|max:25',
@@ -197,46 +196,68 @@ class ClientController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-        $testDni =  preg_match('/^[0-9]{8,8}[A-Za-z]$/g',$request->dni);
-        $testtarja = preg_match('/^[0-9]{14,14}[A-Z]$/g',$request->tarja_sanitaria);
-        $validator = Validator::make($input, [
-             'nom' => 'required | min:3 | max:20' ,
-        ]);
-        if($validator->fails() || !$testDni){
-            $response = [
-                'success' => true, 
-                'message' => "errors de validacio",
-                'data' => $validator->errors()->all(), 
-            ];
+    //     //
+    //     $testDni =  preg_match('/^[0-9]{8,8}[A-Za-z]$/g',$request->dni);
+    //     $testtarja = preg_match('/^[0-9]{14,14}[A-Z]$/g',$request->tarja_sanitaria);
+    //     $validator = Validator::make($input, [
+    //          'nom' => 'required | min:3 | max:20' ,
+    //     ]);
+    //     if($validator->fails() || !$testDni){
+    //         $response = [
+    //             'success' => true, 
+    //             'message' => "errors de validacio",
+    //             'data' => $validator->errors()->all(), 
+    //         ];
       
-            return response()->json($response, 404); 
-        }
-        try {
-            //code...
+    //         return response()->json($response, 404); 
+    //     }
+    //     try {
+    //         //code...
 
-        $Clients = Treballador::findOrFail($id);
-        $Clients->dni = $request->dni;
-        $Clients->nom = $request->nom;
-        $Clients->genere = $request->genere;
-        $Clients->tarja_sanitaria = $request->tarja_sanitaria;
-        $Clients->save();
+    //     $Clients = Client::findOrFail($id);
+    //     $Clients->dni = $request->dni;
+    //     $Clients->nom = $request->nom;
+    //     $Clients->genere = $request->genere;
+    //     $Clients->tarja_sanitaria = $request->tarja_sanitaria;
+    //     $Clients->save();
         
-        $response = [
-            'success' => true, 
-            'message' => "Informacion Trabajador actualizada con exito",
-            'data' => $Treballador, 
-        ];
+    //     $response = [
+    //         'success' => true, 
+    //         'message' => "Informacion Client actualizada con exito",
+    //         'data' => $Clients, 
+    //     ];
   
-        return response()->json($response, 200); 
-    } catch (\Throwable $th) {
+    //     return response()->json($response, 200); 
+    // } catch (\Throwable $th) {
+    //     $response = [
+    //         'success' => false, 
+    //         'message' => "Error al actualizar el cliente",
+    //         'data' => $th, 
+    //     ];
+    //     return response()->json($response, 404);  
+    // }
+
+    $Clients = Client::find($id);
+    if($Clients==null) {
         $response = [
-            'success' => false, 
-            'message' => "Error al actualizar el cliente",
-            'data' => $th, 
-        ];
-        return response()->json($response, 404);  
-    }
+            'success' => false,
+            'message' => "Client no trobat",
+            'data' => [],
+        ];        
+        return response()->json($response,404);
+    }   
+    $Clients->dni = $request->dni;
+    $Clients->nom = $request->nom;
+    $Clients->genere = $request->genere;  
+    $Clients->tarja_sanitaria = $request->tarja_sanitaria;
+
+    $Clients->save();
+    $response = [
+        'success' => true,
+        'message' => "Client trobat",
+        'data' => $Clients,
+    ];
+    return response()->json($response,200);
         
     }
 

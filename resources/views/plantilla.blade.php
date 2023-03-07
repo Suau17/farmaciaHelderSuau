@@ -26,7 +26,7 @@
             <ul class="navbar-nav mr-auto">
                 @if (auth()->user()->role == 'admin')
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route('client.index')}}" style="color:white">Client</a>
+                        <a class="nav-link" href="{{url('/Client')}}" style="color:white">Client</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url('/Treballador') }}" style="color:white">Treballador</a>
