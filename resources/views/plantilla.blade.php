@@ -32,14 +32,11 @@
                         <a class="nav-link" href="{{ url('/Treballador') }}" style="color:white">Treballador</a>
                     </li>
                     <li class="nav-item">
-
                         <a class="nav-link " href="{{url('/Proveidor/get')}}" style="color:white">Proveidor</a>
-
-                      
                     </li>
                 @endif
                 <li class="nav-item">
-                    <a class="nav-link " href="{{ url('/Producte') }}" style="color:white">Producte</a>
+                    <a class="nav-link " href="{{ url('/producte/create2') }}" style="color:white">Producte</a>
                 </li>
                 @guest
                 @if (Route::has('login'))
