@@ -74,7 +74,7 @@ async function getClient(){
         console.log(data)
         console.log(response)
         if (response.ok) {
-            
+            pagination.innerHTML = ""
             let links = data.data.links;
             loadIntoTable(Url.get);
         } else {
@@ -140,6 +140,7 @@ async function updateClient(id){
         "genere": clientGenre.value,
         "tarja_sanitaria": clientTarja.value
     }
+    console.log(updateClient)
     try{
         const response = await fetch(Url.update + '/' + id, {
             method: 'PUT',
@@ -147,7 +148,7 @@ async function updateClient(id){
                 'Content-type': 'application/json',
                 'Accept': 'application/json'
             },
-            body: JSON.stringify(updateClient) //   "{ 'name' : 'mart'}"
+            body: JSON.stringify(updateClient)
         })
 
         const data = await response.json(); 
@@ -204,7 +205,7 @@ async function updateClient(id){
         try{
         const response = await fetch(url);
         const json = await response.json();
-        rows = json.data.data;     
+        rows = json.data.data;  
         for (const row of rows){
             afegirFila(row)
             const buttons = document.querySelectorAll('button[id^="delete-"]');
@@ -253,19 +254,13 @@ async function updateClient(id){
         
             const pagLi = document.createElement("li");
             pagLi.classList.add('page-item');
-        console.log(1)
             const pagAnchor = document.createElement("a");
             pagAnchor.innerHTML = link.label;
             pagAnchor.addEventListener('click', function(event) {paginate(link.url)});
-            console.log(2)
             pagAnchor.classList.add('page-link');
-            pagAnchor.setAttribute('href', "#");
-            console.log(3)
-            console.log(pagAnchor)
-        
+            pagAnchor.setAttribute('href', "#");        
             pagLi.appendChild(pagAnchor);
             pagination.appendChild(pagLi);
-            console.log(4)
         }
         getClient()
     
