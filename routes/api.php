@@ -49,3 +49,4 @@ Route::post('treballador/save',[TreballadorController::class,'store']);
 Route::delete('treballador/delete/{id}',[TreballadorController::class,'destroy']); 
 Route::put('treballador/update/{id}',[TreballadorController::class,'update']);
 
+
