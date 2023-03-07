@@ -115,7 +115,7 @@ Route::get('/Proveidor/update/{id}',[ProveidorController::class,'edit']);
 
 Route::post('/Proveidor/update/{id}',[ProveidorController::class,'update']);
 
-Route::get('/Proveidor/show',[ProveidorController::class,'show']);
+Route::get('/Proveidor/show/{id}',[ProveidorController::class,'show']);
 
 //middleware
 Route::get('/token',function(Request $request){

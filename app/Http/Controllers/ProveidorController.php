@@ -68,7 +68,6 @@ class ProveidorController extends Controller
      */
     public function show()
     {
-
         return view('Proveidor.show');
     }
 

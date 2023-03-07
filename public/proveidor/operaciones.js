@@ -52,7 +52,7 @@ function afegirFila(row) {
     <td id='tdPais'>${row.pais}</td>
     <td><a href=""><button id='delete-${row.id}'>Eliminar</button></a></td>
     <td><button id='update-${row.id}-${row.nomE}-${row.pais}'>Actualizar</button></td>
-    <td><button id='show-${row.id}' >Info</button></td>
+    <td><a href="http://localhost:8000/Proveidor/show/${row.id}"><button >Info</button></a></td>
     </tr>
     `
 }
@@ -71,6 +71,7 @@ async function getProducte() {
 
         if (response.ok) {
             console.log('asdasda')
+            
             let links = data.data.links;
             loadIntoTable(Url.get);
         } else {
