@@ -35,8 +35,13 @@ Route::post('producte/save',[ProducteController::class,'store']);
 Route::delete('producte/delete/{id}',[ProducteController::class,'destroy']); 
 Route::put('producte/update/{id}',[ProducteController::class,'update']);
 
-Route::resource('client', ClientController::class);
-Route::resource('producte', ProducteController::class);
+//clients
+Route::get('client', [ClientController::class, 'index']);
+Route::post('client/save',[ClientController::class,'store']); 
+Route::delete('client/delete/{id}',[ClientController::class,'destroy']); 
+Route::put('client/update/{id}',[ClientController::class,'update']);
+
+
 //cositas
 Route::get('proveidor', [ProveidorController::class,'index']);
 Route::post('proveidor/save', [ProveidorController::class,'store']);

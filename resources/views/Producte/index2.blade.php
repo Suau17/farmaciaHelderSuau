@@ -2,7 +2,7 @@
 @section('content')
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -50,8 +50,8 @@
         <thead style="border: solid 1px;">
             <tr style="border: solid 1px;">
                 <th>id</th>
-                <th>nom</th>
-                <th>tipus</th>
+                <th>Nom</th>
+                <th>Tipus</th>
                 <th>Operacions</th>
             </tr>
         </thead>
@@ -71,4 +71,4 @@
 
 </html>
 
-    @endsection
+@endsection

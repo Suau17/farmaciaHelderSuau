@@ -188,6 +188,13 @@ async function deleteProducte(id) {
     }
 }
 
+//Código paginación
+function paginate(url){
+    pagination.innerHTML = "";
+    taula.innerHTML = "";
+    loadIntoTable(url);
+}
+
 async function loadIntoTable(url){
     try{
         const response = await fetch(url);
@@ -215,6 +222,44 @@ async function loadIntoTable(url){
                 });
             }
         }
+
+
+        function afegirFila(row) {
+            console.log(row)
+            let taula = document.getElementById('taula')
+            taula.innerHTML += `
+            <tr>
+            <td id='${row.id}'>${row.id}</td>
+            <td>${row.nom}</td>
+            <td>${row.tipus}</td>
+            <td><button id='delete-${row.id}'>Eliminar</button></td>
+            </tr>
+            `
+        }
+
+function afegirLinks(links){
+    console.log("has entrat")
+    for (const link of links){
+        
+        afegirBoto(link)
+        
+    }
+}
+
+function afegirBoto(link){
+    const pagLi = document.createElement("li");
+    pagLi.classList.add('page-item');
+
+    const pagAnchor = document.createElement("a");
+    pagAnchor.innerHTML = link.label;
+    pagAnchor.addEventListener('click', function(event) {paginate(link.url)});
+    pagAnchor.classList.add('page-link');
+    pagAnchor.setAttribute('href', "#");
+
+    pagLi.appendChild(pagAnchor);
+    pagination.appendChild(pagLi);
+}
+
         const links = json.data.links;
         console.log(links)
         afegirLinks(links)
@@ -224,6 +269,7 @@ async function loadIntoTable(url){
     }
     
 }
+
 
 function paginate(url){
     pagination.innerHTML = "";
@@ -257,8 +303,3 @@ console.log(1)
     console.log(4)
 }
 getProducte()
-
-export function imprime() {
- console.log('nuevo import')   
-}
-
