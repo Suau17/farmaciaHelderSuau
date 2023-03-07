@@ -33,27 +33,30 @@ Route::post('/tokens/create', function (Request $request) {
     return ['token' => $token->plainTextToken];
 });
 
+//productos
+Route::get('producte',[ProducteController::class,'index']); 
+Route::post('producte/save',[ProducteController::class,'store']); 
+Route::delete('producte/delete/{id}',[ProducteController::class,'destroy']); 
+Route::put('producte/update/{id}',[ProducteController::class,'update']);
+
+//clients
+Route::get('client', [ClientController::class, 'index']);
+Route::post('client/save',[ClientController::class,'store']); 
+Route::delete('client/delete/{id}',[ClientController::class,'destroy']); 
+Route::put('client/update/{id}',[ClientController::class,'update']);
+
+
+//cositas
+Route::get('proveidor', [ProveidorController::class,'index']);
+Route::post('proveidor/save', [ProveidorController::class,'store']);
+Route::delete('proveidor/delete/{id}', [ProveidorController::class,'destroy']);
+Route::put('proveidor/update/{id}', [ProveidorController::class,'update']);
+
 //treballadors
 Route::get('treballador',[TreballadorController::class,'index']); 
 Route::post('treballador/save',[TreballadorController::class,'store']); 
 Route::delete('treballador/delete/{id}',[TreballadorController::class,'destroy']); 
 Route::put('treballador/update/{id}',[TreballadorController::class,'update']);
-
-
-Route::middleware('auth:sanctum')->group( function () {
-});
-Route::post('producte/save',[ProducteController::class,'store']);
-Route::get('producte/get',[ProducteController::class,'index']);  
-Route::delete('producte/delete/{id}',[ProducteController::class,'destroy']);  
-
-Route::resource('client', ClientController::class);
-Route::resource('producte', ProducteController::class);
-//cositas
-Route::get('proveidor', [ProveidorController::class,'index']);
-Route::get('proveidor/{id}', [ProveidorController::class,'show']);
-Route::post('proveidor/save', [ProveidorController::class,'store']);
-Route::delete('proveidor/delete/{id}', [ProveidorController::class,'destroy']);
-Route::put('proveidor/update/{id}', [ProveidorController::class,'update']);    
 
 Route::get('/login', function () {
     return "Has de validar-te com a usuari!";
