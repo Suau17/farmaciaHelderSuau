@@ -125,6 +125,9 @@ function updateHTML(id,nom,tipus){
 }
 
 async function updateProducte(id){
+    let respostaDIV = document.getElementById('resposta')
+    respostaDIV.innerHTML = "";
+    respostaDIV.className = "alert alert-success"
     update = false;
     var updateProducte = {
         "nom": producteNom.value,
@@ -146,6 +149,12 @@ async function updateProducte(id){
         producteTipus.value = ""
         if (response.ok) {
             //afegirFila(data.data)
+            respostaDIV.innerHTML = `Producte ${data.data.nom} creat correctament`
+            setTimeout(() => {
+                respostaDIV.innerHTML = "";
+                respostaDIV.className = ""
+            }, "4000")
+            paginate()
             getProducte()
         } else {
             showErrors(data.data)

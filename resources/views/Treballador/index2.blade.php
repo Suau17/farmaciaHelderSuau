@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Producte</title>
+    <title>Treballador</title>
     <script src = "/treballador/treballadors.js" defer>
 
     
@@ -39,9 +39,14 @@
     <h1 >CRUD Treballador</h1>
     <div class="div2">
     <div>
-        <input type="text" name="dniT" id="dniT">
-        <input type="text" name="nomT" id="nomT">
-        <input type="text" name="genreT" id="genreT">
+       DNI: <input type="text" name="dniT" id="dniT">
+        NOM: <input type="text" name="nomT" id="nomT">
+        <!-- <input type="text" name="genreT" id="genreT"> -->
+   GENERE: <select name="genreT" id="genreT">
+    
+     <option value="masculi" >masculi</option>
+    <option value="femeni">femeni</option>
+    </select>
         <button id="saveButton">save</button>
     </div>
     <div id="resposta" role="alert"></div>

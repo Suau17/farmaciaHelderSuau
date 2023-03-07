@@ -7,6 +7,9 @@ use App\Http\Controllers\api\ProveidorController;
 use App\Http\Controllers\api\Prod_ProvController;
 use App\Http\Controllers\api\ClientController;
 use App\Http\Controllers\api\TreballadorController;
+
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\LoginController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -17,6 +20,10 @@ use App\Http\Controllers\api\TreballadorController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::post('register', [RegisterController::class, 'register']);
+
+//Route::post('login', [RegisterController::class, 'login']);
+
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -42,8 +49,9 @@ Route::delete('proveidor/delete/{id}', [ProveidorController::class,'destroy']);
 Route::put('proveidor/update/{id}', [ProveidorController::class,'update']);
 
 //treballadors
-route::get('treballador',[TreballadorController::class,'index']); 
+Route::get('treballador',[TreballadorController::class,'index']); 
 Route::post('treballador/save',[TreballadorController::class,'store']); 
 Route::delete('treballador/delete/{id}',[TreballadorController::class,'destroy']); 
 Route::put('treballador/update/{id}',[TreballadorController::class,'update']);
+
 

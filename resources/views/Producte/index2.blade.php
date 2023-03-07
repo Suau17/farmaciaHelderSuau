@@ -39,8 +39,8 @@
     <h1 >CRUD PRODUCTOS</h1>
     <div class="div2">
     <div>
-        <input type="text" name="producteNom" id="producteNom">
-        <input type="text" name="producteTipus" id="producteTipus">
+        NOM:<input type="text" name="producteNom" id="producteNom">
+        TIPUS:<input type="text" name="producteTipus" id="producteTipus">
         <button id="saveButton">save</button>
     </div>
     <div id="resposta" role="alert"></div>
