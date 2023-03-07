@@ -66,12 +66,10 @@ class ProveidorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        
-        $Proveidor = Proveidor::findOrFail($id);
-        
-        return view('Proveidor.show',compact('Proveidor'));
+
+        return view('Proveidor.show');
     }
 
     /**

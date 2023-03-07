@@ -2,16 +2,16 @@ var rows = [];
 var selectId;
 var update = false;
 // obtener html
-const table = document.getElementById('taula');
-const divErrors = document.getElementById("errors");
+let table = document.getElementById('taula');
+let divErrors = document.getElementById("errors");
 divErrors.style.display = "none";
-const proveidorNom = document.getElementById("inputNom");
-const proveidorPais = document.getElementById("inputPais");
-const saveButton = document.getElementById('saveButton')
+let proveidorNom = document.getElementById("inputNom");
+let proveidorPais = document.getElementById("inputPais");
+let saveButton = document.getElementById('saveButton')
 saveButton.addEventListener('click', onSave)
 
 
-const Url = {
+let Url = {
     get: 'http://localhost:8000/api/proveidor/',
     save: 'http://localhost:8000/api/proveidor/save',
     update: 'http://localhost:8000/api/proveidor/update',
@@ -45,16 +45,20 @@ function afegirFila(row) {
     console.log(row)
     let taula = document.getElementById('taula')
     taula.innerHTML += `
-    <tr class='rowDataTD'>
+    <tr class='rowDataTD' onClick='verInfo(${row.id})'>
     <td id='${row.id}'>${row.id}</td>
     <td id='tdNom'>${row.nomE}</td>
     <td id='tdPais'>${row.pais}</td>
-    <td><button id='delete-${row.id}'>Eliminar</button></td>
+    <td><button id='info'>Informacion</button></td>
     <td><button id='update-${row.id}-${row.nomE}-${row.pais}'>Actualizar</button></td>
+    <td><button id='delete-${row.id}'>Eliminar</button></td>
     </tr>
     `
 }
-
+console.log('FUNCIONA ESTA MIERDA??????')
+function verInfo(id){
+    console.log(id)
+}
 async function getProducte() {
     try {
         let taula = document.getElementById('taula')
@@ -202,7 +206,7 @@ async function deleteProducte(id) {
         }
 
     } catch (error) {
-        errors.innerHTML = "S'ha produit un error inesperat"
+        error.innerHTML = "S'ha produit un error inesperat"
     }
 }
 

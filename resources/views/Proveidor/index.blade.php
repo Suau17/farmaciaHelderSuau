@@ -35,7 +35,6 @@
     }
     .rowDataTD:hover{
         background-color: lightgrey;
-        cursor: pointer
     }
     .mt-2{
        margin-bottom: 10%;
@@ -48,6 +47,7 @@
         <input type="text" name="inputPais" id="inputPais">
         <button id="saveButton">save</button>
     </div>
+    
     <div id="resposta" role="alert"></div>
     <div id="errors" role="alert"></div>
     <table class="table">
@@ -71,6 +71,5 @@
         </ul>
     </nav>
 </body>
-
 </html>
 @endsection
