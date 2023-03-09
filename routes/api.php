@@ -22,31 +22,38 @@ use App\Http\Controllers\Auth\LoginController;
 */
 Route::post('register', [RegisterController::class, 'register']);
 
-//Route::post('login', [RegisterController::class, 'login']);
+//Route::post('login', [LoginController::class, 'login']);
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
-});
+      Route::post('producte/save',[ProducteController::class,'store']); 
+      Route::delete('producte/delete/{id}',[ProducteController::class,'destroy']); 
+    Route::put('producte/update/{id}',[ProducteController::class,'update']);
+
+    Route::post('proveidor/save', [ProveidorController::class,'store']);
+Route::delete('proveidor/delete/{id}', [ProveidorController::class,'destroy']);
+Route::put('proveidor/update/{id}', [ProveidorController::class,'update']);
+ });
 
 //productos
 Route::get('producte',[ProducteController::class,'index']); 
-Route::post('producte/save',[ProducteController::class,'store']); 
-Route::delete('producte/delete/{id}',[ProducteController::class,'destroy']); 
-Route::put('producte/update/{id}',[ProducteController::class,'update']);
+// Route::post('producte/save',[ProducteController::class,'store']); 
+// Route::delete('producte/delete/{id}',[ProducteController::class,'destroy']); 
+// Route::put('producte/update/{id}',[ProducteController::class,'update']);
 
 Route::resource('client', ClientController::class);
 Route::resource('producte', ProducteController::class);
 //cositas
 Route::get('proveidor', [ProveidorController::class,'index']);
-Route::post('proveidor/save', [ProveidorController::class,'store']);
-Route::delete('proveidor/delete/{id}', [ProveidorController::class,'destroy']);
-Route::put('proveidor/update/{id}', [ProveidorController::class,'update']);
+// Route::post('proveidor/save', [ProveidorController::class,'store']);
+// Route::delete('proveidor/delete/{id}', [ProveidorController::class,'destroy']);
+// Route::put('proveidor/update/{id}', [ProveidorController::class,'update']);
 
 //treballadors
 Route::get('treballador',[TreballadorController::class,'index']); 
-Route::post('treballador/save',[TreballadorController::class,'store']); 
-Route::delete('treballador/delete/{id}',[TreballadorController::class,'destroy']); 
-Route::put('treballador/update/{id}',[TreballadorController::class,'update']);
+// Route::post('treballador/save',[TreballadorController::class,'store']); 
+// Route::delete('treballador/delete/{id}',[TreballadorController::class,'destroy']); 
+// Route::put('treballador/update/{id}',[TreballadorController::class,'update']);
 
 

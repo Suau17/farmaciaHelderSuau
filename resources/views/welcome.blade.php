@@ -22,7 +22,8 @@
         const response = await fetch(URL, {
             method: 'GET',
             headers: {
-                'Accept': 'aplication/json'
+                'Accept': 'aplication/json',
+                'authorization': 'Bearer '+ document.cookie,
             }
         });
         const data = await response.json();
