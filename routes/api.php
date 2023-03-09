@@ -45,7 +45,6 @@ Route::post('client/save',[ClientController::class,'store']);
 Route::delete('client/delete/{id}',[ClientController::class,'destroy']); 
 Route::put('client/update/{id}',[ClientController::class,'update']);
 
-
 //cositas
 Route::get('proveidor', [ProveidorController::class,'index']);
 Route::post('proveidor/save', [ProveidorController::class,'store']);

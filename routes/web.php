@@ -13,7 +13,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\api\ProducteController;
 use App\Http\Controllers\ProveidorController;
 use App\Http\Controllers\api\Prod_ProvController;
-use App\Http\Controllers\api\ClientController;
+use App\Http\Controllers\ClientController;
+use App\Http\Controllers\TreballadorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,14 +44,6 @@ Route::get('/producte/create2', function () {
     return view('Producte/index2');
 });
 
-Route::get('/client/create2', function(){
-    return view('Client/index2');
-});
-
- Route::get('/treballador/create2', function(){
-     return view('Treballador/index2');
- });
-
 
 });
 
@@ -75,7 +68,7 @@ Route::group(['middleware'=>['auth','role:admin']], function() {
 
 //Client
 
-Route::get('/Client',[ClientController::class,'index']);
+Route::get('/Client/get',[ClientController::class,'index']);
 
 Route::get('/Client/formnew',[ClientController::class,'create']);
 
@@ -89,7 +82,7 @@ Route::post('/Client/update/{id}',[ClientController::class,'update']);
 
 //treballador
 
-Route::get('/Treballador',[TreballadorController::class,'index']);
+Route::get('/Treballador/get',[TreballadorController::class,'index']);
 
 Route::get('/Treballador/formnew',[TreballadorController::class,'create']);
 
