@@ -46,7 +46,7 @@ function afegirFila(row) {
     console.log(row)
     let taula = document.getElementById('taula')
     taula.innerHTML += `
-    <tr>
+    <tr class='rowDataTD'>
     <td id='${row.id}'>${row.id}</td>
     <td id='nom'>${row.nom}</td>
     <td id='tipus'>${row.tipus}</td>

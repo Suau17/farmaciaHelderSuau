@@ -6,18 +6,21 @@ const pagination = document.getElementById('pagination');
 const table = document.getElementById('taula');
 const divErrors = document.getElementById("errors");
 divErrors.style.display = "none";
-const producteNom = document.getElementById("producteNom");
-const producteTipus = document.getElementById("producteTipus");
-const saveButton = document.getElementById('saveButton');
+
+const clientDni = document.getElementById("clientDni");
+const clientNom = document.getElementById("clientName");
+const clientGenre = document.getElementById("clientGender");
+const clientTarja = document.getElementById("clientTarja");
+const saveButton = document.getElementById('saveButton')
 saveButton.addEventListener('click', onSave)
 
 const Url = {
-    get: 'http://localhost:8000/api/producte/',
-    save: 'http://localhost:8000/api/producte/save',
-    update: 'http://localhost:8000/api/producte/update',
-    delete: 'http://localhost:8000/api/producte/delete',
+    get: 'http://localhost:8000/api/client',
+    save: 'http://localhost:8000/api/client/save',
+    update: 'http://localhost:8000/api/client/update',
+    delete: 'http://localhost:8000/api/client/delete',
 }
-
+console.log(Url.get)
 function showErrors(errors) {
 
     divErrors.style.display = "block"
@@ -34,10 +37,10 @@ function showErrors(errors) {
 function onSave(event) {
     console.log(update)
     if (update === false) {
-        saveProducte();
+        saveClient();
     }
     if (update != false) {
-        updateProducte(update)
+        updateClient(update)
     }
 }
 
@@ -46,17 +49,18 @@ function afegirFila(row) {
     let taula = document.getElementById('taula')
     taula.innerHTML += `
     <tr>
-    <td id='${row.id}'>${row.id}</td>
-    <td id='nom'>${row.nom}</td>
-    <td id='tipus'>${row.tipus}</td>
-    <td><button id='delete-${row.id}'>Eliminar</button></td>
-    <td><button id='update-${row.id}-${row.nom}-${row.tipus}'>Actualizar</button></td>
+        <td id='${row.id}'>${row.id}</td>
+        <td id='${row.dni}'>${row.dni}</td>
+        <td id='nom'>${row.nom}</td>
+        <td id='genere'>${row.genere}</td>
+        <td id='tarja_sanitaria'>${row.tarja_sanitaria}</td>
+        <td><button id='delete-${row.id}'>Eliminar</button></td>
+        <td><button id='update-${row.id}-${row.dni}-${row.nom}-${row.genere}-${row.tarja_sanitaria}'>Actualizar</button></td>
     </tr>
     `
 }
 
-async function getProducte(){
-    console.log("has entrado")
+async function getClient(){
     try{
         let taula = document.getElementById('taula')
         taula.innerHTML = ``;
@@ -67,8 +71,10 @@ async function getProducte(){
             }
         });
         const data = await response.json();
+        console.log(data)
+        console.log(response)
         if (response.ok) {
-            console.log('asdasda')
+            pagination.innerHTML = ""
             let links = data.data.links;
             loadIntoTable(Url.get);
         } else {
@@ -81,13 +87,16 @@ async function getProducte(){
    
 }
 
-async function saveProducte(event){
+async function saveClient(event){
     let respostaDIV = document.getElementById('resposta')
     respostaDIV.innerHTML = "";
     respostaDIV.className = "alert alert-success"
-    var newProducte = {
-        "nom": producteNom.value,
-        "tipus": producteTipus.value
+    var newClient = {
+        "dni": clientDni.value,
+        "nom": clientNom.value,
+        "genere": clientGenre.value,
+        "tarja_sanitaria": clientTarja.value,
+        
     }
     try{
         const response = await fetch(Url.save, {
@@ -96,12 +105,12 @@ async function saveProducte(event){
                 'Content-type': 'application/json',
                 'Accept': 'application/json'
             },
-            body: JSON.stringify(newProducte)
+            body: JSON.stringify(newClient)
         })
         const data = await response.json();
         if (response.ok){
 
-            respostaDIV.innerHTML = `Producte ${data.data.nom} creat correctament`
+            respostaDIV.innerHTML = `Client ${data.data.nom} creat correctament`
             setTimeout(() => {
                 respostaDIV.innerHTML = "";
                 respostaDIV.className = ""
@@ -112,23 +121,26 @@ async function saveProducte(event){
     }catch(error){
         errors.innerHTML = "S'ha produit un error inesperat"
     }
-    getProducte()
+    getClient()
 }
 
-function updateHTML(id,nom,tipus){
+function updateHTML(id, dni, nom, genere, tarja_sanitaria){
     update = id
-    producteNom.value=nom
-    producteTipus.value=tipus
-
+    clientDni.value = dni
+    clientNom.value = nom
+    clientGenre.value = genere
+    clientTarja.value = tarja_sanitaria
 }
 
-async function updateProducte(id){
+async function updateClient(id){
     update = false;
-    var updateProducte = {
-        "nom": producteNom.value,
-        "tipus": producteTipus.value
+    var updateClient = {
+        "dni": clientDni.value,
+        "nom": clientNom.value,
+        "genere": clientGenre.value,
+        "tarja_sanitaria": clientTarja.value
     }
-    console.log(updateProducte);
+    console.log(updateClient)
     try{
         const response = await fetch(Url.update + '/' + id, {
             method: 'PUT',
@@ -136,15 +148,17 @@ async function updateProducte(id){
                 'Content-type': 'application/json',
                 'Accept': 'application/json'
             },
-            body: JSON.stringify(updateProducte) //   "{ 'name' : 'mart'}"
+            body: JSON.stringify(updateClient)
         })
 
         const data = await response.json(); 
-        producteNom.value = ""
-        producteTipus.value = ""
+        clientDni.value = ""
+        clientNom.value = ""
+        clientGenre.value = ""
+        clientTarja.value = ""
         if (response.ok) {
             //afegirFila(data.data)
-            getProducte()
+            getClient()
         } else {
             showErrors(data.data)
         }
@@ -154,7 +168,7 @@ async function updateProducte(id){
     }
     }
 
-    async function deleteProducte(id){
+    async function deleteClient(id){
         let respostaDIV = document.getElementById('resposta')
         respostaDIV.innerHTML = "";
         respostaDIV.className = "alert alert-danger"
@@ -170,7 +184,7 @@ async function updateProducte(id){
             const data = await response.json();
             if(response.ok){
                 paginate()
-                respostaDIV.innerHTML = `Producte ${data.data.nom} eliminat Correctament`
+                respostaDIV.innerHTML = `Client ${data.data.nom} eliminat Correctament`
                 setTimeout(() => {
                     respostaDIV.innerHTML = "";
                     respostaDIV.className = ""
@@ -191,7 +205,7 @@ async function updateProducte(id){
         try{
         const response = await fetch(url);
         const json = await response.json();
-        rows = json.data.data;     
+        rows = json.data.data;  
         for (const row of rows){
             afegirFila(row)
             const buttons = document.querySelectorAll('button[id^="delete-"]');
@@ -200,17 +214,19 @@ async function updateProducte(id){
 
                 button.addEventListener("click", function () {
                     const id = this.id.split("-")[1];
-                    deleteProducte(id)
-                    getProducte()
+                    deleteClient(id)
+                    getClient()
                 });
             }
             for (let button of buttonsUpdate) {
 
                 button.addEventListener("click", function () {
                     const id = this.id.split("-")[1];
-                    const nom = this.id.split("-")[2];
-                    const tipus = this.id.split("-")[3];
-                    updateHTML(id, nom,tipus)
+                    const dni = this.id.split("-")[2];
+                    const nom = this.id.split("-")[3];
+                    const genere = this.id.split("-")[4];
+                    const tarja_sanitaria = this.id.split("-")[5];
+                    updateHTML(id, dni, nom, genere, tarja_sanitaria)
                 });
             }
         }
@@ -238,19 +254,13 @@ async function updateProducte(id){
         
             const pagLi = document.createElement("li");
             pagLi.classList.add('page-item');
-        console.log(1)
             const pagAnchor = document.createElement("a");
             pagAnchor.innerHTML = link.label;
             pagAnchor.addEventListener('click', function(event) {paginate(link.url)});
-            console.log(2)
             pagAnchor.classList.add('page-link');
-            pagAnchor.setAttribute('href', "#");
-            console.log(3)
-            console.log(pagAnchor)
-        
+            pagAnchor.setAttribute('href', "#");        
             pagLi.appendChild(pagAnchor);
             pagination.appendChild(pagLi);
-            console.log(4)
         }
-        getProducte()
+        getClient()
     

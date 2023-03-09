@@ -20,6 +20,7 @@ class ProveidorController extends Controller
     {
         //
         $Proveidors= Proveidor::all();
+        $Proveidors= Proveidor::Paginate(10);
 
         $Proveidors= Proveidor::Paginate(10);
 

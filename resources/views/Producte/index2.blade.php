@@ -2,7 +2,7 @@
 @section('content')
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -10,9 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Producte</title>
     <script src="/productes/producte.js" defer>
-
     
-
 </script>
 <style>
     h1{
@@ -23,7 +21,6 @@
         text-align: center;
         padding-bottom: 5%;
     }
-
     .table{
         text-align: center;
         border: solid 1px;
@@ -74,4 +71,4 @@
 
 </html>
 
-    @endsection
+@endsection

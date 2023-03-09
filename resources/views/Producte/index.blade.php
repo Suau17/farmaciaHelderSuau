@@ -1,41 +1,77 @@
 @extends('plantilla')
 @section('content')
-<h1>Productes</h1>
-@if(auth()->user()->role == "admin")  
-<a href="/Producte/formnew">Afegir Producte</a>
-@endif
-<table border=1 class ="table">
-<thead class="thead-dark">
-    <tr>
-        
-        <td>id</td>
-        <td>Nom</td>
-        <td>tipus</td>
-        <td>Proveidor</td>
-        
-        
-    </tr>
-    </thead>
-    <tbody>
-    @foreach($Productes as $producte)
-        <tr>
-            <td>{{ $producte->id }}</td>          
-            <td>{{ $producte->nom }}</td>
-            <td>{{ $producte->tipus}}</td>
 
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Producte</title>
+    <script src="/productes/producte.js" defer>
 
-            <td> <a href="/Producte/show/{{ $producte->id }}"><button type="button" class="btn btn-primary">Mostrar</button></a></td>
-            @if(Auth()->user()->role == "admin") 
-            <td>
-                
-                <a href="/Producte/delete/{{ $producte->id }}"><button type="button" class="btn btn-danger">Delete</button></a>
-                <a href="/Producte/update/{{ $producte->id }}"><button type="button" class="btn btn-primary">Update</button></a>
-            </td>
-            @endif
-        </tr>
-    @endforeach
-</tbody>
-</table>
-{{ $Productes->links('pagination::bootstrap-4') }}
-@endsection
+    
+
+</script>
+<style>
+    body{
+        height: 100%;
+    }
+    h1{
+        text-align: center;
+        margin-top: 3%;
+    }
+    .div2{
+        text-align: center;
+        padding-bottom: 5%;
+    }
+
+    .table{
+        text-align: center;
+        border: solid 1px;
+        margin-top: 2%;
+    }
+    .rowDataTD:hover{
+        background-color: lightgrey;
+    }
+
+</style>
+</head>
+
+<body>
+    <h1 >CRUD PRODUCTOS</h1>
+    <div class="div2">
+    <div>
+        NOM:<input type="text" name="producteNom" id="producteNom">
+        TIPUS:<input type="text" name="producteTipus" id="producteTipus">
+        <button id="saveButton">save</button>
+    </div>
+    <div id="resposta" role="alert"></div>
+    <div id="errors" role="alert"></div>
+    <!-- <button onClick="getProducte()">Mostrar Productos</button> -->
+    <table class="table">
+        <thead style="border: solid 1px;">
+            <tr style="border: solid 1px;">
+                <th>id</th>
+                <th>nom</th>
+                <th>tipus</th>
+                <th>Operacions</th>
+            </tr>
+        </thead>
+        <tbody id="taula">
+
+        </tbody>
+    </table>
+    </div>
+    <nav class = "mt-2">
+        <ul id = 'pagination' class = 'pagination'>
+        </ul>
+    </nav>
+
+    </form>
+</body>
+
+</html>
+
+    @endsection

@@ -1,6 +1,7 @@
 @extends('plantilla')
 
 @section('content')
+<<<<<<< HEAD
 <script>
     function cookieExiste(nombreCookie) {
   var cookies = document.cookie.split(";"); // Divide todas las cookies en un array
@@ -55,14 +56,18 @@
     
     getToken()
 </script>
+=======
+>>>>>>> 389d845ff9e5fdbfb6922aa4de71f168c4db8f5a
 <div class="text-white">
     <div class="card-header">
-    </div>
+    </div>  
     <img class="mx-auto d-block" src="/img/FARMACIA.png" alt="Card image cap">
     <div class="card-body">
     </div>
     <div class="card-footer">
     </div>
 </div>
-
+<footer>
+    s
+</footer>
 @endsection
