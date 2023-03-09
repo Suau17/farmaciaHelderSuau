@@ -20,8 +20,8 @@ class ProveidorController extends Controller
     public function index()
     {
          //$Proveidors= Proveidor::all();
-          $Proveidors= Proveidor::Paginate(10);
-        return view('Proveidor.index',compact('Proveidors'));
+         // $Proveidors= Proveidor::paginate(10);
+        return view('Proveidor.index');
     }
 
     /**
@@ -66,12 +66,9 @@ class ProveidorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        
-        $Proveidor = Proveidor::findOrFail($id);
-        
-        return view('Proveidor.show',compact('Proveidor'));
+        return view('Proveidor.show');
     }
 
     /**

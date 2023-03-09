@@ -2,10 +2,18 @@
 
 use Illuminate\Support\Facades\Route;
 //IMPORTANTE PONER LOS CONTROLLERS
-use App\Http\Controllers\ClientController;
-use App\Http\Controllers\TreballadorController;
-use App\Http\Controllers\ProducteController;
+// use App\Http\Controllers\ClientController;
+// use App\Http\Controllers\TreballadorController;
+// use App\Http\Controllers\ProducteController;
+// use App\Http\Controllers\ProveidorController;
+
+
+use Illuminate\Http\Request;
+
+use App\Http\Controllers\api\ProducteController;
 use App\Http\Controllers\ProveidorController;
+use App\Http\Controllers\api\Prod_ProvController;
+use App\Http\Controllers\api\ClientController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,8 +36,21 @@ Route::get('plantilla', function () {
 Route::group(['middleware'=>['auth']], function() {
 
 Route::get('/', function () {
-    return view('plantilla');
-})->name('plantilla');
+    return view('welcome');
+})->name('welcome');
+
+Route::get('/producte/create2', function () {
+    return view('Producte/index2');
+});
+
+Route::get('/client/create2', function(){
+    return view('Client/index2');
+});
+
+ Route::get('/treballador/create2', function(){
+     return view('Treballador/index2');
+ });
+
 
 });
 
@@ -39,7 +60,7 @@ Route::get('/Producte',[ProducteController::class,'index']);
 
 Route::get('/Producte/formnew',[ProducteController::class,'create']);
 
-Route::post('/Producte/save',[ProducteController::class,'store']);
+
 
 Route::get('/Producte/delete/{id}',[ProducteController::class,'destroy']);
 
@@ -82,7 +103,7 @@ Route::post('/Treballador/update/{id}',[TreballadorController::class,'update']);
 
 //Proveidor
 
-Route::get('/Proveidor',[ProveidorController::class,'index']);
+Route::get('/Proveidor/get',[ProveidorController::class,'index']);
 
 Route::get('/Proveidor/formnew',[ProveidorController::class,'create']);
 
@@ -97,5 +118,19 @@ Route::post('/Proveidor/update/{id}',[ProveidorController::class,'update']);
 Route::get('/Proveidor/show/{id}',[ProveidorController::class,'show']);
 
 //middleware
+Route::get('/token',function(Request $request){
+    if(auth()->check()){
+        auth()->user()->tokens()->delete();
+        $token = auth()->user()->createToken("prova");
+        return response()->json(['token' => $token->plainTextToken],200);
+    }
+    else{
+        return response()->json("NO AUTORIZADO",405);
+    }
+});
+
+
+//vista api 
+Route::get('/api/producte/create');
 });
 

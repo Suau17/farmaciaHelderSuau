@@ -2,7 +2,7 @@
 @section('content')
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -10,14 +10,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Producte</title>
     <script src="/productes/producte.js" defer>
-
     
-
 </script>
 <style>
-    body{
-        height: 100%;
-    }
     h1{
         text-align: center;
         margin-top: 3%;
@@ -26,16 +21,14 @@
         text-align: center;
         padding-bottom: 5%;
     }
-
     .table{
         text-align: center;
         border: solid 1px;
         margin-top: 2%;
     }
-    .rowDataTD:hover{
+    tr:hover{
         background-color: lightgrey;
     }
-
 </style>
 </head>
 
@@ -54,8 +47,8 @@
         <thead style="border: solid 1px;">
             <tr style="border: solid 1px;">
                 <th>id</th>
-                <th>nom</th>
-                <th>tipus</th>
+                <th>Nom</th>
+                <th>Tipus</th>
                 <th>Operacions</th>
             </tr>
         </thead>
@@ -66,6 +59,7 @@
     </div>
     <nav class = "mt-2">
         <ul id = 'pagination' class = 'pagination'>
+
         </ul>
     </nav>
 
@@ -74,4 +68,4 @@
 
 </html>
 
-    @endsection
+@endsection
