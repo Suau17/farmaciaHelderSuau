@@ -19,6 +19,25 @@ const Url = {
     delete: 'http://localhost:8000/api/producte/delete',
 }
 console.log(Url.get)
+
+
+function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for(let i = 0; i <ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+  }
+
+
 function showErrors(errors) {
 
     divErrors.style.display = "block"
@@ -96,11 +115,13 @@ async function saveProducte(event){
         "stock": producteStock.value
     }
     try{
+        console.log(document.cookie)
         const response = await fetch(Url.save, {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json',
-                'Accept': 'application/json'
+                'Accept': 'application/json',
+                'Authorization': 'Bearer '+ getCookie('token'),
             },
             body: JSON.stringify(newProducte)
         })
@@ -146,7 +167,8 @@ async function updateProducte(id){
             method: 'PUT',
             headers: {
                 'Content-type': 'application/json',
-                'Accept': 'application/json'
+                'Accept': 'application/json',
+                'Authorization': 'Bearer '+ getCookie('token'),
             },
             body: JSON.stringify(updateProducte) //   "{ 'name' : 'mart'}"
         })
@@ -182,7 +204,8 @@ async function updateProducte(id){
                 method: 'DELETE',
                 headers: {
                     'Content-type': 'application/json',
-                    'Accept': 'application/json'
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer '+ getCookie('token'),
                 },
     
             })

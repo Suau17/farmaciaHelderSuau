@@ -95,7 +95,8 @@ async function saveProducte(event) {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json',
-                'Accept': 'application/json'
+                'Accept': 'application/json',
+                'Authorization': 'Bearer '+ getCookie('token'),
             },
             body: JSON.stringify(newProveidor)
         })
@@ -116,6 +117,8 @@ async function saveProducte(event) {
     } catch (error) {
         errors.innerHTML = "S'ha produit un error inesperat"
     }
+    getProducte()
+    paginate()
 }
 
 function updateHTML(id, nomE, pais) {
@@ -137,7 +140,8 @@ async function updateProducte(id) {
             method: 'PUT',
             headers: {
                 'Content-type': 'application/json',
-                'Accept': 'application/json'
+                'Accept': 'application/json',
+                'Authorization': 'Bearer '+ getCookie('token'),
             },
             body: JSON.stringify(updateProducte) //   "{ 'name' : 'mart'}"
         })
@@ -166,7 +170,8 @@ async function deleteProducte(id) {
             method: 'DELETE',
             headers: {
                 'Content-type': 'application/json',
-                'Accept': 'application/json'
+                'Accept': 'application/json',
+                'Authorization': 'Bearer '+ getCookie('token'),
             },
 
         })
@@ -226,18 +231,7 @@ async function loadIntoTable(url){
         }
 
 
-        function afegirFila(row) {
-            console.log(row)
-            let taula = document.getElementById('taula')
-            taula.innerHTML += `
-            <tr>
-            <td id='${row.id}'>${row.id}</td>
-            <td>${row.nom}</td>
-            <td>${row.tipus}</td>
-            <td><button id='delete-${row.id}'>Eliminar</button></td>
-            </tr>
-            `
-        }
+    
 
 function afegirLinks(links){
     console.log("has entrat")
@@ -286,22 +280,5 @@ function afegirLinks(links){
     }
 }
 
-function afegirBoto(link){
 
-    const pagLi = document.createElement("li");
-    pagLi.classList.add('page-item');
-console.log(1)
-    const pagAnchor = document.createElement("a");
-    pagAnchor.innerHTML = link.label;
-    pagAnchor.addEventListener('click', function(event) {paginate(link.url)});
-    console.log(2)
-    pagAnchor.classList.add('page-link');
-    pagAnchor.setAttribute('href', "#");
-    console.log(3)
-    console.log(pagAnchor)
-
-    pagLi.appendChild(pagAnchor);
-    pagination.appendChild(pagLi);
-    console.log(4)
-}
 getProducte()

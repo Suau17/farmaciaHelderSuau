@@ -1,35 +1,81 @@
 @extends('plantilla')
 @section('content')
-<h1>Treballadors</h1>
-<a href="/Treballador/formnew">Login Treballador</a>
-<table border=1 class ="table">
-<thead class="thead-dark">
-    <tr>
-        <td>id</td>
-        <td>DNI</td>
-        <td>Nom</td>
-        <td>gender</td>
-        
-        
-    </tr>
-    </thead>
-    <tbody>
-    @foreach($Treballadors as $treballador)
-        <tr>
-            <td>{{ $treballador->id }}</td>
-            <td>{{ $treballador->dni }}</td>
-            <td>{{ $treballador->nom }}</td>
-            <td>{{ $treballador->genere }}</td>
-            
-            
-            <td>
-                
-                <a href="/Treballador/delete/{{ $treballador->id }}"><button type="button" class="btn btn-danger">Delete</button></a>
-                <a href="/Treballador/update/{{ $treballador->id }}"><button type="button" class="btn btn-primary">Update</button></a>
-            </td>
-        </tr>
-    @endforeach
-</tbody>
-</table>
-{{ $Treballadors->links('pagination::bootstrap-4') }}
-@endsection
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treballador</title>
+    <script src = "/treballador/treballadors.js" defer>
+
+    
+
+</script>
+<style>
+    h1{
+        text-align: center;
+        margin-top: 3%;
+    }
+    .div2{
+        text-align: center;
+        padding-bottom: 5%;
+    }
+
+    .table{
+        text-align: center;
+        border: solid 1px;
+        margin-top: 2%;
+    }
+    tr:hover{
+        background-color: lightgrey;
+    }
+</style>
+</head>
+
+<body>
+    <h1 >CRUD Treballador</h1>
+    <div class="div2">
+    <div>
+       DNI: <input type="text" name="dniT" id="dniT">
+        NOM: <input type="text" name="nomT" id="nomT">
+        <!-- <input type="text" name="genreT" id="genreT"> -->
+   GENERE: <select name="genreT" id="genreT">
+    
+     <option value="masculi" >masculi</option>
+    <option value="femeni">femeni</option>
+    </select>
+        <button id="saveButton">save</button>
+    </div>
+    <div id="resposta" role="alert"></div>
+    <div id="errors" role="alert"></div>
+    <!-- <button onClick="getProducte()">Mostrar Productos</button> -->
+    <table class="table">
+        <thead style="border: solid 1px;">
+            <tr style="border: solid 1px;">
+                <th>id</th>
+                <th>DNI</th>
+                <th>nom</th>
+                <th>genre</th>
+                <th>Operacions</th>
+            </tr>
+        </thead>
+        <tbody id="taula">
+
+        </tbody>
+    </table>
+    </div>
+    <nav class = "mt-2">
+        <ul id = 'pagination' class = 'pagination'>
+
+        </ul>
+    </nav>
+
+    </form>
+</body>
+
+</html>
+
+    @endsection

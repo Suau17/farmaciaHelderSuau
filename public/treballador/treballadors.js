@@ -101,7 +101,8 @@ async function saveTreballador(event){
             method: 'POST',
             headers: {
                 'Content-type': 'application/json',
-                'Accept': 'application/json'
+                'Accept': 'application/json',
+                'Authorization': 'Bearer '+ getCookie('token'),
             },
             body: JSON.stringify(newTreballador)
         })
@@ -146,7 +147,8 @@ async function updateTreballador(id){
             method: 'PUT',
             headers: {
                 'Content-type': 'application/json',
-                'Accept': 'application/json'
+                'Accept': 'application/json',
+                'Authorization': 'Bearer '+ getCookie('token'),
             },
             body: JSON.stringify(updateTreballador) //   "{ 'name' : 'mart'}"
         })
@@ -182,7 +184,8 @@ async function deletTreballador(id){
                 method: 'DELETE',
                 headers: {
                     'Content-type': 'application/json',
-                    'Accept': 'application/json'
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer '+ getCookie('token'),
                 },
     
             })

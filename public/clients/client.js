@@ -103,7 +103,8 @@ async function saveClient(event){
             method: 'POST',
             headers: {
                 'Content-type': 'application/json',
-                'Accept': 'application/json'
+                'Accept': 'application/json',
+                'Authorization': 'Bearer '+ getCookie('token'),
             },
             body: JSON.stringify(newClient)
         })
@@ -146,7 +147,8 @@ async function updateClient(id){
             method: 'PUT',
             headers: {
                 'Content-type': 'application/json',
-                'Accept': 'application/json'
+                'Accept': 'application/json',
+                'Authorization': 'Bearer '+ getCookie('token'),
             },
             body: JSON.stringify(updateClient)
         })
@@ -177,7 +179,8 @@ async function updateClient(id){
                 method: 'DELETE',
                 headers: {
                     'Content-type': 'application/json',
-                    'Accept': 'application/json'
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer '+ getCookie('token'),
                 },
     
             })

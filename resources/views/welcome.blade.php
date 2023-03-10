@@ -1,7 +1,6 @@
 @extends('plantilla')
 
 @section('content')
-<<<<<<< HEAD
 <script>
     function cookieExiste(nombreCookie) {
   var cookies = document.cookie.split(";"); // Divide todas las cookies en un array
@@ -23,8 +22,7 @@
         const response = await fetch(URL, {
             method: 'GET',
             headers: {
-                'Accept': 'aplication/json',
-                'authorization': 'Bearer '+ document.cookie,
+                'Accept': 'aplication/json'               
             }
         });
         const data = await response.json();
@@ -56,8 +54,6 @@
     
     getToken()
 </script>
-=======
->>>>>>> 389d845ff9e5fdbfb6922aa4de71f168c4db8f5a
 <div class="text-white">
     <div class="card-header">
     </div>  
