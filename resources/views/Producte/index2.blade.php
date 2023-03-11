@@ -38,6 +38,8 @@
     <div>
         NOM:<input type="text" name="producteNom" id="producteNom">
         TIPUS:<input type="text" name="producteTipus" id="producteTipus">
+        STOCK: <input type="text" name="producteStock" id="producteStock">
+        
         <button id="saveButton">save</button>
     </div>
     <div id="resposta" role="alert"></div>
@@ -47,8 +49,9 @@
         <thead style="border: solid 1px;">
             <tr style="border: solid 1px;">
                 <th>id</th>
-                <th>Nom</th>
-                <th>Tipus</th>
+                <th>nom</th>
+                <th>tipus</th>
+                <th>stock</th>
                 <th>Operacions</th>
             </tr>
         </thead>

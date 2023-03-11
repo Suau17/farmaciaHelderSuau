@@ -18,16 +18,22 @@ class ProducteSeeder extends Seeder
         //
         $productes = [
             ['nom'=>'Colistin Forest ',
-            'tipus'=>'ingerir'],
+            'tipus'=>'ingerir',
+             'stock' => '22'],
             ['nom'=>'Colistin Xellia',
-            'tipus'=>'vía inhalatoria'],
+            'tipus'=>'vía inhalatoria',
+            'stock' => '22'],
             ['nom'=>'ColiFin',
-            'tipus'=>'vía inhalatoria'],
+            'tipus'=>'vía inhalatoria',
+            'stock' => '22'],
 
             ['nom'=>'Promixin',
-            'tipus'=>'vía inhalatoria'],
+            'tipus'=>'vía inhalatoria',
+            'stock' => '22'],
+
             ['nom'=>'TADIM ',
-            'tipus'=>'COLIMICINA'], 
+            'tipus'=>'COLIMICINA',
+            'stock' => '22'], 
             ['nom'=>'Colistin Xellia',
             'tipus'=>'vía intravenosa'],
             ['nom'=>'COLFINAIR ',
