@@ -9,22 +9,25 @@ use App\Models\Pedido;
 class PedidoController extends Controller
 {
    
-    public function index($id)
+    public function index()
     {
-        if (auth()->user()->role == 'admin') {
-            $pedidos = Pedido::where('user_id', auth()->user()->id)
-                ->where('restaurante_id', $id)
-                ->get();
-            return response()->json(compact('pedidos'));
-        } else {
-            return response()->json(['message' => 'Unauthorized'], 401);
-        }
+      
+        $pedidos= Pedido::Paginate(10);
+        
+        $response = [
+            'success' => true, 
+            'message' => "Llista pedidos recuperada",
+            'data' => $pedidos, 
+        ];
+  
+        return response()->json($response, 200);  
+
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
+            'client_id' => 'required',
         ]);
 
         $pedido = new Pedido;
@@ -32,15 +35,28 @@ class PedidoController extends Controller
         $pedido->preuTotal = 0;
         $pedido->save();
 
-        return response()->json(['message' => 'Pedido creado correctamente']);
+        $response = [
+            'success' => true, 
+            'message' => "pedido creado con exito",
+            'data' => $pedido, 
+        ];
+  
+        return response()->json($response, 200); 
     }
 
-    public function showPedido($id, $idPedido)
+    public function showPedido($idPedido)
     {
         $pedido = Pedido::findOrFail($idPedido);
         $productesPedido = $pedido->productes()->where('pedido_id', $idPedido)->get();
 
-        return response()->json(compact('platosPedido', 'pedido'));
+        $response = [
+            'success' => true, 
+            'message' => "Llista pedidos recuperada",
+            'data' => $productesPedido, 
+            'pedido' => $pedido
+        ];
+  
+        return response()->json($response, 200); 
     }
 
     public function pagar($idPedido)
@@ -49,7 +65,12 @@ class PedidoController extends Controller
         $pedido->estado = 1;
         $pedido->save();
 
-        return response()->json(['message' => 'Pedido pagado correctamente']);
+        $response = [
+            'success' => true, 
+            'message' => "Pedido pagado y listo",
+        ];
+  
+        return response()->json($response, 200); 
     }
 
     public function update(Request $request, $id)
@@ -61,26 +82,44 @@ class PedidoController extends Controller
         $pedido = Pedido::findOrFail($id);
         $pedido->update($request->all());
 
-        return response()->json(['message' => 'Pedido actualizado correctamente']);
+        $response = [
+            'success' => true, 
+            'message' => "pedido actualizado",
+            'data' => $pedido, 
+        ];
+  
+        return response()->json($response, 200); 
     }
 
-    public function destroy($idRestaurante, $id)
+    public function destroy($id)
     {
         $pedido = Pedido::findOrFail($id);
         if ($pedido->estado == 0) {
             try {
                 $pedido->delete();
-                return response()->json(['message' => 'Pedido eliminado correctamente']);
+                $response = [
+                    'success' => true, 
+                    'message' => "pedido eliminado",
+                ];
+          
+                return response()->json($response, 200); 
             } catch (\Illuminate\Database\QueryException $e) {
-                return response()->json(['error' => 'Error eliminando el pedido'], 500);
+                $response = [
+                    'success' => true, 
+                    'message' => "error al eliminar el pedido",
+                ];
+          
+                return response()->json($response, 400); 
             }
         } else {
             return response()->json(['message' => 'El pedido ya está pagado'], 400);
         }
     }
 
-    public function agregarPlato($idRestaurante, $idPedido, $idProducte)
+    public function agregarProducte(Request $request)
     {
+        $idPedido = $request->idPedido;
+        $idProducte = $request->idProducte;
         $pedido = Pedido::findOrFail($idPedido);
         $producte = Producte::findOrFail($idProducte);
 
@@ -95,31 +134,41 @@ class PedidoController extends Controller
 
             $pedido->productes()->attach($idProducte);
 
-            return response()->json(['message' => 'Producto agregado correctamente']);
+            $response = [
+                'success' => true, 
+                'message' => "pedido agregado al carrito",
+            ];
+      
+            return response()->json($response, 200); 
         } else {
             return response()->json(['message' => 'El pedido ya está pagado'], 400);
         }
     }
     
-    public function deletePlato($idRestaurante,$idPedido, $idProducte){
-        
+    public function deleteProducte( $idPedido, $idProducte) {
         $pedido = Pedido::findOrFail($idPedido);
         $producte = Producte::findOrFail($idProducte);
         if ($pedido->estado == 0) {
-
             $preuProducte = $producte->preu;
             $preuPedido = $pedido->preuTotal;
-
             $preuTotal = $preuPedido - $preuProducte;
-
+    
             $pedido->preuTotal = $preuTotal;
             $pedido->save();
-            
+    
             $pedido->productes()->detach($idProducte);
-            return redirect()->route('ClientePedidos.index', $idRestaurante);
+            
+            $response = [
+                'success' => true, 
+                'message' => "pedido retirado del carrito",
+            ];
+      
+            return response()->json($response, 200); 
         } else {
-            return response('El pedido ya esta pagado', 200);
+            return response()->json([
+                'message' => 'El pedido ja està pagat'
+            ], 200);
         }
     }
+    
 }
-
