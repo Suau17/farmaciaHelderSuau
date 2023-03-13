@@ -15,4 +15,5 @@ class Client extends Model
         'genere',
         'tarja_sanitaria'
     ];
+    protected $table = 'clients';
 }

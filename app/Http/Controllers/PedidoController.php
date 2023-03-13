@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Producte; 
 use App\Models\Pedido;
+use App\Models\Client;
 
 class PedidoController extends Controller
 {
@@ -12,7 +13,7 @@ class PedidoController extends Controller
     public function index()
     {
       
-        $pedidos= Pedido::Paginate(10);
+        $pedidos = Pedido::with('client')->paginate(10);
         
         $response = [
             'success' => true, 
@@ -29,9 +30,10 @@ class PedidoController extends Controller
         $request->validate([
             'client_id' => 'required',
         ]);
+        $Client = Client::where('tarja_sanitaria', $request->tarjeta_sanitaria)->first();
 
         $pedido = new Pedido;
-        $pedido->client_id = $request->client_id;
+        $pedido->client_id = $Client->id;
         $pedido->preuTotal = 0;
         $pedido->save();
 

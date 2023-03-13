@@ -10,9 +10,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Producte</title>
 
-  
-    
 
+
+    <script src="/PedidosJS/operaciones2.js" defer></script>
 </head>
 <style>
     body {
@@ -56,7 +56,11 @@
 
     <div id="formPedidos" class="d-none">
         <form id="createPedido">
-            <input type="text">
+            <div class="form-group">
+                <label for="exampleInputEmail1">Tarjeta Sanitaria</label>
+                <input type="text" class="form-control" id="tarjeta_sanitaria" aria-describedby="emailHelp" placeholder="Enter email">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
 
@@ -65,8 +69,10 @@
             <thead style="border: solid 1px;">
                 <tr style="border: solid 1px;">
                     <th>id</th>
-                    <th>nom</th>
-                    <th>país</th>
+                    <th>Nom Client</th>
+                    <th>Tarjeta Sanitaria</th>
+                    <th>Preu Total</th>
+                    <th>Estado</th>
                     <th>Operacions</th>
                 </tr>
             </thead>
@@ -82,7 +88,7 @@
 
         </ul>
     </nav>
-    <script src="/PedidosJS/operaciones.js" defer />
+
 </body>
 
 </html>

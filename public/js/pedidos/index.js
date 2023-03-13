@@ -1,3 +1,4 @@
+console.log('egag')
 const formP = document.getElementById('formPedidos')
 const divPedidos = document.getElementById('divPedidos')
 function createPedidos() {
@@ -14,5 +15,3 @@ function viewPedidos() {
     formP.classList.add('d-none')
     formP.classList.remove('d-block')
 }
-
-console.log('egag')
