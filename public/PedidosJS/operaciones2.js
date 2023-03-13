@@ -1,9 +1,6 @@
 console.log('egag')
 const formP = document.getElementById('formPedidos')
-formP.onsubmit(
-    await crearPedido()
-    
-)
+
 const divPedidos = document.getElementById('divPedidos')
 function createPedidos() {
     formP.classList.add('d-block')
@@ -267,7 +264,9 @@ function updateHTML(id,nom,tipus,stock){
             console.log(4)
         }
 
-       function infoProv(){
+       function agregarCarrito(){
+        
+
         
        }
         getProducte()

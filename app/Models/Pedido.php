@@ -5,9 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Client;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 class Pedido extends Model
 {
-    use HasFactory;
+    use HasFactory, Notifiable, HasApiTokens;
 
     protected $fillable = [
         'client_id',
