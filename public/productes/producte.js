@@ -8,6 +8,7 @@ const divErrors = document.getElementById("errors");
 divErrors.style.display = "none";
 const producteNom = document.getElementById("producteNom");
 const producteTipus = document.getElementById("producteTipus");
+const producteStock = document.getElementById("producteStock");
 const saveButton = document.getElementById('saveButton');
 saveButton.addEventListener('click', onSave)
 
@@ -18,6 +19,25 @@ const Url = {
     delete: 'http://localhost:8000/api/producte/delete',
 }
 console.log(Url.get)
+
+
+function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for(let i = 0; i <ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+  }
+
+
 function showErrors(errors) {
 
     divErrors.style.display = "block"
@@ -49,8 +69,10 @@ function afegirFila(row) {
     <td id='${row.id}'>${row.id}</td>
     <td id='nom'>${row.nom}</td>
     <td id='tipus'>${row.tipus}</td>
+    <td id='stock'>${row.stock}</td>
     <td><button id='delete-${row.id}'>Eliminar</button></td>
-    <td><button id='update-${row.id}-${row.nom}-${row.tipus}'>Actualizar</button></td>
+    <td><button id='update-${row.id}-${row.nom}-${row.tipus}-${row.stock}'>Actualizar</button></td>
+    <td><button id='info-${row.id}'>info</button></td>
     </tr>
     `
 }
@@ -89,14 +111,17 @@ async function saveProducte(event){
     respostaDIV.className = "alert alert-success"
     var newProducte = {
         "nom": producteNom.value,
-        "tipus": producteTipus.value
+        "tipus": producteTipus.value,
+        "stock": producteStock.value
     }
     try{
+        console.log(document.cookie)
         const response = await fetch(Url.save, {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json',
-                'Accept': 'application/json'
+                'Accept': 'application/json',
+                'Authorization': 'Bearer '+ getCookie('token'),
             },
             body: JSON.stringify(newProducte)
         })
@@ -115,12 +140,14 @@ async function saveProducte(event){
         errors.innerHTML = "S'ha produit un error inesperat"
     }
     getProducte()
+    paginate()
 }
 
-function updateHTML(id,nom,tipus){
+function updateHTML(id,nom,tipus,stock){
     update = id
     producteNom.value=nom
     producteTipus.value=tipus
+    producteStock.value=stock
 
 }
 
@@ -131,7 +158,8 @@ async function updateProducte(id){
     update = false;
     var updateProducte = {
         "nom": producteNom.value,
-        "tipus": producteTipus.value
+        "tipus": producteTipus.value,
+        "stock": producteStock.value
     }
     console.log(updateProducte);
     try{
@@ -139,7 +167,8 @@ async function updateProducte(id){
             method: 'PUT',
             headers: {
                 'Content-type': 'application/json',
-                'Accept': 'application/json'
+                'Accept': 'application/json',
+                'Authorization': 'Bearer '+ getCookie('token'),
             },
             body: JSON.stringify(updateProducte) //   "{ 'name' : 'mart'}"
         })
@@ -147,6 +176,7 @@ async function updateProducte(id){
         const data = await response.json(); 
         producteNom.value = ""
         producteTipus.value = ""
+        producteStock.value = ""
         if (response.ok) {
             //afegirFila(data.data)
             respostaDIV.innerHTML = `Producte ${data.data.nom} creat correctament`
@@ -174,7 +204,8 @@ async function updateProducte(id){
                 method: 'DELETE',
                 headers: {
                     'Content-type': 'application/json',
-                    'Accept': 'application/json'
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer '+ getCookie('token'),
                 },
     
             })
@@ -195,7 +226,7 @@ async function updateProducte(id){
         } catch (error) {
             errors.innerHTML = "S'ha produit un error inesperat"
         }
-            
+         
     }
 
     async function loadIntoTable(url){
@@ -221,7 +252,8 @@ async function updateProducte(id){
                     const id = this.id.split("-")[1];
                     const nom = this.id.split("-")[2];
                     const tipus = this.id.split("-")[3];
-                    updateHTML(id, nom,tipus)
+                    const stock = this.id.split("-")[4];
+                    updateHTML(id, nom,tipus,stock)
                 });
             }
         }
@@ -263,5 +295,9 @@ async function updateProducte(id){
             pagination.appendChild(pagLi);
             console.log(4)
         }
+
+       function infoProv(){
+        
+       }
         getProducte()
     

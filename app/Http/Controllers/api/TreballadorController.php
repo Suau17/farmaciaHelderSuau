@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Treballador;
 use App\Http\Resources\TreballadorResource as TreballadorResource;
 use Validator;
+use Laravel\Sanctum\HasApiTokens;
 
 class TreballadorController extends Controller
 {

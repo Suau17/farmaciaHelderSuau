@@ -12,6 +12,22 @@ const genreT = document.getElementById("genreT");
 const saveButton = document.getElementById('saveButton');
 saveButton.addEventListener('click', onSave);
 
+function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for(let i = 0; i <ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+  }
+
 const Url = {
     get: 'http://localhost:8000/api/treballador',
     save: 'http://localhost:8000/api/treballador/save',
@@ -101,7 +117,8 @@ async function saveTreballador(event){
             method: 'POST',
             headers: {
                 'Content-type': 'application/json',
-                'Accept': 'application/json'
+                'Accept': 'application/json',
+                'Authorization': 'Bearer '+ getCookie('token'),
             },
             body: JSON.stringify(newTreballador)
         })
@@ -121,6 +138,7 @@ async function saveTreballador(event){
             errors.innerHTML = "S'ha produit un error inesperat"
         }
         getTreballador()
+        paginate()
 }
 
 function updateHTML(id,dni,nom,genere){
@@ -146,7 +164,8 @@ async function updateTreballador(id){
             method: 'PUT',
             headers: {
                 'Content-type': 'application/json',
-                'Accept': 'application/json'
+                'Accept': 'application/json',
+                'Authorization': 'Bearer '+ getCookie('token'),
             },
             body: JSON.stringify(updateTreballador) //   "{ 'name' : 'mart'}"
         })
@@ -182,7 +201,8 @@ async function deletTreballador(id){
                 method: 'DELETE',
                 headers: {
                     'Content-type': 'application/json',
-                    'Accept': 'application/json'
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer '+ getCookie('token'),
                 },
     
             })

@@ -39,10 +39,15 @@
     <h1 >CRUD CLIENTS</h1>
     <div class="div2">
     <div>
-	    <input type="text" id="clientDni">
-	    <input type="text" id="clientName">
-		<input type = "text" id = "clientGender">
-		<input type = "text" id = "clientTarja">
+	    DNI: <input type="text" id="clientDni">
+	    NOM: <input type="text" id="clientName">
+		
+       GENERE: <select name="clientGender" id="clientGender">
+    
+     <option value="masculi" >Masculí</option>
+    <option value="femeni">femeni</option>
+    </select>
+		TAREJETA SANITARIA:<input type = "text" id = "clientTarja">
         <button id="saveButton">save</button>
     </div>
     <div id="resposta" role="alert"></div>

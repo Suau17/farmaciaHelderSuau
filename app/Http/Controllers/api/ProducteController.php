@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Producte;
 use App\Http\Resources\ProducteResource as ProducteResource;
 use Validator;
+use Laravel\Sanctum\HasApiTokens;
 class ProducteController extends Controller
 {
     /**
@@ -55,6 +56,7 @@ class ProducteController extends Controller
          
           'nom' => 'required|min:3',
           'tipus' => 'required|max:256',
+          'stock' => 'required'
         ]);
 
         // Si alguna dada no és correcta
@@ -147,7 +149,8 @@ class ProducteController extends Controller
             return response()->json($response,404);
         }   
         $Productes->nom = $request->nom;
-        $Productes->tipus = $request->tipus;  
+        $Productes->tipus = $request->tipus; 
+        $Productes->stock = $request->stock; 
 
         $Productes->save();
         $response = [

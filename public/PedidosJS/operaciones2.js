@@ -1,3 +1,24 @@
+console.log('egag')
+const formP = document.getElementById('formPedidos')
+formP.onsubmit(
+    await crearPedido()
+    
+)
+const divPedidos = document.getElementById('divPedidos')
+function createPedidos() {
+    formP.classList.add('d-block')
+    formP.classList.remove('d-none')
+    divPedidos.classList.add('d-none')
+    divPedidos.classList.remove('d-block')
+
+}
+
+function viewPedidos() {
+    divPedidos.classList.add('d-block')
+    divPedidos.classList.remove('d-none')
+    formP.classList.add('d-none')
+    formP.classList.remove('d-block')
+}
 var rows = [];
 var selectId;
 var update = false;
@@ -6,13 +27,21 @@ const pagination = document.getElementById('pagination');
 const table = document.getElementById('taula');
 const divErrors = document.getElementById("errors");
 divErrors.style.display = "none";
+const producteNom = document.getElementById("producteNom");
+const producteTipus = document.getElementById("producteTipus");
+const producteStock = document.getElementById("producteStock");
 
-const clientDni = document.getElementById("clientDni");
-const clientNom = document.getElementById("clientName");
-const clientGenre = document.getElementById("clientGender");
-const clientTarja = document.getElementById("clientTarja");
-const saveButton = document.getElementById('saveButton')
-saveButton.addEventListener('click', onSave)
+
+
+const Url = {
+    get: 'http://localhost:8000/api/pedido/get',
+    save: 'http://localhost:8000/api/pedido/create',
+    pagar: 'http://localhost:8000/api/pedido/pagar',
+    delete: 'http://localhost:8000/api/pedido/delete',
+
+}
+console.log(Url.get)
+
 
 function getCookie(cname) {
     let name = cname + "=";
@@ -30,13 +59,7 @@ function getCookie(cname) {
     return "";
   }
 
-const Url = {
-    get: 'http://localhost:8000/api/client',
-    save: 'http://localhost:8000/api/client/save',
-    update: 'http://localhost:8000/api/client/update',
-    delete: 'http://localhost:8000/api/client/delete',
-}
-console.log(Url.get)
+
 function showErrors(errors) {
 
     divErrors.style.display = "block"
@@ -50,33 +73,26 @@ function showErrors(errors) {
     divErrors.appendChild(ul)
 }
 
-function onSave(event) {
-    console.log(update)
-    if (update === false) {
-        saveClient();
-    }
-    if (update != false) {
-        updateClient(update)
-    }
-}
 
 function afegirFila(row) {
     console.log(row)
     let taula = document.getElementById('taula')
     taula.innerHTML += `
-    <tr>
-        <td id='${row.id}'>${row.id}</td>
-        <td id='${row.dni}'>${row.dni}</td>
-        <td id='nom'>${row.nom}</td>
-        <td id='genere'>${row.genere}</td>
-        <td id='tarja_sanitaria'>${row.tarja_sanitaria}</td>
-        <td><button id='delete-${row.id}'>Eliminar</button></td>
-        <td><button id='update-${row.id}-${row.dni}-${row.nom}-${row.genere}-${row.tarja_sanitaria}'>Actualizar</button></td>
+    <tr class='rowDataTD'>
+    <td id='${row.id}'>${row.id}</td>
+    <td id='nom'>${row.client.nom}</td>
+    <td id='nom'>${row.client.tarja_sanitaria}</td>
+    <td id='tipus'>${row.preuTotal}</td>
+    <td id='stock'>${(row.estado == 1) ? 'Pagado' : 'Sin pagar'}</td>
+    ${(row.estado == 1) ? '' : '<td><button onClick="pagar(${row.id})">Pagar</button></td>'}
+    
+    <td><button id='info-${row.id}'>Detalles</button></td>
     </tr>
     `
 }
 
-async function getClient(){
+async function getProducte(){
+    console.log("has entrado")
     try{
         let taula = document.getElementById('taula')
         taula.innerHTML = ``;
@@ -90,7 +106,7 @@ async function getClient(){
         console.log(data)
         console.log(response)
         if (response.ok) {
-            pagination.innerHTML = ""
+            
             let links = data.data.links;
             loadIntoTable(Url.get);
         } else {
@@ -103,18 +119,17 @@ async function getClient(){
    
 }
 
-async function saveClient(event){
+async function saveProducte(event){
     let respostaDIV = document.getElementById('resposta')
     respostaDIV.innerHTML = "";
     respostaDIV.className = "alert alert-success"
-    var newClient = {
-        "dni": clientDni.value,
-        "nom": clientNom.value,
-        "genere": clientGenre.value,
-        "tarja_sanitaria": clientTarja.value,
-        
+    var newProducte = {
+        "nom": producteNom.value,
+        "tipus": producteTipus.value,
+        "stock": producteStock.value
     }
     try{
+        console.log(document.cookie)
         const response = await fetch(Url.save, {
             method: 'POST',
             headers: {
@@ -122,12 +137,12 @@ async function saveClient(event){
                 'Accept': 'application/json',
                 'Authorization': 'Bearer '+ getCookie('token'),
             },
-            body: JSON.stringify(newClient)
+            body: JSON.stringify(newProducte)
         })
         const data = await response.json();
         if (response.ok){
 
-            respostaDIV.innerHTML = `Client ${data.data.nom} creat correctament`
+            respostaDIV.innerHTML = `Producte ${data.data.nom} creat correctament`
             setTimeout(() => {
                 respostaDIV.innerHTML = "";
                 respostaDIV.className = ""
@@ -138,55 +153,20 @@ async function saveClient(event){
     }catch(error){
         errors.innerHTML = "S'ha produit un error inesperat"
     }
-    getClient()
+    getProducte()
+    paginate()
 }
 
-function updateHTML(id, dni, nom, genere, tarja_sanitaria){
+function updateHTML(id,nom,tipus,stock){
     update = id
-    clientDni.value = dni
-    clientNom.value = nom
-    clientGenre.value = genere
-    clientTarja.value = tarja_sanitaria
+    producteNom.value=nom
+    producteTipus.value=tipus
+    producteStock.value=stock
+
 }
 
-async function updateClient(id){
-    update = false;
-    var updateClient = {
-        "dni": clientDni.value,
-        "nom": clientNom.value,
-        "genere": clientGenre.value,
-        "tarja_sanitaria": clientTarja.value
-    }
-    console.log(updateClient)
-    try{
-        const response = await fetch(Url.update + '/' + id, {
-            method: 'PUT',
-            headers: {
-                'Content-type': 'application/json',
-                'Accept': 'application/json',
-                'Authorization': 'Bearer '+ getCookie('token'),
-            },
-            body: JSON.stringify(updateClient)
-        })
 
-        const data = await response.json(); 
-        clientDni.value = ""
-        clientNom.value = ""
-        clientGenre.value = ""
-        clientTarja.value = ""
-        if (response.ok) {
-            //afegirFila(data.data)
-            getClient()
-        } else {
-            showErrors(data.data)
-        }
-    } catch (error) {
-        errors.innerHTML = "S'ha produit un error inesperat"
-        operation = "inserting";
-    }
-    }
-
-    async function deleteClient(id){
+    async function deleteProducte(id){
         let respostaDIV = document.getElementById('resposta')
         respostaDIV.innerHTML = "";
         respostaDIV.className = "alert alert-danger"
@@ -203,7 +183,7 @@ async function updateClient(id){
             const data = await response.json();
             if(response.ok){
                 paginate()
-                respostaDIV.innerHTML = `Client ${data.data.nom} eliminat Correctament`
+                respostaDIV.innerHTML = `Producte ${data.data.nom} eliminat Correctament`
                 setTimeout(() => {
                     respostaDIV.innerHTML = "";
                     respostaDIV.className = ""
@@ -217,14 +197,14 @@ async function updateClient(id){
         } catch (error) {
             errors.innerHTML = "S'ha produit un error inesperat"
         }
-            
+         
     }
 
     async function loadIntoTable(url){
         try{
         const response = await fetch(url);
         const json = await response.json();
-        rows = json.data.data;  
+        rows = json.data.data;     
         for (const row of rows){
             afegirFila(row)
             const buttons = document.querySelectorAll('button[id^="delete-"]');
@@ -233,19 +213,18 @@ async function updateClient(id){
 
                 button.addEventListener("click", function () {
                     const id = this.id.split("-")[1];
-                    deleteClient(id)
-                    getClient()
+                    deleteProducte(id)
+                    getProducte()
                 });
             }
             for (let button of buttonsUpdate) {
 
                 button.addEventListener("click", function () {
                     const id = this.id.split("-")[1];
-                    const dni = this.id.split("-")[2];
-                    const nom = this.id.split("-")[3];
-                    const genere = this.id.split("-")[4];
-                    const tarja_sanitaria = this.id.split("-")[5];
-                    updateHTML(id, dni, nom, genere, tarja_sanitaria)
+                    const nom = this.id.split("-")[2];
+                    const tipus = this.id.split("-")[3];
+                    const stock = this.id.split("-")[4];
+                    updateHTML(id, nom,tipus,stock)
                 });
             }
         }
@@ -273,13 +252,23 @@ async function updateClient(id){
         
             const pagLi = document.createElement("li");
             pagLi.classList.add('page-item');
+        console.log(1)
             const pagAnchor = document.createElement("a");
             pagAnchor.innerHTML = link.label;
             pagAnchor.addEventListener('click', function(event) {paginate(link.url)});
+            console.log(2)
             pagAnchor.classList.add('page-link');
-            pagAnchor.setAttribute('href', "#");        
+            pagAnchor.setAttribute('href', "#");
+            console.log(3)
+            console.log(pagAnchor)
+        
             pagLi.appendChild(pagAnchor);
             pagination.appendChild(pagLi);
+            console.log(4)
         }
-        getClient()
+
+       function infoProv(){
+        
+       }
+        getProducte()
     

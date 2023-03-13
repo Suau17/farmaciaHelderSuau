@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Validator;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Sanctum\HasApiTokens;
 
 class RegisterController extends Controller
 {

@@ -12,6 +12,8 @@ class Producte extends Model
         'id',
         'nom',
         'tipus',
+        'preu',
+        'stock'
         
         
     ];
