@@ -12,37 +12,36 @@
 
 
 
-    <script src="/PedidosJS/operaciones2.js" defer></script>
 </head>
 <style>
     body {
         height: 100%;
     }
-
+    
     h1 {
         text-align: center;
         margin-top: 3%;
     }
-
+    
     .div2 {
         text-align: center;
         padding-bottom: 5%;
     }
-
+    
     .table {
         text-align: center;
         border: solid 1px;
         margin-top: 2%;
     }
-
+    
     .rowDataTD:hover {
         background-color: lightgrey;
     }
-
+    
     .mt-2 {
         margin-bottom: 10%;
     }
-</style>
+    </style>
 
 <body>
     <h1>CRUD PROVEIDORS</h1>
@@ -50,20 +49,20 @@
         <button id="btnCreate" onclick="createPedidos()">Crear Pedido</button>
         <button id="btnList" onclick="viewPedidos()">Ver Pedidos</button>
     </div>
-
+    
     <div id="resposta" role="alert"></div>
     <div id="errors" role="alert"></div>
-
+    
     <div id="formPedidos" class="d-none">
-        <form id="createPedido">
+        <div id="createPedido">
             <div class="form-group">
                 <label for="exampleInputEmail1">Tarjeta Sanitaria</label>
-                <input type="text" class="form-control" id="tarjeta_sanitaria" aria-describedby="emailHelp" placeholder="Enter email">
+                <input type="text" class="form-control" id="formTargetaSanitaria" aria-describedby="emailHelp" placeholder="Enter email">
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+            <button type="submit" class="btn btn-primary" onclick="savePedido()">Submit</button>
+        </div>
     </div>
-
+    
     <div id='divPedidos'>
         <table class="table">
             <thead style="border: solid 1px;">
@@ -77,18 +76,19 @@
                 </tr>
             </thead>
             <tbody id="taula">
-
+                
             </tbody>
         </table>
     </div>
+    
+</form>
+<nav class="mt-2">
+    <ul id='pagination' class='pagination'>
+        
+    </ul>
+</nav>
 
-    </form>
-    <nav class="mt-2">
-        <ul id='pagination' class='pagination'>
-
-        </ul>
-    </nav>
-
+<script src="/PedidosJS/operaciones2.js" defer></script>
 </body>
 
 </html>
