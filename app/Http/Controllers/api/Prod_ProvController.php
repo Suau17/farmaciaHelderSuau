@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Prod_Prov;
 use App\Http\Resources\Prod_ProvResource as Prod_ProvResource;
-
+use Laravel\Sanctum\HasApiTokens;
 class Prod_ProvController extends Controller
 {
     /**
