@@ -1,9 +1,6 @@
 console.log('egag')
 const formP = document.getElementById('formPedidos')
-formP.onsubmit(
-    await crearPedido()
-    
-)
+
 const divPedidos = document.getElementById('divPedidos')
 function createPedidos() {
     formP.classList.add('d-block')
@@ -27,7 +24,7 @@ const pagination = document.getElementById('pagination');
 const table = document.getElementById('taula');
 const divErrors = document.getElementById("errors");
 divErrors.style.display = "none";
-const producteNom = document.getElementById("producteNom");
+const formTargetaSanitaria = document.getElementById("formTargetaSanitaria");
 const producteTipus = document.getElementById("producteTipus");
 const producteStock = document.getElementById("producteStock");
 
@@ -38,9 +35,7 @@ const Url = {
     save: 'http://localhost:8000/api/pedido/create',
     pagar: 'http://localhost:8000/api/pedido/pagar',
     delete: 'http://localhost:8000/api/pedido/delete',
-
 }
-console.log(Url.get)
 
 
 function getCookie(cname) {
@@ -113,23 +108,24 @@ async function getProducte(){
             showErrors(data.data)
         }
     } catch (error) {
-        errors.innerHTML = "An unexpected error has occurred"
+        error.innerHTML = "An unexpected error has occurred"
     }
         
    
 }
 
-async function saveProducte(event){
+///////////////////////////////////////////
+
+
+async function savePedido(){
+ 
     let respostaDIV = document.getElementById('resposta')
     respostaDIV.innerHTML = "";
     respostaDIV.className = "alert alert-success"
     var newProducte = {
-        "nom": producteNom.value,
-        "tipus": producteTipus.value,
-        "stock": producteStock.value
+        "tarjeta_sanitaria": formTargetaSanitaria.value
     }
     try{
-        console.log(document.cookie)
         const response = await fetch(Url.save, {
             method: 'POST',
             headers: {
@@ -140,8 +136,11 @@ async function saveProducte(event){
             body: JSON.stringify(newProducte)
         })
         const data = await response.json();
+        console.log('AAAAAAAAAAAAAAA')
+        console.log(data)
+        console.log('AAAAAAAAAAAAAAA')
         if (response.ok){
-
+            location.href = `http://localhost:8000/api/pedido/get/${data.data.id}`;
             respostaDIV.innerHTML = `Producte ${data.data.nom} creat correctament`
             setTimeout(() => {
                 respostaDIV.innerHTML = "";

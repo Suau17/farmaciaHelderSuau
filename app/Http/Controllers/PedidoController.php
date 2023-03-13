@@ -28,7 +28,7 @@ class PedidoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'client_id' => 'required',
+            'tarjeta_sanitaria' => 'required',
         ]);
         $Client = Client::where('tarja_sanitaria', $request->tarjeta_sanitaria)->first();
 
