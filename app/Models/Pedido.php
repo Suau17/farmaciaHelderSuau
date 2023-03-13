@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use App\Models\Client;
 class Pedido extends Model
 {
     use HasFactory;
@@ -25,5 +25,10 @@ class Pedido extends Model
         	'producte_pedido');
        
      }
-    
+
+     
+     public function client()
+     {
+         return $this->belongsTo(Client::class);
+     }
 }

@@ -46,6 +46,9 @@ Route::get('/producte/create2', function () {
 
 
 });
+Route::get('/pedidos', function () {
+    return view('pedidos/index');
+})->name('welcome');
 
 //Producte
 

@@ -11,6 +11,13 @@
 <style>
     li a{
         color: white;
+        margin: 0;
+    }
+    li a:hover{
+        color: white;
+        background-color: #353536;
+        transition: 0.9s;
+        border-radius: 6%;
     }
 </style>
 
@@ -37,6 +44,9 @@
                 @endif
                 <li class="nav-item">
                     <a class="nav-link " href="{{ url('/producte/create2') }}" style="color:white">Producte</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="{{ url('/pedidos') }}" style="color:white">Pedidos</a>
                 </li>
                 @guest
                 @if (Route::has('login'))
