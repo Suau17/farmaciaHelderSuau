@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Client;
 use App\Http\Resources\ClientResource as ClientResource;
-
+use Laravel\Sanctum\HasApiTokens;
 use Validator;
 
 class ClientController extends Controller

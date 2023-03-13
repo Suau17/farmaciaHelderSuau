@@ -8,6 +8,7 @@ use App\Models\Proveidor;
 use App\Http\Resources\ProveidorResource as ProveidorResource;
 use App\Models\Producte;
 use Validator;
+use Laravel\Sanctum\HasApiTokens;
 
 class ProveidorController extends Controller
 {

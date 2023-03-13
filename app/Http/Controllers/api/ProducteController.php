@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Producte;
 use App\Http\Resources\ProducteResource as ProducteResource;
 use Validator;
+use Laravel\Sanctum\HasApiTokens;
 class ProducteController extends Controller
 {
     /**
