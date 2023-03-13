@@ -140,7 +140,7 @@ async function savePedido(){
         console.log(data)
         console.log('AAAAAAAAAAAAAAA')
         if (response.ok){
-            location.href = `http://localhost:8000/api/pedido/get/${data.data.id}`;
+            location.href = `http://localhost:8000/pedido/${data.data.id}`;
             respostaDIV.innerHTML = `Producte ${data.data.nom} creat correctament`
             setTimeout(() => {
                 respostaDIV.innerHTML = "";
