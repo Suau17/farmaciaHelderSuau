@@ -281,7 +281,7 @@ async function updateProducte(id){
         
             const pagLi = document.createElement("li");
             pagLi.classList.add('page-item');
-        console.log(1)
+            console.log(1)
             const pagAnchor = document.createElement("a");
             pagAnchor.innerHTML = link.label;
             pagAnchor.addEventListener('click', function(event) {paginate(link.url)});
@@ -297,7 +297,6 @@ async function updateProducte(id){
         }
 
        function infoProv(){
-        
+            
        }
         getProducte()
-    

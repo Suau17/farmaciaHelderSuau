@@ -121,10 +121,11 @@ class PedidoController extends Controller
     public function agregarProducte(Request $request)
     {
         $idPedido = $request->idPedido;
-        $idProducte = $request->idProducte;
+        $nomProducte = $request->nom;
         $pedido = Pedido::findOrFail($idPedido);
-        $producte = Producte::findOrFail($idProducte);
-
+        //$producte2 = Producte::findOrFail($nomProducte);
+        $producte = Producte::where('nom', $request->nom)->first();
+        if($producte==null)   return response()->json("no trobat", 200); 
         if ($pedido->estado == 0) {
             $preuProducte = $producte->preu;
             $preuPedido = $pedido->preuTotal;
@@ -134,7 +135,8 @@ class PedidoController extends Controller
             $pedido->preuTotal = $preuTotal;
             $pedido->save();
 
-            $pedido->productes()->attach($idProducte);
+            
+            //$pedido->productes()->attach($producte->id);
 
             $response = [
                 'success' => true, 

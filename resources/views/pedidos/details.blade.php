@@ -41,6 +41,13 @@
     .mt-2 {
         margin-bottom: 10%;
     }
+
+    .buscar{
+        float:right;
+        margin-bottom: 1%;
+    }
+
+    
     </style>
 
 <body>
@@ -65,12 +72,15 @@
                 </tr>
             </thead>
             <tbody id="taula">
-                
+                <div class="buscar">
+                    <input type = "text" placeholder = "Buscar el producte..." id="buscador"></input>
+                    <button onClick = "agregar()">Agregar</button>
+                </div>
             </tbody>
             </table>
     </div>
 
-<script src="/PedidosJS/details.js" defer></script>
+<script src="/PedidosJS/detailsprova.js" defer></script>
 </body>
 
 </html>

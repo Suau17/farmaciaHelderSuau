@@ -159,7 +159,6 @@ async function loadIntoTable(url){
         }
     }
 
-    
 
 getProducte();
 
