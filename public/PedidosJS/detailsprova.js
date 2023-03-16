@@ -9,6 +9,10 @@ let URLactual = window.location;
 let urlSplit = URLactual.pathname.split('/');
 let idURL = urlSplit[(urlSplit.length-1)];
 
+const nom = document.getElementById("nom");
+const tipus = document.getElementById("tipus");
+const stock = document.getElementById("stock");
+
 const producteNom = document.getElementById("buscador");
 
 const Url = {
@@ -55,13 +59,10 @@ function afegirFila(row) {
     taula.innerHTML += `
     <tr class='rowDataTD'>
     <td id='${row.id}'>${row.id}</td>
-    <td id='nom'>${row.client.nom}</td>
-    <td id='nom'>${row.client.tarja_sanitaria}</td>
-    <td id='tipus'>${row.preuTotal}</td>
-    <td id='stock'>${(row.estado == 1) ? 'Pagado' : 'Sin pagar'}</td>
-    ${(row.estado == 1) ? '' : '<td><button onClick="pagar(${row.id})">Pagar</button></td>'}
-    
-    <td><button id='info-${row.id}'>Detalles</button></td>
+    <td id='nom'>${row.nom}</td>
+    <td id='tipus'>${row.tipus}</td>
+    <td id='preu'>${row.preu}€</td>
+    <td id='stock'>${row.stock }</td>
     </tr>
     `
 }
@@ -147,11 +148,12 @@ async function agregar(){
             },
             body: JSON.stringify(prod)
         })
-        console.log("ey2")
+       
         const data = await response.json();
         if (response.ok) {
+            console.log("ey2")
             console.log(data)
-            afegirTaula()
+            afegirFila(data.producte)
         } else {
             showErrors(data.data)
         }
@@ -161,67 +163,8 @@ async function agregar(){
     console.log("ey")
 }
 
-async function llista(){
-    console.log("has entrado")
-    try{
-        let taula = document.getElementById('taula')
-        taula.innerHTML = ``;
-        const response = await fetch(Url.list,{
-            method: 'GET',
-            headers:{
-                'Accept':'aplication/json'
-            }
-        });
-        const data = await response.json();
-        console.log(data)
-        console.log(response)
-        if (response.ok) {
-            
-            let list = document.getElementById("listProductes");
-            console.log("llista")
-            console.log(data.data.data)
-            let lista = data.data
-            lista.forEach(element => {
-                list.innerHTML += `<option value="${element.nom}">`
-            });
-            //data.data.data.forEach(e=>console.log(e))
-        } else {
-            showErrors(data.data)
-        }
-    } catch (error) {
-        errors.innerHTML = "An unexpected error has occurred"
-    }
-        
-   
-}
 
-async function afegirTaula(){
-    console.log("has entrado")
-    try{
-        let taula = document.getElementById('taula')
-        taula.innerHTML = ``;
-        const response = await fetch(Url.getPedido,{
-            method: 'GET',
-            headers:{
-                'Accept':'aplication/json'
-            }
-        });
-        const data = await response.json();
-        console.log(data)
-        console.log(response)
-        if (response.ok) {
-            
-            let links = data.data.links;
-            loadIntoTable(Url.getProducto);
-        } else {
-            showErrors(data.data)
-        }
-    } catch (error) {
-        error.innerHTML = "An unexpected error has occurred"
-    }
-        
-   
-}
+
 
 async function loadIntoTable(url){
     try{
@@ -230,14 +173,13 @@ async function loadIntoTable(url){
     rows = json.data.data;     
     for (const row of rows){
         afegirFila(row)
-        const buttons = document.querySelectorAll('button[id^="delete-"]');
-        const buttonsUpdate = document.querySelectorAll('button[id^="update-"]');
         for (let button of buttons) {
 
             button.addEventListener("click", function () {
                 const id = this.id.split("-")[1];
                 deleteProducte(id)
-                getPedido()
+                afegir()
+                afegirFila()
             });
         }
         for (let button of buttonsUpdate) {
@@ -275,4 +217,3 @@ async function loadIntoTable(url){
 
     getPedido()
     getProducte()
-    llista()

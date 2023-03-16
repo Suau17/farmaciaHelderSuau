@@ -47,7 +47,7 @@
     <h1>CRUD PROVEIDORS</h1>
     <div>
         <button id="btnCreate" onclick="createPedidos()">Crear Pedido</button>
-        <button id="btnList" onclick="viewPedidos()">Ver Pedidos</button>
+        <!-- <button id="btnList" onclick="viewPedidos()">Ver Pedidos</button> -->
     </div>
     
     <div id="resposta" role="alert"></div>

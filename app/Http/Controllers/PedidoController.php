@@ -141,6 +141,7 @@ class PedidoController extends Controller
             $response = [
                 'success' => true, 
                 'message' => "pedido agregado al carrito",
+                'producte' => $producte
             ];
       
             return response()->json($response, 200); 

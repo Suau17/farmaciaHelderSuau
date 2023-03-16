@@ -64,11 +64,10 @@
             <thead style="border: solid 1px;">
                 <tr style="border: solid 1px;">
                     <th>id</th>
-                    <th>Nom Client</th>
-                    <th>Tarjeta Sanitaria</th>
-                    <th>Preu Total</th>
-                    <th>Estado</th>
-                    <th>Operacions</th>
+                    <th>Nom Producte</th>
+                    <th>Tipus</th>
+                    <th>Preu</th>
+                    <th>Stock</th>
                 </tr>
             </thead>
             <tbody id="taula">

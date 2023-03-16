@@ -72,7 +72,6 @@ function afegirFila(row) {
     <td id='stock'>${row.stock}</td>
     <td><button id='delete-${row.id}'>Eliminar</button></td>
     <td><button id='update-${row.id}-${row.nom}-${row.tipus}-${row.stock}'>Actualizar</button></td>
-    <td><button id='info-${row.id}'>info</button></td>
     </tr>
     `
 }
