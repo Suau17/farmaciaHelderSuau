@@ -136,7 +136,7 @@ class PedidoController extends Controller
             $pedido->save();
 
             
-            //$pedido->productes()->attach($producte->id);
+            $pedido->productes()->attach($producte->id);
 
             $response = [
                 'success' => true, 

@@ -73,12 +73,18 @@
             </thead>
             <tbody id="taula">
                 <div class="buscar">
-                    <input type = "text" placeholder = "Buscar el producte..." id="buscador"></input>
+                    <input type = "text" list='listProductes' placeholder = "Buscar el producte..." id="buscador"></input>
                     <button onClick = "agregar()">Agregar</button>
                 </div>
             </tbody>
+
             </table>
     </div>
+
+    <datalist id="listProductes">
+        
+    </datalist>
+
 
 <script src="/PedidosJS/detailsprova.js" defer></script>
 </body>

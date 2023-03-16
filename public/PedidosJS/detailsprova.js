@@ -1,3 +1,4 @@
+
 var rows = [];
 var selectId;
 var update = false;
@@ -14,7 +15,7 @@ const Url = {
     getProducto: 'http://localhost:8000/api/producte',
     getPedido: 'http://localhost:8000/api/pedido/get/' + idURL,
     addProducte: 'http://localhost:8000/api/pedido/agregar',
-    delete: 'http://localhost:8000/api/producte/delete',
+    list: 'http://localhost:8000/api/producte/list',
 }
 console.log(Url.get)
 
@@ -46,6 +47,23 @@ function showErrors(errors) {
         ul.appendChild(li);
     }
     divErrors.appendChild(ul)
+}
+
+function afegirFila(row) {
+    console.log(row)
+    let taula = document.getElementById('taula')
+    taula.innerHTML += `
+    <tr class='rowDataTD'>
+    <td id='${row.id}'>${row.id}</td>
+    <td id='nom'>${row.client.nom}</td>
+    <td id='nom'>${row.client.tarja_sanitaria}</td>
+    <td id='tipus'>${row.preuTotal}</td>
+    <td id='stock'>${(row.estado == 1) ? 'Pagado' : 'Sin pagar'}</td>
+    ${(row.estado == 1) ? '' : '<td><button onClick="pagar(${row.id})">Pagar</button></td>'}
+    
+    <td><button id='info-${row.id}'>Detalles</button></td>
+    </tr>
+    `
 }
 
 async function getPedido(){
@@ -110,35 +128,151 @@ function updateHTML(id,nom,tipus,stock){
 
 }
 
-function agregar(){
+async function agregar(){
+
+    let taula = document.getElementById('taula')
+    taula.innerHTML = ``;
 
     let prod ={
         "idPedido": idURL,
         "nom": producteNom.value
     }
     try{
-        const response = fetch(Url.addProducte,{
+        const response = await fetch(Url.addProducte,{
             method: 'POST',
             headers:{
-                'Accept':'aplication/json'
+                'Content-type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': 'Bearer '+ getCookie('token'),
             },
             body: JSON.stringify(prod)
-        });
-
-        const data = response.json();
+        })
+        console.log("ey2")
+        const data = await response.json();
         if (response.ok) {
             console.log(data)
-            
+            afegirTaula()
         } else {
             showErrors(data.data)
         }
     } catch (error) {
         errors.innerHTML = "An unexpected error has occurred"
     }
-    
+    console.log("ey")
 }
+
+async function llista(){
+    console.log("has entrado")
+    try{
+        let taula = document.getElementById('taula')
+        taula.innerHTML = ``;
+        const response = await fetch(Url.list,{
+            method: 'GET',
+            headers:{
+                'Accept':'aplication/json'
+            }
+        });
+        const data = await response.json();
+        console.log(data)
+        console.log(response)
+        if (response.ok) {
+            
+            let list = document.getElementById("listProductes");
+            console.log("llista")
+            console.log(data.data.data)
+            let lista = data.data
+            lista.forEach(element => {
+                list.innerHTML += `<option value="${element.nom}">`
+            });
+            //data.data.data.forEach(e=>console.log(e))
+        } else {
+            showErrors(data.data)
+        }
+    } catch (error) {
+        errors.innerHTML = "An unexpected error has occurred"
+    }
+        
+   
+}
+
+async function afegirTaula(){
+    console.log("has entrado")
+    try{
+        let taula = document.getElementById('taula')
+        taula.innerHTML = ``;
+        const response = await fetch(Url.getPedido,{
+            method: 'GET',
+            headers:{
+                'Accept':'aplication/json'
+            }
+        });
+        const data = await response.json();
+        console.log(data)
+        console.log(response)
+        if (response.ok) {
+            
+            let links = data.data.links;
+            loadIntoTable(Url.getProducto);
+        } else {
+            showErrors(data.data)
+        }
+    } catch (error) {
+        error.innerHTML = "An unexpected error has occurred"
+    }
+        
+   
+}
+
+async function loadIntoTable(url){
+    try{
+    const response = await fetch(url);
+    const json = await response.json();
+    rows = json.data.data;     
+    for (const row of rows){
+        afegirFila(row)
+        const buttons = document.querySelectorAll('button[id^="delete-"]');
+        const buttonsUpdate = document.querySelectorAll('button[id^="update-"]');
+        for (let button of buttons) {
+
+            button.addEventListener("click", function () {
+                const id = this.id.split("-")[1];
+                deleteProducte(id)
+                getPedido()
+            });
+        }
+        for (let button of buttonsUpdate) {
+
+            button.addEventListener("click", function () {
+                const id = this.id.split("-")[1];
+                const nom = this.id.split("-")[2];
+                const tipus = this.id.split("-")[3];
+                const stock = this.id.split("-")[4];
+                updateHTML(id, nom,tipus,stock)
+            });
+        }
+    }
+    const links = json.data.links;
+    console.log(links)
+    afegirLinks(links)
+    }  catch(error) {
+        errors.innerHTML = "No es pot accedir a la base de dades"
+    }
+    }
+    function paginate(url){
+        pagination.innerHTML = "";
+        taula.innerHTML = "";
+        loadIntoTable(url);
+    }
+    function afegirLinks(links){
+        for (const link of links){
+            console.log(link)
+            afegirBoto(link)
+            
+        }
+    }
     
 
 
     getPedido()
     getProducte()
+    llista()

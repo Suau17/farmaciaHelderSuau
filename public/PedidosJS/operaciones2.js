@@ -164,41 +164,6 @@ function updateHTML(id,nom,tipus,stock){
 
 }
 
-
-    async function deleteProducte(id){
-        let respostaDIV = document.getElementById('resposta')
-        respostaDIV.innerHTML = "";
-        respostaDIV.className = "alert alert-danger"
-        try {
-            const response = await fetch(Url.delete + '/' + id, {
-                method: 'DELETE',
-                headers: {
-                    'Content-type': 'application/json',
-                    'Accept': 'application/json',
-                    'Authorization': 'Bearer '+ getCookie('token'),
-                },
-    
-            })
-            const data = await response.json();
-            if(response.ok){
-                paginate()
-                respostaDIV.innerHTML = `Producte ${data.data.nom} eliminat Correctament`
-                setTimeout(() => {
-                    respostaDIV.innerHTML = "";
-                    respostaDIV.className = ""
-                }, "4000")
-    
-                //	afegirFila(data.data)
-            } else {
-                showErrors(data.data)
-            }
-    
-        } catch (error) {
-            errors.innerHTML = "S'ha produit un error inesperat"
-        }
-         
-    }
-
     async function loadIntoTable(url){
         try{
         const response = await fetch(url);
@@ -212,7 +177,7 @@ function updateHTML(id,nom,tipus,stock){
 
                 button.addEventListener("click", function () {
                     const id = this.id.split("-")[1];
-                    deleteProducte(id)
+                    pagar(id)
                     getProducte()
                 });
             }
@@ -266,8 +231,38 @@ function updateHTML(id,nom,tipus,stock){
             console.log(4)
         }
 
-       function infoProv(){
+        async function pagar(id) {
+            let respostaDIV = document.getElementById('resposta')
+            respostaDIV.innerHTML = "";
+            respostaDIV.className = "alert alert-danger"
+            
+            try {
+                const response = await fetch(Url.delete + '/' + id, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-type': 'application/json',
+                        'Accept': 'application/json',
+                        'Authorization': 'Bearer '+ getCookie('token'),
+                    },
         
-       }
+                })
+                const data = await response.json();
+                if (response.ok) {
+                    console.log(data.data.nom)
+                    respostaDIV.innerHTML = `Comanda ${data.data.nom} eliminada Correctament`
+                    setTimeout(() => {
+                        respostaDIV.innerHTML = "";
+                        respostaDIV.className = ""
+                    }, "4000")
+        
+                    //	afegirFila(data.data)
+                } else {
+                    showErrors(data.data)
+                }
+        
+            } catch (error) {
+                error.innerHTML = "S'ha produit un error inesperat"
+            }
+        }
+
         getProducte()
-    

@@ -28,6 +28,18 @@ class ProducteController extends Controller
         ];
         return response()->json($response, 200);
     }
+    public function list()
+    {
+        //
+        $Productes= Producte::all();
+        // return viebw('Producte.index',compact('Productes'));
+        $response = [
+            'success' => true,  // Per indicar que Tot ha anat bé
+          'message' => "Llista de tots els productes per a datalist", // missatge
+          'data' => $Productes,
+        ];
+        return response()->json($response, 200);
+    }
 
     /**
      * Show the form for creating a new resource.

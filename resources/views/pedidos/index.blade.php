@@ -62,6 +62,8 @@
             <button type="submit" class="btn btn-primary" onclick="savePedido()">Submit</button>
         </div>
     </div>
+    <div id="resposta" role="alert"></div>
+    <div id="errors" role="alert"></div>
     
     <div id='divPedidos'>
         <table class="table">
