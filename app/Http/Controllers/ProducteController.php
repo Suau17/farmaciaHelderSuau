@@ -49,6 +49,7 @@ class ProducteController extends Controller
         $Productes = new Producte;
         $Productes->nom = $request->nom;
         $Productes->tipus = $request->tipus;
+        $Productes->stock = $request->stock;
         
         $Productes->save();
         return redirect('/Producte');
@@ -99,6 +100,7 @@ class ProducteController extends Controller
         $Productes = Producte::findOrFail($id);
         $Productes->nom = $request->nom;
         $Productes->tipus= $request->tipus;
+        $Productes->stock = $request->stock;
         $Productes->save();
         return redirect('/Producte');
     }

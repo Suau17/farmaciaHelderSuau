@@ -2,10 +2,19 @@
 
 use Illuminate\Support\Facades\Route;
 //IMPORTANTE PONER LOS CONTROLLERS
+// use App\Http\Controllers\ClientController;
+// use App\Http\Controllers\TreballadorController;
+// use App\Http\Controllers\ProducteController;
+// use App\Http\Controllers\ProveidorController;
+
+
+use Illuminate\Http\Request;
+
+use App\Http\Controllers\api\ProducteController;
+use App\Http\Controllers\ProveidorController;
+use App\Http\Controllers\api\Prod_ProvController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\TreballadorController;
-use App\Http\Controllers\ProducteController;
-use App\Http\Controllers\ProveidorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,10 +37,22 @@ Route::get('plantilla', function () {
 Route::group(['middleware'=>['auth']], function() {
 
 Route::get('/', function () {
-    return view('plantilla');
-})->name('plantilla');
+    return view('welcome');
+})->name('welcome');
+
+Route::get('/producte/create2', function () {
+    return view('Producte/index2');
+});
+
 
 });
+Route::get('/pedidos', function () {
+    return view('pedidos/index');
+})->name('welcome');
+
+Route::get('/pedido/{id}', function () {
+    return view('pedidos/details');
+})->name('welcome');
 
 //Producte
 
@@ -39,7 +60,7 @@ Route::get('/Producte',[ProducteController::class,'index']);
 
 Route::get('/Producte/formnew',[ProducteController::class,'create']);
 
-Route::post('/Producte/save',[ProducteController::class,'store']);
+
 
 Route::get('/Producte/delete/{id}',[ProducteController::class,'destroy']);
 
@@ -54,7 +75,7 @@ Route::group(['middleware'=>['auth','role:admin']], function() {
 
 //Client
 
-Route::get('/Client',[ClientController::class,'index']);
+Route::get('/Client/get',[ClientController::class,'index']);
 
 Route::get('/Client/formnew',[ClientController::class,'create']);
 
@@ -68,7 +89,7 @@ Route::post('/Client/update/{id}',[ClientController::class,'update']);
 
 //treballador
 
-Route::get('/Treballador',[TreballadorController::class,'index']);
+Route::get('/Treballador/get',[TreballadorController::class,'index']);
 
 Route::get('/Treballador/formnew',[TreballadorController::class,'create']);
 
@@ -82,7 +103,7 @@ Route::post('/Treballador/update/{id}',[TreballadorController::class,'update']);
 
 //Proveidor
 
-Route::get('/Proveidor',[ProveidorController::class,'index']);
+Route::get('/Proveidor/get',[ProveidorController::class,'index']);
 
 Route::get('/Proveidor/formnew',[ProveidorController::class,'create']);
 
@@ -97,5 +118,20 @@ Route::post('/Proveidor/update/{id}',[ProveidorController::class,'update']);
 Route::get('/Proveidor/show/{id}',[ProveidorController::class,'show']);
 
 //middleware
+ Route::get('/token',function(Request $request){
+     if(auth()->check()){
+         auth()->user()->tokens()->delete();
+         $token = auth()->user()->createToken("prova");
+         return response()->json(['token' => $token->plainTextToken],200);
+     }
+     else{
+         return response()->json("NO AUTORIZADO",405);
+     }
+
+ });
+
+
+//vista api 
+Route::get('/api/producte/create');
 });
 

@@ -62,6 +62,9 @@ class TreballadorController extends Controller
     public function show($id)
     {
         //
+        $Treballadors = Treballador::findOrFail($id);
+        
+        return view('Treballador.show',compact('Treballador'));
     }
 
     /**
