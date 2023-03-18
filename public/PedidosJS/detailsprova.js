@@ -20,8 +20,8 @@ const Url = {
     getPedido: 'http://localhost:8000/api/pedido/get/' + idURL,
     addProducte: 'http://localhost:8000/api/pedido/agregar',
     list: 'http://localhost:8000/api/producte/list',
+    delete: 'http://localhost:8000/api/producte/delete'
 }
-console.log(Url.get)
 
 function getCookie(cname) {
     let name = cname + "=";
@@ -62,7 +62,7 @@ function afegirFila(row) {
     <td id='nom'>${row.nom}</td>
     <td id='tipus'>${row.tipus}</td>
     <td id='preu'>${row.preu}€</td>
-    <td id='stock'>${row.stock }</td>
+    <td><button id='delete-${row.id}'>Eliminar</button></td>
     </tr>
     `
 }
@@ -81,9 +81,8 @@ async function getPedido(){
         console.log(data)
         console.log(response)
         if (response.ok) {
-            
             let links = data.data.links;
-            //loadIntoTable(Url.getPedido);
+            loadIntoTable(Url.getPedido);
         } else {
             showErrors(data.data)
         }
@@ -163,35 +162,67 @@ async function agregar(){
     console.log("ey")
 }
 
+async function llista(){
+    console.log("has entrado")
+    try{
+        let taula = document.getElementById('taula')
+        taula.innerHTML = ``;
+        const response = await fetch(Url.list,{
+            method: 'GET',
+            headers:{
+                'Accept':'aplication/json'
+            }
+        });
+        const data = await response.json();
+        console.log(data)
+        console.log(response)
+        if (response.ok) {
 
+            let list = document.getElementById("listProductes");
+            console.log("llista")
+            console.log(data.data)
+            let lista = data.data
+            lista.forEach(element => {
+                list.innerHTML += `<option value="${element.nom}">`
+            });
+            //data.data.data.forEach(e=>console.log(e))
+        } else {
+            showErrors(data.data)
+        }
+    } catch (error) {
+        errors.innerHTML = "An unexpected error has occurred"
+    }
+}
 
 
 async function loadIntoTable(url){
     try{
     const response = await fetch(url);
     const json = await response.json();
-    rows = json.data.data;     
+    rows = json.data;
+    console.log('rows') 
+    console.log(rows)    
     for (const row of rows){
         afegirFila(row)
+
+        const buttons = document.querySelectorAll('button[id^="delete-"]');
         for (let button of buttons) {
+        button.addEventListener("click", function () {
+            const id = this.id.split("-")[1];
+            deleteProducte(id)
+        });
+    }
 
-            button.addEventListener("click", function () {
-                const id = this.id.split("-")[1];
-                deleteProducte(id)
-                afegir()
-                afegirFila()
-            });
-        }
-        for (let button of buttonsUpdate) {
+        // for (let button of buttonsUpdate) {
 
-            button.addEventListener("click", function () {
-                const id = this.id.split("-")[1];
-                const nom = this.id.split("-")[2];
-                const tipus = this.id.split("-")[3];
-                const stock = this.id.split("-")[4];
-                updateHTML(id, nom,tipus,stock)
-            });
-        }
+        //     button.addEventListener("click", function () {
+        //         const id = this.id.split("-")[1];
+        //         const nom = this.id.split("-")[2];
+        //         const tipus = this.id.split("-")[3];
+        //         const stock = this.id.split("-")[4];
+        //         updateHTML(id, nom,tipus,stock)
+        //     });
+        // }
     }
     const links = json.data.links;
     console.log(links)
@@ -212,8 +243,46 @@ async function loadIntoTable(url){
             
         }
     }
+
+    async function deleteProducte(id){
+        let respostaDIV = document.getElementById('resposta')
+        respostaDIV.innerHTML = "";
+        respostaDIV.className = "alert alert-danger"
+        try {
+            const response = await fetch(Url.delete + '/' + id, {
+                method: 'DELETE',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer '+ getCookie('token'),
+                },
+    
+            })
+            const data = await response.json();
+            if(response.ok){
+                paginate()
+                //respostaDIV.innerHTML = `Producte eliminat Correctament`
+                setTimeout(() => {
+                    respostaDIV.innerHTML = "";
+                    respostaDIV.className = ""
+                }, "4000")
+    
+                //	afegirFila(data.data)
+            } else {
+                showErrors(data.data)
+            }
+    
+        } catch (error) {
+            errors.innerHTML = "S'ha produit un error inesperat"
+        }
+        location.reload()
+         
+    }
+
+
     
 
 
     getPedido()
     getProducte()
+    llista()

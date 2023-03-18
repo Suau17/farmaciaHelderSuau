@@ -56,7 +56,9 @@ Route::middleware('auth:sanctum')->group( function () {
  Route::post('pedido/agregar',[PedidoController::class,'agregarProducte']); 
  Route::get('pedido/get',[PedidoController::class,'index']); 
  Route::get('pedido/get/{idPedido}',[PedidoController::class,'showPedido']); 
- Route::get('pedido/pagar/{idPedido}',[PedidoController::class,'pagar']); 
+ Route::post('pedido/pagar/{idPedido}',[PedidoController::class,'pagar']); 
+ Route::get('/pedido/delete/{id}',[PedidoController::class,'destroy']);
+
 
 
 
@@ -67,7 +69,7 @@ Route::middleware('auth:sanctum')->group( function () {
 //productos
 Route::get('producte',[ProducteController::class,'index']); 
 //  Route::post('producte/save',[ProducteController::class,'store']); 
-//  Route::delete('producte/delete/{id}',[ProducteController::class,'destroy']); 
+Route::delete('producte/delete/{id}',[ProducteController::class,'destroy']); 
 //  Route::put('producte/update/{id}',[ProducteController::class,'update']);
 
 Route::resource('client', ClientController::class);

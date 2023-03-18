@@ -57,17 +57,21 @@
     <div id="errors" role="alert"></div>
 
     <div class="info">
+      <!-- Mostrar nombre de cliente o tarja sanitaria,
+      precio total del pedido y hora del último update -->  
+
+      </div id="displayInfo">
         
-    </div>
+        </div>
     <div class="productos">
     <table class="table">
+
             <thead style="border: solid 1px;">
                 <tr style="border: solid 1px;">
                     <th>id</th>
                     <th>Nom Producte</th>
                     <th>Tipus</th>
                     <th>Preu</th>
-                    <th>Stock</th>
                 </tr>
             </thead>
             <tbody id="taula">

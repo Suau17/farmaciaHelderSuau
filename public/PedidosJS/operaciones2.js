@@ -69,7 +69,7 @@ function showErrors(errors) {
 }
 
 
-function afegirFila(row) {
+function afegirFila(row) {  
     console.log(row)
     let taula = document.getElementById('taula')
     taula.innerHTML += `
@@ -79,9 +79,10 @@ function afegirFila(row) {
     <td id='nom'>${row.client.tarja_sanitaria}</td>
     <td id='tipus'>${row.preuTotal}</td>
     <td id='stock'>${(row.estado == 1) ? 'Pagado' : 'Sin pagar'}</td>
-    ${(row.estado == 1) ? '' : '<td><button onClick="pagar(${row.id})">Pagar</button></td>'}
+    ${(row.estado == 1) ? '' : '<td><button onClick="pagar('+row.id+')">Pagar</button></td>'}
     
-    <td><button id='info-${row.id}'>Detalles</button></td>
+    <td><button id='info' onClick='details(${row.id})'>Detalles</button></td>
+    <td><button id='delete-${row.id}'>Eliminar</button></td>
     </tr>
     `
 }
@@ -156,6 +157,11 @@ async function savePedido(){
     paginate()
 }
 
+
+
+
+
+
 function updateHTML(id,nom,tipus,stock){
     update = id
     producteNom.value=nom
@@ -165,10 +171,13 @@ function updateHTML(id,nom,tipus,stock){
 }
 
     async function loadIntoTable(url){
+        
         try{
         const response = await fetch(url);
         const json = await response.json();
-        rows = json.data.data;     
+        rows = json.data.data; 
+        
+
         for (const row of rows){
             afegirFila(row)
             const buttons = document.querySelectorAll('button[id^="delete-"]');
@@ -237,8 +246,8 @@ function updateHTML(id,nom,tipus,stock){
             respostaDIV.className = "alert alert-danger"
             
             try {
-                const response = await fetch(Url.delete + '/' + id, {
-                    method: 'DELETE',
+                const response = await fetch(Url.pagar + '/' + id, {
+                    method: 'POST',
                     headers: {
                         'Content-type': 'application/json',
                         'Accept': 'application/json',
@@ -249,12 +258,8 @@ function updateHTML(id,nom,tipus,stock){
                 const data = await response.json();
                 if (response.ok) {
                     console.log(data.data.nom)
-                    respostaDIV.innerHTML = `Comanda ${data.data.nom} eliminada Correctament`
-                    setTimeout(() => {
-                        respostaDIV.innerHTML = "";
-                        respostaDIV.className = ""
-                    }, "4000")
-        
+
+                    
                     //	afegirFila(data.data)
                 } else {
                     showErrors(data.data)
@@ -263,6 +268,41 @@ function updateHTML(id,nom,tipus,stock){
             } catch (error) {
                 error.innerHTML = "S'ha produit un error inesperat"
             }
+            location.reload()
+        }
+
+        async function deletePedido(id){
+            let respostaDIV = document.getElementById('resposta')
+                respostaDIV.innerHTML = "";
+                respostaDIV.className = "alert alert-danger"
+                try {
+                    const response = await fetch(Url.delete + '/' + id, {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-type': 'application/json',
+                            'Accept': 'application/json',
+                            'Authorization': 'Bearer '+ getCookie('token'),
+                        },
+            
+                    })
+                    const data = await response.json();
+                    if(response.ok){
+                        paginate()
+                        respostaDIV.innerHTML = `Pedido eliminat correctament`
+                        setTimeout(() => {
+                            respostaDIV.innerHTML = "";
+                            respostaDIV.className = ""
+                        }, "4000")
+                    }else {
+                        showErrors(data.data)
+                    }
+                } catch (error) {
+                    errors.innerHTML = "S'ha produit un error inesperat"
+                }
+        }
+
+        async function details(idInfo){
+                location.href = `http://localhost:8000/pedido/${idInfo}`
         }
 
         getProducte()
