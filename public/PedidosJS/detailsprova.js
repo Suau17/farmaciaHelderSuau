@@ -261,7 +261,7 @@ async function loadIntoTable(url){
             const data = await response.json();
             if(response.ok){
                 paginate()
-                //respostaDIV.innerHTML = `Producte eliminat Correctament`
+                respostaDIV.innerHTML = `Producte eliminat Correctament`
                 setTimeout(() => {
                     respostaDIV.innerHTML = "";
                     respostaDIV.className = ""

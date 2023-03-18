@@ -188,18 +188,19 @@ function updateHTML(id,nom,tipus,stock){
                     const id = this.id.split("-")[1];
                     pagar(id)
                     getProducte()
+                    deletePedido(id)
                 });
             }
-            for (let button of buttonsUpdate) {
+            // for (let button of buttonsUpdate) {
 
-                button.addEventListener("click", function () {
-                    const id = this.id.split("-")[1];
-                    const nom = this.id.split("-")[2];
-                    const tipus = this.id.split("-")[3];
-                    const stock = this.id.split("-")[4];
-                    updateHTML(id, nom,tipus,stock)
-                });
-            }
+            //     button.addEventListener("click", function () {
+            //         const id = this.id.split("-")[1];
+            //         const nom = this.id.split("-")[2];
+            //         const tipus = this.id.split("-")[3];
+            //         const stock = this.id.split("-")[4];
+            //         updateHTML(id, nom,tipus,stock)
+            //     });
+            // }
         }
         const links = json.data.links;
         console.log(links)
@@ -287,18 +288,14 @@ function updateHTML(id,nom,tipus,stock){
                     })
                     const data = await response.json();
                     if(response.ok){
-                        paginate()
-                        respostaDIV.innerHTML = `Pedido eliminat correctament`
-                        setTimeout(() => {
-                            respostaDIV.innerHTML = "";
-                            respostaDIV.className = ""
-                        }, "4000")
+                       
                     }else {
                         showErrors(data.data)
                     }
                 } catch (error) {
                     errors.innerHTML = "S'ha produit un error inesperat"
                 }
+                
         }
 
         async function details(idInfo){
