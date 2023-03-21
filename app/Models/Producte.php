@@ -5,9 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 //haspiToken para los token de laravel
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 class Producte extends Model
 {
-    use HasFactory;
+    use HasFactory, Notifiable, HasApiTokens;
     protected $fillable = [
         'id',
         'nom',

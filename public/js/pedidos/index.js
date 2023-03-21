@@ -15,3 +15,5 @@ function viewPedidos() {
     formP.classList.add('d-none')
     formP.classList.remove('d-block')
 }
+
+

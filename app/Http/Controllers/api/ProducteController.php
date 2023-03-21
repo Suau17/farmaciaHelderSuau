@@ -68,6 +68,7 @@ class ProducteController extends Controller
          
           'nom' => 'required|min:3',
           'tipus' => 'required|max:256',
+          'preu' => 'required',
           'stock' => 'required'
         ]);
 
@@ -162,6 +163,7 @@ class ProducteController extends Controller
         }   
         $Productes->nom = $request->nom;
         $Productes->tipus = $request->tipus; 
+        $Productes->preu = $request->preu;
         $Productes->stock = $request->stock; 
 
         $Productes->save();
