@@ -1,4 +1,3 @@
-
 var rows = [];
 var selectId;
 var update = false;
@@ -20,7 +19,7 @@ const Url = {
     getPedido: 'http://localhost:8000/api/pedido/get/' + idURL,
     addProducte: 'http://localhost:8000/api/pedido/agregar',
     list: 'http://localhost:8000/api/producte/list',
-    delete: 'http://localhost:8000/api/producte/delete'
+    deleteProducte: 'http://localhost:8000/api/pedido/deleteProducte/' + idURL
 }
 
 function getCookie(cname) {
@@ -151,7 +150,7 @@ async function agregar(){
         const data = await response.json();
         if (response.ok) {
             console.log("ey2")
-            console.log(data)
+            console.log(data.producte)
             afegirFila(data.producte)
         } else {
             showErrors(data.data)
@@ -184,8 +183,9 @@ async function llista(){
             let lista = data.data
             lista.forEach(element => {
                 list.innerHTML += `<option value="${element.nom}">`
+                console.log("element lista")
             });
-            //data.data.data.forEach(e=>console.log(e))
+            // data.data.forEach(e=>console.log(e))
         } else {
             showErrors(data.data)
         }
@@ -213,16 +213,15 @@ async function loadIntoTable(url){
         });
     }
 
-        // for (let button of buttonsUpdate) {
+        for (let button of buttonsUpdate) {
 
-        //     button.addEventListener("click", function () {
-        //         const id = this.id.split("-")[1];
-        //         const nom = this.id.split("-")[2];
-        //         const tipus = this.id.split("-")[3];
-        //         const stock = this.id.split("-")[4];
-        //         updateHTML(id, nom,tipus,stock)
-        //     });
-        // }
+            button.addEventListener("click", function () {
+                const id = this.id.split("-")[1];
+                const nom = this.id.split("-")[2];
+                const tipus = this.id.split("-")[3];
+                updateHTML(id, nom,tipus)
+            });
+        }
     }
     const links = json.data.links;
     console.log(links)
@@ -249,7 +248,7 @@ async function loadIntoTable(url){
         respostaDIV.innerHTML = "";
         respostaDIV.className = "alert alert-danger"
         try {
-            const response = await fetch(Url.delete + '/' + id, {
+            const response = await fetch(Url.deleteProducte + '/' + id, {
                 method: 'DELETE',
                 headers: {
                     'Content-type': 'application/json',
@@ -275,7 +274,7 @@ async function loadIntoTable(url){
         } catch (error) {
             errors.innerHTML = "S'ha produit un error inesperat"
         }
-        location.reload()
+        // location.reload()
          
     }
 

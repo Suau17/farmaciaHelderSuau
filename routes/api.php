@@ -57,7 +57,9 @@ Route::middleware('auth:sanctum')->group( function () {
  Route::get('pedido/get',[PedidoController::class,'index']); 
  Route::get('pedido/get/{idPedido}',[PedidoController::class,'showPedido']); 
  Route::post('pedido/pagar/{idPedido}',[PedidoController::class,'pagar']); 
- Route::get('/pedido/delete',[PedidoController::class,'destroy']);
+ Route::delete('/pedido/delete',[PedidoController::class,'destroy']);
+ Route::delete('/pedido/deleteProducte/{idPedido}',[PedidoController::class,'deleteProducte']);
+
 
 
 
