@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class Client extends Model
 {
-    use HasFactory;
+    use HasFactory, Notifiable, HasApiTokens;
     protected $fillable = [
         'id',
         'dni',
@@ -15,4 +17,5 @@ class Client extends Model
         'genere',
         'tarja_sanitaria'
     ];
+    protected $table = 'clients';
 }

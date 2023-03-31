@@ -1,33 +1,75 @@
 @extends('plantilla')
 @section('content')
-<h1>Proveidors</h1>
-<a href="/Proveidor/formnew">Afegir Proveidor</a>
-<table border=1 class ="table">
-<thead class="thead-dark">
-    <tr>
-        <td>id</td>
-        <td>Nom</td>
-        <td>Pais</td>
-        <td>Producte</td>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Producte</title>
+
+    <script src="/proveidor/operaciones.js" defer>
         
-    </tr>
-    </thead>
-    <tbody>
-    @foreach($Proveidors as $proveidor)
-        <tr>
-            <td>{{ $proveidor->id }}</td>
-            <td>{{ $proveidor->nomE }}</td>
-            <td>{{ $proveidor->pais }}</td>
-            <td> <a href="/Proveidor/show/{{ $proveidor->id }}"><button type="button" class="btn btn-primary">Mostrar</button></a></td>
-            <td>
-                
-                <a href="/Proveidor/delete/{{ $proveidor->id }}"><button type="button" class="btn btn-danger">Delete</button></a>
-                <a href="/Proveidor/update/{{ $proveidor->id }}"><button type="button" class="btn btn-primary">Update</button></a>
-               
-            </td>
-        </tr>
-    @endforeach
-</tbody>
-</table>
-{{ $Proveidors->links('pagination::bootstrap-4') }}
+    </script>
+
+</head>
+<style>
+    body{
+        height: 100%;
+    }
+    h1{
+        text-align: center;
+        margin-top: 3%;
+    }
+    .div2{
+        text-align: center;
+        padding-bottom: 5%;
+    }
+
+    .table{
+        text-align: center;
+        border: solid 1px;
+        margin-top: 2%;
+    }
+    .rowDataTD:hover{
+        background-color: lightgrey;
+    }
+    .mt-2{
+       margin-bottom: 10%;
+    }
+</style>
+<body>
+    <h1>CRUD PROVEIDORS</h1>
+    <div>
+        <input type="text" name="inputNom" id="inputNom">
+        <input type="text" name="inputPais" id="inputPais">
+        <button id="saveButton">save</button>
+    </div>
+    
+    <div id="resposta" role="alert"></div>
+    <div id="errors" role="alert"></div>
+    <table class="table">
+        <thead style="border: solid 1px;">
+            <tr style="border: solid 1px;">
+                <th>id</th>
+                <th>nom</th>
+                <th>país</th>
+                <th>Operacions</th>
+            </tr>
+        </thead>
+        <tbody id="taula">
+
+        </tbody>
+    </table>
+
+    </form>
+    <nav class = "mt-2">
+        <ul id = 'pagination' class = 'pagination'>
+
+        </ul>
+    </nav>
+</body>
+</html>
 @endsection
