@@ -156,6 +156,7 @@ function updateHTML(id,nom,tipus,preu,stock){
 }
 
 async function updateProducte(id){
+    console.log('UPDATE')
     let respostaDIV = document.getElementById('resposta')
     respostaDIV.innerHTML = "";
     respostaDIV.className = "alert alert-success"
@@ -189,7 +190,7 @@ async function updateProducte(id){
             setTimeout(() => {
                 respostaDIV.innerHTML = "";
                 respostaDIV.className = ""
-            }, "4000")
+            }, "1000")
             paginate()
             getProducte()
         } else {
@@ -199,6 +200,7 @@ async function updateProducte(id){
         errors.innerHTML = "S'ha produit un error inesperat"
         operation = "inserting";
     }
+    getProducte()
     }
 
     async function deleteProducte(id){
@@ -303,7 +305,5 @@ async function updateProducte(id){
             console.log(4)
         }
 
-       function infoProv(){
-            
-       }
+   
         getProducte()

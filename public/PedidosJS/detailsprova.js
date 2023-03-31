@@ -61,7 +61,6 @@ function afegirFila(row) {
     <td id='nom'>${row.nom}</td>
     <td id='tipus'>${row.tipus}</td>
     <td id='preu'>${row.preu}€</td>
-    <td><button id='delete-${row.id}'>Eliminar</button></td>
     </tr>
     `
 }
@@ -81,6 +80,7 @@ async function getPedido(){
         console.log(response)
         if (response.ok) {
             let links = data.data.links;
+            console.log("getPedido error")
             loadIntoTable(Url.getPedido);
         } else {
             showErrors(data.data)
@@ -103,12 +103,13 @@ async function getProducte(){
             }
         });
         const data = await response.json();
+        console.log('sSasADAddd')
         console.log(data)
         console.log(response)
         if (response.ok) {
             
             let links = data.data.links;
-            // loadIntoTable(Url.getProducto);
+             //loadIntoTable(links);
         } else {
             showErrors(data.data)
         }
@@ -150,8 +151,9 @@ async function agregar(){
         const data = await response.json();
         if (response.ok) {
             console.log("ey2")
-            console.log(data.producte)
+            console.log(data)
             afegirFila(data.producte)
+            location.reload()
         } else {
             showErrors(data.data)
         }
@@ -159,6 +161,7 @@ async function agregar(){
         errors.innerHTML = "An unexpected error has occurred"
     }
     console.log("ey")
+    getPedido()
 }
 
 async function llista(){
@@ -205,23 +208,14 @@ async function loadIntoTable(url){
     for (const row of rows){
         afegirFila(row)
 
-        const buttons = document.querySelectorAll('button[id^="delete-"]');
-        for (let button of buttons) {
-        button.addEventListener("click", function () {
-            const id = this.id.split("-")[1];
-            deleteProducte(id)
-        });
-    }
+        // const buttons = document.querySelectorAll('button[id^="delete-"]');
+    //     for (let button of buttons) {
+    //     button.addEventListener("click", function () {
+    //         const id = this.id.split("-")[1];
+    //         deleteProducte(id)
+    //     });
+    // }
 
-        for (let button of buttonsUpdate) {
-
-            button.addEventListener("click", function () {
-                const id = this.id.split("-")[1];
-                const nom = this.id.split("-")[2];
-                const tipus = this.id.split("-")[3];
-                updateHTML(id, nom,tipus)
-            });
-        }
     }
     const links = json.data.links;
     console.log(links)
@@ -229,6 +223,7 @@ async function loadIntoTable(url){
     }  catch(error) {
         errors.innerHTML = "No es pot accedir a la base de dades"
     }
+    
     }
     function paginate(url){
         pagination.innerHTML = "";
@@ -275,7 +270,7 @@ async function loadIntoTable(url){
             errors.innerHTML = "S'ha produit un error inesperat"
         }
         // location.reload()
-         
+       
     }
 
 

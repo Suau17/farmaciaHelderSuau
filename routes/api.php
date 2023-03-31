@@ -28,25 +28,29 @@ Route::post('login', [LoginController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
 
-     Route::post('proveidor/save', [ProveidorController::class,'store']);
-  Route::delete('proveidor/delete/{id}', [ProveidorController::class,'destroy']);
-  Route::put('proveidor/update/{id}', [ProveidorController::class,'update']);
+  Route::post('producte/save', [ProducteController::class, 'store']);
+  Route::delete('producte/delete/{id}', [ProducteController::class, 'destroy']);
+  Route::put('producte/update/{id}', [ProducteController::class, 'update']);
 
-  Route::post('treballador/save',[TreballadorController::class,'store']); 
-  Route::delete('treballador/delete/{id}',[TreballadorController::class,'destroy']); 
-  Route::put('treballador/update/{id}',[TreballadorController::class,'update']);
+   Route::post('proveidor/save', [ProveidorController::class,'store']);
+   Route::delete('proveidor/delete/{id}', [ProveidorController::class,'destroy']);
+   Route::put('proveidor/update/{id}', [ProveidorController::class,'update']);
 
-  Route::post('client/save',[ClientController::class,'store']); 
-  Route::delete('client/delete/{id}',[ClientController::class,'destroy']); 
-  Route::put('client/update/{id}',[ClientController::class,'update']);
+   Route::post('treballador/save',[TreballadorController::class,'store']); 
+   Route::delete('treballador/delete/{id}',[TreballadorController::class,'destroy']); 
+   Route::put('treballador/update/{id}',[TreballadorController::class,'update']);
+
+   Route::post('client/save',[ClientController::class,'store']); 
+   Route::delete('client/delete/{id}',[ClientController::class,'destroy']); 
+   Route::put('client/update/{id}',[ClientController::class,'update']);
 });
 //});
 
  Route::get('producte/list',[ProducteController::class,'list']); 
+
+
+
  
-
-
-
  Route::post('pedido/create',[PedidoController::class,'store']); 
  Route::post('pedido/agregar',[PedidoController::class,'agregarProducte']); 
  Route::get('pedido/get',[PedidoController::class,'index']); 

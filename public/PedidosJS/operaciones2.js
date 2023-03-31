@@ -82,7 +82,6 @@ function afegirFila(row) {
     ${(row.estado == 1) ? '' : '<td><button onClick="pagar('+row.id+')">Pagar</button></td>'}
     
     <td><button id='info' onClick='details(${row.id})'>Detalles</button></td>
-    <td><button id='delete-${row.id}'>Eliminar</button></td>
     </tr>
     `
 }
