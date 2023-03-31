@@ -64,6 +64,6 @@
     </div>
 </div>
 <footer>
-    s
+    
 </footer>
 @endsection

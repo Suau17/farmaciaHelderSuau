@@ -9,6 +9,7 @@ divErrors.style.display = "none";
 const producteNom = document.getElementById("producteNom");
 const producteTipus = document.getElementById("producteTipus");
 const producteStock = document.getElementById("producteStock");
+const productePreu = document.getElementById("productePreu");
 const saveButton = document.getElementById('saveButton');
 saveButton.addEventListener('click', onSave)
 
@@ -18,7 +19,7 @@ const Url = {
     update: 'http://localhost:8000/api/producte/update',
     delete: 'http://localhost:8000/api/producte/delete',
 }
-console.log(Url.get)
+
 
 
 function getCookie(cname) {
@@ -69,9 +70,10 @@ function afegirFila(row) {
     <td id='${row.id}'>${row.id}</td>
     <td id='nom'>${row.nom}</td>
     <td id='tipus'>${row.tipus}</td>
+    <td id='preu'>${row.preu}</td>
     <td id='stock'>${row.stock}</td>
     <td><button id='delete-${row.id}'>Eliminar</button></td>
-    <td><button id='update-${row.id}-${row.nom}-${row.tipus}-${row.stock}'>Actualizar</button></td>
+    <td><button id='update-${row.id}-${row.nom}-${row.tipus}-${row.preu}-${row.stock}'>Actualizar</button></td>
     <td><button id='info-${row.id}'>info</button></td>
     </tr>
     `
@@ -112,6 +114,7 @@ async function saveProducte(event){
     var newProducte = {
         "nom": producteNom.value,
         "tipus": producteTipus.value,
+        "preu": productePreu.value,
         "stock": producteStock.value
     }
     try{
@@ -143,15 +146,17 @@ async function saveProducte(event){
     paginate()
 }
 
-function updateHTML(id,nom,tipus,stock){
+function updateHTML(id,nom,tipus,preu,stock){
     update = id
     producteNom.value=nom
     producteTipus.value=tipus
+    productePreu.value = preu
     producteStock.value=stock
 
 }
 
 async function updateProducte(id){
+    console.log('UPDATE')
     let respostaDIV = document.getElementById('resposta')
     respostaDIV.innerHTML = "";
     respostaDIV.className = "alert alert-success"
@@ -159,6 +164,7 @@ async function updateProducte(id){
     var updateProducte = {
         "nom": producteNom.value,
         "tipus": producteTipus.value,
+        "preu": productePreu.value,
         "stock": producteStock.value
     }
     console.log(updateProducte);
@@ -176,6 +182,7 @@ async function updateProducte(id){
         const data = await response.json(); 
         producteNom.value = ""
         producteTipus.value = ""
+        productePreu = ""
         producteStock.value = ""
         if (response.ok) {
             //afegirFila(data.data)
@@ -183,7 +190,7 @@ async function updateProducte(id){
             setTimeout(() => {
                 respostaDIV.innerHTML = "";
                 respostaDIV.className = ""
-            }, "4000")
+            }, "1000")
             paginate()
             getProducte()
         } else {
@@ -193,6 +200,7 @@ async function updateProducte(id){
         errors.innerHTML = "S'ha produit un error inesperat"
         operation = "inserting";
     }
+    getProducte()
     }
 
     async function deleteProducte(id){
@@ -252,8 +260,9 @@ async function updateProducte(id){
                     const id = this.id.split("-")[1];
                     const nom = this.id.split("-")[2];
                     const tipus = this.id.split("-")[3];
-                    const stock = this.id.split("-")[4];
-                    updateHTML(id, nom,tipus,stock)
+                    const preu = this.id.split("-")[4];
+                    const stock = this.id.split("-")[5];
+                    updateHTML(id, nom,tipus,preu,stock)
                 });
             }
         }
@@ -281,7 +290,7 @@ async function updateProducte(id){
         
             const pagLi = document.createElement("li");
             pagLi.classList.add('page-item');
-        console.log(1)
+            console.log(1)
             const pagAnchor = document.createElement("a");
             pagAnchor.innerHTML = link.label;
             pagAnchor.addEventListener('click', function(event) {paginate(link.url)});
@@ -296,8 +305,5 @@ async function updateProducte(id){
             console.log(4)
         }
 
-       function infoProv(){
-        
-       }
+   
         getProducte()
-    

@@ -50,6 +50,10 @@ Route::get('/pedidos', function () {
     return view('pedidos/index');
 })->name('welcome');
 
+Route::get('/pedido/{id}', function () {
+    return view('pedidos/details');
+})->name('welcome');
+
 //Producte
 
 Route::get('/Producte',[ProducteController::class,'index']);

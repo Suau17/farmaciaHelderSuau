@@ -1,9 +1,6 @@
 console.log('egag')
 const formP = document.getElementById('formPedidos')
-formP.onsubmit(
-    await crearPedido()
-    
-)
+
 const divPedidos = document.getElementById('divPedidos')
 function createPedidos() {
     formP.classList.add('d-block')
@@ -27,7 +24,7 @@ const pagination = document.getElementById('pagination');
 const table = document.getElementById('taula');
 const divErrors = document.getElementById("errors");
 divErrors.style.display = "none";
-const producteNom = document.getElementById("producteNom");
+const formTargetaSanitaria = document.getElementById("formTargetaSanitaria");
 const producteTipus = document.getElementById("producteTipus");
 const producteStock = document.getElementById("producteStock");
 
@@ -38,9 +35,7 @@ const Url = {
     save: 'http://localhost:8000/api/pedido/create',
     pagar: 'http://localhost:8000/api/pedido/pagar',
     delete: 'http://localhost:8000/api/pedido/delete',
-
 }
-console.log(Url.get)
 
 
 function getCookie(cname) {
@@ -74,7 +69,7 @@ function showErrors(errors) {
 }
 
 
-function afegirFila(row) {
+function afegirFila(row) {  
     console.log(row)
     let taula = document.getElementById('taula')
     taula.innerHTML += `
@@ -84,9 +79,9 @@ function afegirFila(row) {
     <td id='nom'>${row.client.tarja_sanitaria}</td>
     <td id='tipus'>${row.preuTotal}</td>
     <td id='stock'>${(row.estado == 1) ? 'Pagado' : 'Sin pagar'}</td>
-    ${(row.estado == 1) ? '' : '<td><button onClick="pagar(${row.id})">Pagar</button></td>'}
+    ${(row.estado == 1) ? '' : '<td><button onClick="pagar('+row.id+')">Pagar</button></td>'}
     
-    <td><button id='info-${row.id}'>Detalles</button></td>
+    <td><button id='info' onClick='details(${row.id})'>Detalles</button></td>
     </tr>
     `
 }
@@ -113,23 +108,24 @@ async function getProducte(){
             showErrors(data.data)
         }
     } catch (error) {
-        errors.innerHTML = "An unexpected error has occurred"
+        error.innerHTML = "An unexpected error has occurred"
     }
         
    
 }
 
-async function saveProducte(event){
+///////////////////////////////////////////
+
+
+async function savePedido(){
+ 
     let respostaDIV = document.getElementById('resposta')
     respostaDIV.innerHTML = "";
     respostaDIV.className = "alert alert-success"
     var newProducte = {
-        "nom": producteNom.value,
-        "tipus": producteTipus.value,
-        "stock": producteStock.value
+        "tarjeta_sanitaria": formTargetaSanitaria.value
     }
     try{
-        console.log(document.cookie)
         const response = await fetch(Url.save, {
             method: 'POST',
             headers: {
@@ -140,8 +136,11 @@ async function saveProducte(event){
             body: JSON.stringify(newProducte)
         })
         const data = await response.json();
+        console.log('AAAAAAAAAAAAAAA')
+        console.log(data)
+        console.log('AAAAAAAAAAAAAAA')
         if (response.ok){
-
+            location.href = `http://localhost:8000/pedido/${data.data.id}`;
             respostaDIV.innerHTML = `Producte ${data.data.nom} creat correctament`
             setTimeout(() => {
                 respostaDIV.innerHTML = "";
@@ -157,6 +156,11 @@ async function saveProducte(event){
     paginate()
 }
 
+
+
+
+
+
 function updateHTML(id,nom,tipus,stock){
     update = id
     producteNom.value=nom
@@ -165,46 +169,14 @@ function updateHTML(id,nom,tipus,stock){
 
 }
 
-
-    async function deleteProducte(id){
-        let respostaDIV = document.getElementById('resposta')
-        respostaDIV.innerHTML = "";
-        respostaDIV.className = "alert alert-danger"
-        try {
-            const response = await fetch(Url.delete + '/' + id, {
-                method: 'DELETE',
-                headers: {
-                    'Content-type': 'application/json',
-                    'Accept': 'application/json',
-                    'Authorization': 'Bearer '+ getCookie('token'),
-                },
-    
-            })
-            const data = await response.json();
-            if(response.ok){
-                paginate()
-                respostaDIV.innerHTML = `Producte ${data.data.nom} eliminat Correctament`
-                setTimeout(() => {
-                    respostaDIV.innerHTML = "";
-                    respostaDIV.className = ""
-                }, "4000")
-    
-                //	afegirFila(data.data)
-            } else {
-                showErrors(data.data)
-            }
-    
-        } catch (error) {
-            errors.innerHTML = "S'ha produit un error inesperat"
-        }
-         
-    }
-
     async function loadIntoTable(url){
+        
         try{
         const response = await fetch(url);
         const json = await response.json();
-        rows = json.data.data;     
+        rows = json.data.data; 
+        
+
         for (const row of rows){
             afegirFila(row)
             const buttons = document.querySelectorAll('button[id^="delete-"]');
@@ -213,20 +185,21 @@ function updateHTML(id,nom,tipus,stock){
 
                 button.addEventListener("click", function () {
                     const id = this.id.split("-")[1];
-                    deleteProducte(id)
+                    pagar(id)
                     getProducte()
+                    deletePedido(id)
                 });
             }
-            for (let button of buttonsUpdate) {
+            // for (let button of buttonsUpdate) {
 
-                button.addEventListener("click", function () {
-                    const id = this.id.split("-")[1];
-                    const nom = this.id.split("-")[2];
-                    const tipus = this.id.split("-")[3];
-                    const stock = this.id.split("-")[4];
-                    updateHTML(id, nom,tipus,stock)
-                });
-            }
+            //     button.addEventListener("click", function () {
+            //         const id = this.id.split("-")[1];
+            //         const nom = this.id.split("-")[2];
+            //         const tipus = this.id.split("-")[3];
+            //         const stock = this.id.split("-")[4];
+            //         updateHTML(id, nom,tipus,stock)
+            //     });
+            // }
         }
         const links = json.data.links;
         console.log(links)
@@ -267,8 +240,65 @@ function updateHTML(id,nom,tipus,stock){
             console.log(4)
         }
 
-       function infoProv(){
+        async function pagar(id) {
+            let respostaDIV = document.getElementById('resposta')
+            respostaDIV.innerHTML = "";
+            respostaDIV.className = "alert alert-danger"
+            
+            try {
+                const response = await fetch(Url.pagar + '/' + id, {
+                    method: 'POST',
+                    headers: {
+                        'Content-type': 'application/json',
+                        'Accept': 'application/json',
+                        'Authorization': 'Bearer '+ getCookie('token'),
+                    },
         
-       }
+                })
+                const data = await response.json();
+                if (response.ok) {
+                    console.log(data.data.nom)
+
+                    
+                    //	afegirFila(data.data)
+                } else {
+                    showErrors(data.data)
+                }
+        
+            } catch (error) {
+                error.innerHTML = "S'ha produit un error inesperat"
+            }
+            location.reload()
+        }
+
+        async function deletePedido(id){
+            let respostaDIV = document.getElementById('resposta')
+                respostaDIV.innerHTML = "";
+                respostaDIV.className = "alert alert-danger"
+                try {
+                    const response = await fetch(Url.delete + '/' + id, {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-type': 'application/json',
+                            'Accept': 'application/json',
+                            'Authorization': 'Bearer '+ getCookie('token'),
+                        },
+            
+                    })
+                    const data = await response.json();
+                    if(response.ok){
+                       
+                    }else {
+                        showErrors(data.data)
+                    }
+                } catch (error) {
+                    errors.innerHTML = "S'ha produit un error inesperat"
+                }
+                
+        }
+
+        async function details(idInfo){
+                location.href = `http://localhost:8000/pedido/${idInfo}`
+        }
+
         getProducte()
-    
